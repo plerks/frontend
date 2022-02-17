@@ -1,0 +1,19 @@
+.rol-6 {
+    width: 50%;
+}
+.slidein {
+    animation-duration: 3s;
+    animation-name: slidein;
+    animation-iteration-count: 3;
+    animation-direction: alternate;
+}
+
+@keyframes slidein {
+    from {
+        height: 0;
+    }
+
+    to {
+        height: auto;
+    }
+}

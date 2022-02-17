@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="static/css/default.css">
+</head>
+<body>
+<!--button中的input，在input中按空格会触发button的click。Ubuntu下搜狗输入法，在input中输中文时也出现这种情况-->
+    <div onclick="console.log('div clicked')" onkeyup="console.log('div keyup')">
+        <!--最好不要在button中套<input>-->
+        <button class="button" onclick="console.log('button clicked')" onkeyup="console.log('button keyup')">
+            <input class="input" onclick="console.log('input clicked')" onkeyup="console.log('input keyup')">
+            <input type="radio" onclick="console.log('radio clicked')" onkeyup="console.log('radio keyup')">
+        </button>
+    </div>
+
+</body>
+</html>

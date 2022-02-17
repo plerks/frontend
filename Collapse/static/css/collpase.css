@@ -1,0 +1,24 @@
+ul {
+    list-style: none;
+}
+.collapse {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial;
+}
+.card {
+    background-color: #fff;
+    width: 100%;
+    border-radius: 5px 5px 5px 0;
+    box-shadow:1px 1px 15px 0 rgba(69,65,78,.08);
+    padding: 10px;
+    margin:10px auto;
+}
+.col-6 {
+    width: 50%;
+    /*flex-shrink: 0;*/
+}
+.margin-auto {
+    margin: auto;
+}
