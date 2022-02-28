@@ -4,7 +4,8 @@
     position: relative;
 }
 .tooltip .tooltip-text {
-    visibility: hidden;
+    display: none;
+    height: 0;
     position: absolute;
     width: 120px;
     background-color: black;
@@ -15,16 +16,10 @@
     left: 50%; /*定位到中间偏右一点*/
     margin-left: -60px; /*width的一半，左移到正中间*/
     padding: 5px;
-    transition: all 0.3s linear;
-    max-height: 0px;
-    opacity: 0;
 }
 .tooltip:hover .tooltip-text {
-    visibility: visible;
-    /* css无法支持从0到auto的过渡效果，要么靠max-height(指定一个充分大的值)实现高度的过渡效果，要么计算出高度 
-    height: auto; */
-    max-height: 500px;
-    opacity: 1;
+    display: block;
+    height: auto;
 }
 .tooltip .tooltip-text::after {
     content: ""; /*见https://developer.mozilla.org/zh-CN/docs/Web/CSS/content，如果不写，默认为normal，对伪元素normal计算为none，不会显示伪元素*/
