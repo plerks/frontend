@@ -1,0 +1,80 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+.row-item-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+.i-remind-add {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  background-color: rgb(85 164 149);
+  cursor: pointer;
+}
+/* toast居中 */
+.toast {
+  position: fixed;
+  width: 400px;
+  height: 400px;
+  top: 50%;
+  left: 50%;
+  /* 这百分比是相对于自身的，不像margin百分比是相对于包含块 */
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+.divider {
+  height: 1px;
+  background-color: #e5e5e5;
+  margin: 9px 0;
+}
+.option {
+  color: #7e878f;
+  padding: 3px 12px;
+  font-size: 13px;
+}
+.option:hover {
+  background-color: #41a5f6;
+  color: white;
+}
+.option-selected {
+  background-color: #41a5f6;
+  color: white;
+}
+.filter {
+  width: 100%;
+  border: 1px solid #a3afb8;
+  padding: 5px;
+  outline: none;
+}
+.filter:focus {
+  border-color: #6b6b91;
+}
+.search-icon {
+  position: absolute;
+  right: 0;
+}
+.search {
+  display: flex;
+  align-items: center;
+}
+.menu {
+  width: 100%;
+  height: 90%;
+  left: 0%;
+  top: 100%;
+  box-shadow: 0 5px 12px 2px rgb(0 0 0 / 10%);
+  padding: 5px;
+  background-color: white;
+  overflow-y: scroll;
+  text-align: left;
+}

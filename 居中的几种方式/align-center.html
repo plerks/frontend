@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../common/css/common.css">
+    <link rel="stylesheet" href="static/css/1.css">
+</head>
+<body>
+    <!-- 基础的margin: 0 auto，不能垂直居中，因为margin上下的auto属性计算值为0。只对块级元素有用，
+        因为margin的auto属性作用是分配剩余空间，块级元素才有剩余空间，
+        内联元素不占一整行，没有剩余空间 -->
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <!-- 这里card的padding产生了垂直居中的效果 -->
+                <div class="card">
+                    <!-- width为50%，左右产生剩余空间 -->
+                    <button class="button" style="display: block;margin: 0 auto;width:50%;">click</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 用flex的垂直居中功能 -->
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="row-item-center">
+                        <span class="i-remind-add">
+                            <span>+</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 用负margin来移动，技巧同"../悬停提示文本" -->
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="card" style="position: relative;">
+                    <!-- static定位下,left,top,bottom,right属性无效 -->
+                    <span class="i-remind-add" style="position: absolute;left: 50%;top: 50%;margin-left: -10px;margin-top: -10px;">
+                        <span>+</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 类似负margin移动，不过使用translateX,translateY -->
+    <!-- <div class="card toast">
+        <div class="search" style="position: relative;">
+            <input spellcheck="false" class="filter" placeholder="Lookup"/>
+        </div>
+        <div class="menu">
+            <ul style="list-style: none;">
+                <li class="divider"></li>
+                <li class="option">BSD 4-Clause "Original" or "Old" License</li>
+                <li class="option">Apache</li>
+                <li class="option">Creative Commons Attribution 4.0 International</li>
+                <li class="divider"></li>
+                <li class="option">BSD 4-Clause "Original" or "Old" License</li>
+                <li class="option">Apache</li>
+                <li class="option">Creative Commons Attribution 4.0 International</li>
+                <li class="divider"></li>
+                <li class="option">BSD 4-Clause "Original" or "Old" License</li>
+                <li class="option">Apache</li>
+                <li class="option">Creative Commons Attribution 4.0 International</li>
+                <li class="divider"></li>
+                <li class="option">BSD 4-Clause "Original" or "Old" License</li>
+                <li class="option">Apache</li>
+                <li class="option">Creative Commons Attribution 4.0 International</li>
+                <li class="divider"></li>
+                <li class="option">BSD 4-Clause "Original" or "Old" License</li>
+                <li class="option">Apache</li>
+                <li class="option">Creative Commons Attribution 4.0 International</li>
+            </ul>
+        </div>
+    </div> -->
+</body>
+</html>

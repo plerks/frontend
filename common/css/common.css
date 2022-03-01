@@ -1,0 +1,78 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* container没做响应式，这个container和row的负margin可以直接删除,效果一样，container和row的负margin的设计
+参考https://www.cnblogs.com/chengdabelief/p/6690940.html */
+.container {
+    padding: 15px;
+}
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -15px;
+}
+.col-1 {
+    width: 8.333333333333333%;
+}
+.col-2 {
+    width: 16.666666666666666%;
+}
+.col-3 {
+    width: 25%;
+}
+.col-4 {
+    width: 33.33333333333333%;
+}
+.col-5 {
+    width: 41.66666666666667%;
+}
+.col-6 {
+    width: 50%;
+}
+.col-7 {
+    width: 58.33333333333334%;
+}
+.col-8 {
+    width: 66.66666666666666%;
+}
+.col-9 {
+    width: 75%;
+}
+.col-10 {
+    width: 83.33333333333334%;
+}
+.col-11 {
+    width: 91.66666666666666%;
+}
+.col-12 {
+    width: 100%;
+}
+.col-1,.col-2,.col-3,.col-4,.col-5,.col-6,.col-7,.col-8,.col-9,.col-10,.col-11,.col-12 {
+    padding: 15px;
+}
+.card {
+    background-color: #fff;
+    width: 100%;
+    border-radius: 5px 5px 5px 0;
+    box-shadow:1px 1px 15px 0 rgba(69,65,78,.08);
+    padding: 15px;
+    font-family: Arial;
+  }
+.button {
+    margin: 15px;
+    padding: 5px 10px;
+    color: white;
+    border-radius: 5px;
+    border: 1px solid rgb(23, 125, 255);
+    background-color: rgb(23, 125, 255);
+}
+.button:enabled:hover {
+    opacity: 0.9;
+    transition: 0.3s;
+}
+.button:disabled {
+    opacity: 0.5;
+    transition: 0.3s;
+}
