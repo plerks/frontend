@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .box {
+            border: 1px black solid;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <!--行内元素，上下margin无效。而左右margin不发生重叠，所以行内元素没有margin重叠的问题-->
+    <span style="width: 60px;
+            background: gray;
+            margin: 20px;">
+        1
+    </span>
+    <span style="width: 60px;
+            background: orange;
+            margin: 30px;">
+        2
+    </span>
+</div>
+<div class="box">
+    <!--块级元素，上下margin一定占一整行，不存在上下margin不一样宽，部分重叠的问题-->
+    <div style="width: 60px;
+            background: gray;
+            margin: 20px;">
+        3
+    </div>
+    <div style="width: 60px;
+            background: orange;
+            margin: 30px;">
+        4
+    </div>
+</div>
+<div class="box">
+    <!--多套一层div也能margin折叠-->
+    <div>
+        <div style="width: 60px;
+            background: gray;
+            margin: 20px;">
+            5
+        </div>
+    </div>
+    <div>
+        <div style="width: 60px;
+            background: orange;
+            margin: 30px;">
+            6
+        </div>
+    </div>
+</div>
+<div class="box" style="overflow:hidden;">
+    <!--负margin的情况-->
+    <div style="width: 60px;
+            background: gray;
+            /*这里改成-60px,设置box的overflow不hidden,可以让two跑到上面的box*/
+            margin-bottom: -35px;">
+        7
+    </div>
+    <div style="width: 60px;
+            background: orange;
+            margin: 30px;">
+        8
+    </div>
+</div>
+<!--inline-block元素不与任何元素的外边距产生折叠-->
+<div class="box" style="height: 200px">
+    <div style="display: inline-block;
+            width: 60px;
+            background: gray;
+            margin: 20px;">
+        9
+    </div>
+    <div style="display: inline-block;
+            width: 60px;
+            background: orange;
+            margin: 30px;">
+        10
+    </div>
+    <div>
+        <div style="display: inline-block;
+            width: 60px;
+            background: gray;
+            margin: 20px;">
+            11
+        </div>
+    </div>
+    <div>
+        <div style="display: inline-block;
+            width: 60px;
+            background: orange;
+            margin: 30px;">
+            12
+        </div>
+    </div>
+</div>
+</body>
+</html>
