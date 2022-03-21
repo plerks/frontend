@@ -21,7 +21,17 @@
 }
 .tooltip:hover .tooltip-text {
     visibility: visible;
-    /* css无法支持从0到auto的过渡效果，要么靠max-height(指定一个充分大的值)实现高度的过渡效果，要么计算出高度 
+    /* css无法支持从0到auto的过渡效果，要么靠max-height(指定一个充分大的值)实现高度的过渡效果，要么计算出高度
+    计算的例子见 https://www.bilibili.com/video/BV1L34y1q7mZ (gitee地址 https://gitee.com/wyanhui02/html_css_demo/blob/master/html/100.html ) ,
+    此外或许也可以通过设置父元素的overflow为hidden收起折叠面板，这样做始终能获取到要折叠部分的高度，然后修改父元素的overflow属性并增减height实现折叠和收起的效果,
+    还有一些可以参考的链接:
+        https://juejin.cn/post/6865316668986523661
+        https://juejin.cn/post/6931729552003891207
+        https://segmentfault.com/a/1190000022442686
+        https://blog.csdn.net/gtLBTNq9mr3/article/details/107074861
+        https://juejin.cn/post/6844903845617729543
+        https://juejin.cn/post/7026631585524875300
+        https://blog.csdn.net/weixin_34150830/article/details/92508382
     height: auto; */
     max-height: 500px;
     opacity: 1;
