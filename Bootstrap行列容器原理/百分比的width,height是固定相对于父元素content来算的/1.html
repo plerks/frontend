@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="utf-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../common/css/common.css">
+    <link rel="stylesheet" href="static/css/1.css">
+</head>
+<body >
+<div class="container body-with-footer">
+    <div class="card gray-border round-border" style="height: 300px">
+        <div class="card gray-border round-border" style="width:50%;height: 50%">border-box > border-box</div>
+    </div>
+    <div class="card gray-border round-border" style="height: 300px">
+        <div class="card gray-border round-border" style="width:50%;height: 50%;box-sizing: content-box">border-box > content-box</div>
+    </div>
+    <div class="card gray-border round-border" style="height: 300px;box-sizing: content-box">
+        <div class="card gray-border round-border" style="width:50%;height: 50%">content-box > border-box</div>
+    </div>
+    <div class="card gray-border round-border" style="height: 300px;box-sizing: content-box">
+        <div class="card gray-border round-border" style="width:50%;height: 50%;box-sizing: content-box">content-box > content-box</div>
+    </div>
+</div>
+</body>
+</html>

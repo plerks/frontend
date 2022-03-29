@@ -3,8 +3,6 @@
     padding: 0;
     box-sizing: border-box;
 }
-/* container没做响应式，这个container和row的负margin可以直接删除,效果一样，container和row的负margin的设计
-参考https://www.cnblogs.com/chengdabelief/p/6690940.html */
 .container {
     padding: 15px;
 }
@@ -104,4 +102,10 @@
     border-radius: 5px;
     background-color: #ededee;
     /*box-shadow: inset 0 0 2px rgba(232, 229, 229, 0.2);*/
+}
+.gray-border {
+    border: 1px solid #dedede;
+}
+.round-border {
+    border-radius: 5px;
 }

@@ -15,7 +15,7 @@
             <div class="col-12">
                 <!-- 这里card的padding产生了垂直居中的效果 -->
                 <div class="card">
-                    <!-- width为50%，左右产生剩余空间 -->
+                    <!-- width为50%，但是width只是指定content-box或border-box的大小(通过box-sizing属性设置)，而块级元素占一整行，所以左右产生了可分配的剩余空间 -->
                     <button class="button" style="display: block;margin: 0 auto;width:50%;">click</button>
                 </div>
             </div>

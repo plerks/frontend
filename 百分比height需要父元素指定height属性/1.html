@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="utf-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../common/css/common.css">
+    <link rel="stylesheet" href="static/css/1.css">
+</head>
+<body >
+<div class="container body-with-footer">
+<!--    参考 https://blog.csdn.net/liuying1802028915/article/details/78224397，-->
+<!--    https://blog.csdn.net/jfwzy109127/article/details/83692677，父元素必须要有设置height属性，子元素的百分比height才有效-->
+    <div class="card gray-border round-border" style="min-height: 300px">
+<!--        父元素没有设置height属性，min-height也不行，这里的height:50%没起作用，有和没有效果一样-->
+        <div class="card gray-border round-border" style="height: 50%"></div>
+    </div>
+    <div class="card gray-border round-border" style="height: 300px">
+        <div class="card gray-border round-border" style="height: 50%"></div>
+    </div>
+    <div class="card gray-border round-border" style="height: 30vh">
+        <div class="card gray-border round-border" style="height: 50%"></div>
+    </div>
+    <div class="card gray-border round-border" style="height: 300px">
+        <div class="card gray-border round-border" style="height: 50%">
+            <div class="card gray-border round-border" style="height: 50%"></div>
+        </div>
+    </div>
+    <div class="card gray-border round-border" style="height: 300px">
+        <div class="card gray-border round-border">
+            <!--这里是靠.card的padding和border撑起来的，父元素也是靠.card的padding和border撑起来的，content为空，结果刚好是父元素的高一半，只是巧合-->
+            <div class="card gray-border round-border"></div>
+        </div>
+    </div>
+    <div class="card gray-border round-border">
+<!--        百分比宽度不需要父元素指定width-->
+        <div class="card gray-border round-border" style="width: 50%"></div>
+    </div>
+</div>
+</body>
+</html>

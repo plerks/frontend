@@ -1,0 +1,69 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* container没做响应式，把这个.container和.row的负margin删除，效果一样，container和row的负margin的设计
+参考 https://www.cnblogs.com/chengdabelief/p/6690940.html,
+container提供了基础的padding，这样就算container中直接放其它元素不先套row，col也不会导致元素贴着浏览器边缘(正统的bootstrap用container做了响应式，这里没弄)，
+container的padding和row的负margin使得container,row,col的整体的盒子边界都在浏览器左边缘，col的padding和container的padding重合，提供基础padding。
+当设置了container,row,col后，在col内再创建新的栅格系统时，直接在内部的col里创建row就行，不需要新的container,因为col也有padding,扮演了container的角色，抵消row的负margin。
+把row的位置确定之后，row里的col只是没有margin的，相对于row的百分比容器，密集地排满row(row没有padding)，很好理解。
+此外即使row有padding应该也不会导致col超出，因为col的百分比宽高是按row的content区来算的(见../../百分比的width,height是相对于父元素content来算的/)
+*/
+.container {
+    padding: 15px;
+}
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -15px;
+}
+.col-1 {
+    width: 8.333333333333333%;
+}
+.col-2 {
+    width: 16.666666666666666%;
+}
+.col-3 {
+    width: 25%;
+}
+.col-4 {
+    width: 33.33333333333333%;
+}
+.col-5 {
+    width: 41.66666666666667%;
+}
+.col-6 {
+    width: 50%;
+}
+.col-7 {
+    width: 58.33333333333334%;
+}
+.col-8 {
+    width: 66.66666666666666%;
+}
+.col-9 {
+    width: 75%;
+}
+.col-10 {
+    width: 83.33333333333334%;
+}
+.col-11 {
+    width: 91.66666666666666%;
+}
+.col-12 {
+    width: 100%;
+}
+.col-1,.col-2,.col-3,.col-4,.col-5,.col-6,.col-7,.col-8,.col-9,.col-10,.col-11,.col-12 {
+    padding: 15px;
+}
+.button {
+    color: white;
+    border-radius: 5px;
+    border: 1px solid rgb(23, 125, 255);
+    background-color: rgb(23, 125, 255);
+}
+.offset-4 {
+    margin-left: 33.333333333333336%;
+}
