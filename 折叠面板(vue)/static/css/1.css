@@ -26,7 +26,7 @@
 .has-arrow {
   position: relative;
 }
-.has-arrow:not(.expanded)::after {
+/*.has-arrow:not(.expanded)::after {
   content: "";
   position: absolute;
   width: 0.5em;
@@ -36,8 +36,8 @@
   color: #5f5f5f;
   border-top: 2px solid #dedede;
   border-right: 2px solid #dedede;
-  /*rotate和translateY的顺序会有影响*/
-  /*transform: rotate(45deg) translateY(calc(-50% - 2px));*/
+  !*rotate和translateY的顺序会有影响*!
+  !*transform: rotate(45deg) translateY(calc(-50% - 2px));*!
   transform: translateY(-50%) rotate(45deg) ;
   transition: all 0.3s linear;
 }
@@ -51,11 +51,11 @@
   color: #5f5f5f;
   border-top: 2px solid #dedede;
   border-right: 2px solid #dedede;
-  /*rotate和translateY的顺序会有影响*/
-  /*transform: rotate(45deg) translateY(calc(-50% - 2px));*/
+  !*rotate和translateY的顺序会有影响*!
+  !*transform: rotate(45deg) translateY(calc(-50% - 2px));*!
   transform: translateY(-50%) rotate(135deg) ;
   transition: all 0.3s linear;
-}
+}*/
 .has-arrow::after {
   content: "";
   position: absolute;
@@ -66,9 +66,12 @@
   color: #5f5f5f;
   border-top: 2px solid #dedede;
   border-right: 2px solid #dedede;
+  border-left: 2px solid transparent;
+  border-bottom: 2px solid transparent;
   /*rotate和translateY的顺序会有影响*/
   /*transform: rotate(45deg) translateY(calc(-50% - 2px));*/
-  transform: translateY(-50%) rotate(45deg) ;
+  /*transform: rotate(45deg) translateY(-50%);*/   /*原因参考 https://blog.csdn.net/crazy_jialin/article/details/77969990，旋转之后这个伪元素的本地坐标系也跟着旋转了，tranlateY沿着的本地Y坐标系是斜着的，所以应该先位移，最后旋转*/
+  transform: translateY(-50%) rotate(45deg);
   transition: all 0.3s linear;
 }
 .has-arrow[aria-expanded=true]::after {
