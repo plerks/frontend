@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)https://www.cnblogs.com/chengdabelief/p/6690940.html -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="origin-when-crossorigin">
+    <meta name="description" content="这个标题取的有点奇怪，怪我翻译的有问题吧。英文学平有限，有道词典和google翻译齐上阵是必须的。还好翻译的不是小说，对于技术文章，还是能勉强翻过来的。 本文主要讲解了Bootstrap3.0的栅格布">
+    <meta property="og:description" content="这个标题取的有点奇怪，怪我翻译的有问题吧。英文学平有限，有道词典和google翻译齐上阵是必须的。还好翻译的不是小说，对于技术文章，还是能勉强翻过来的。 本文主要讲解了Bootstrap3.0的栅格布">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Bootstrap3.0的栅格布局系统实现原理 - 小猫慢慢爬 - 博客园</title>
+    <link id="favicon" rel="shortcut icon" href="https://common.cnblogs.com/favicon.svg" type="image/svg+xml">
+    
+    <style>:not(.cnblogs_code):not(.cnblogs_Highlighter)>pre:not([class*="language-"]):not([highlighted]):not(.hljs):not([class*="brush:"]) {
+        background: rgb(245, 245, 245);
+        padding: 5px;
+        border: 1.11111px solid rgb(204, 204, 204);
+        border-radius: 3px;
+        border-color: transparent;
+        color: rgb(68, 68, 68);
+        font-family: "Courier New", sans-serif;
+    }:not(.cnblogs_code):not(.cnblogs_Highlighter)>pre:not([highlighted]):not([class*="brush:"]) code:not(.hljs) {
+            background: rgb(245, 245, 245) !important;
+            border-color: transparent !important;
+        }</style><link rel="stylesheet" href="./Bootstrap3.0的栅格布局系统实现原理 - 小猫慢慢爬 - 博客园_files/blog-common.min.css">
+    <link id="MainCss" rel="stylesheet" href="./Bootstrap3.0的栅格布局系统实现原理 - 小猫慢慢爬 - 博客园_files/bundle-simpleblue.min.css">
+    <link id="highlighter-theme-cnblogs" type="text/css" rel="stylesheet" href="./Bootstrap3.0的栅格布局系统实现原理 - 小猫慢慢爬 - 博客园_files/cnblogs.css">
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="./Bootstrap3.0的栅格布局系统实现原理 - 小猫慢慢爬 - 博客园_files/bundle-simpleblue-mobile.min.css">
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/chengdabelief/rss">
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/chengdabelief/rsd.xml">
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/chengdabelief/wlwmanifest.xml">
+    <script type="text/javascript" async="" src="./Bootstrap3.0的栅格布局系统实现原理 - 小猫慢慢爬 - 博客园_files/analytics.js.下载"></script><script type="text/javascript" src="./Bootstrap3.0的栅格布局系统实现原理 - 小猫慢慢爬 - 博客园_files/encoder.js.下载"></script><script>
+        var currentBlogId = 301334;
+        var currentBlogApp = 'chengdabelief';
+        var cb_enable_mathjax = false;
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'SimpleBlue';
+        var visitorUserId = '';
+        var hasCustomScript = false;
+        try {
+            if (hasCustomScript && document.referrer && document.referrer.indexOf('baidu.com') >= 0) {
+                Object.defineProperty(document, 'referrer', { value: '' });
+                Object.defineProperty(Document.prototype, 'referrer', { get: function(){ return ''; } });
+            }
+        } catch(error) { }
+        window.codeHighlightEngine = 1;
+        window.enableCodeLineNumber = false;
+        window.codeHighlightTheme = 'cnblogs';
+    </script>
+        <script>
+            var currentPostDateAdded = '2017-04-10 21:07';
+        </script>
+    <script src="./Bootstrap3.0的栅格布局系统实现原理 - 小猫慢慢爬 - 博客园_files/jquery-2.2.0.min.js.下载"></script>
+    <script src="./Bootstrap3.0的栅格布局系统实现原理 - 小猫慢慢爬 - 博客园_files/blog-common.min.js.下载"></script><style type="text/css">.medium-zoom-overlay{position:fixed;top:0;right:0;bottom:0;left:0;opacity:0;transition:opacity .3s;will-change:opacity}.medium-zoom--opened .medium-zoom-overlay{cursor:pointer;cursor:zoom-out;opacity:1}.medium-zoom-image{cursor:pointer;cursor:zoom-in;transition:transform .3s cubic-bezier(.2,0,.2,1)!important}.medium-zoom-image--hidden{visibility:hidden}.medium-zoom-image--opened{position:relative;cursor:pointer;cursor:zoom-out;will-change:transform}</style><script id="hljs-script" async="" data-loaded="true" src="./Bootstrap3.0的栅格布局系统实现原理 - 小猫慢慢爬 - 博客园_files/highlight.min.js.下载"></script>
+    
+    
+    
+<meta http-equiv="origin-trial" content="AxujKG9INjsZ8/gUq8+dTruNvk7RjZQ1oFhhgQbcTJKDnZfbzSTE81wvC2Hzaf3TW4avA76LTZEMdiedF1vIbA4AAABueyJvcmlnaW4iOiJodHRwczovL2ltYXNkay5nb29nbGVhcGlzLmNvbTo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzVGhpcmRQYXJ0eSI6dHJ1ZX0="><meta http-equiv="origin-trial" content="Azuce85ORtSnWe1MZDTv68qpaW3iHyfL9YbLRy0cwcCZwVnePnOmkUJlG8HGikmOwhZU22dElCcfrfX2HhrBPAkAAAB7eyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="A16nvcdeoOAqrJcmjLRpl1I6f3McDD8EfofAYTt/P/H4/AWwB99nxiPp6kA0fXoiZav908Z8etuL16laFPUdfQsAAACBeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXRhZ3NlcnZpY2VzLmNvbTo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="AxBHdr0J44vFBQtZUqX9sjiqf5yWZ/OcHRcRMN3H9TH+t90V/j3ENW6C8+igBZFXMJ7G3Pr8Dd13632aLng42wgAAACBeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="A88BWHFjcawUfKU3lIejLoryXoyjooBXLgWmGh+hNcqMK44cugvsI5YZbNarYvi3roc1fYbHA1AVbhAtuHZflgEAAAB2eyJvcmlnaW4iOiJodHRwczovL2dvb2dsZS5jb206NDQzIiwiZmVhdHVyZSI6IlRydXN0VG9rZW5zIiwiZXhwaXJ5IjoxNjUyNzc0NDAwLCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><meta http-equiv="origin-trial" content="A8FHS1NmdCwGqD9DwOicnHHY+y27kdWfxKa0YHSGDfv0CSpDKRHTQdQmZVPDUdaFWUsxdgVxlwAd6o+dhJykPA0AAACWeyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiQ29udmVyc2lvbk1lYXN1cmVtZW50IiwiZXhwaXJ5IjoxNjQzMTU1MTk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlLCJ1c2FnZSI6InN1YnNldCJ9"><meta http-equiv="origin-trial" content="A8zdXi6dr1hwXEUjQrYiyYQGlU3557y5QWDnN0Lwgj9ePt66XMEvNkVWOEOWPd7TP9sBQ25X0Q15Lr1Nn4oGFQkAAACceyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiQ29udmVyc2lvbk1lYXN1cmVtZW50IiwiZXhwaXJ5IjoxNjQzMTU1MTk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlLCJ1c2FnZSI6InN1YnNldCJ9"><meta http-equiv="origin-trial" content="A4/Htern2udN9w3yJK9QgWQxQFruxOXsXL7cW60DyCl0EZFGCSme/J33Q/WzF7bBkVvhEWDlcBiUyZaim5CpFQwAAACceyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXRhZ3NlcnZpY2VzLmNvbTo0NDMiLCJmZWF0dXJlIjoiQ29udmVyc2lvbk1lYXN1cmVtZW50IiwiZXhwaXJ5IjoxNjQzMTU1MTk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlLCJ1c2FnZSI6InN1YnNldCJ9"><script src="./Bootstrap3.0的栅格布局系统实现原理 - 小猫慢慢爬 - 博客园_files/pubads_impl_2022032106.js.下载" async=""></script><link rel="preload" href="./Bootstrap3.0的栅格布局系统实现原理 - 小猫慢慢爬 - 博客园_files/f.txt" as="script"><script type="text/javascript" src="./Bootstrap3.0的栅格布局系统实现原理 - 小猫慢慢爬 - 博客园_files/f.txt"></script></head>
+<body class="skin-simpleblue has-navbar">
+    <a name="top"></a>
+    <div id="top_nav" class="navbar forpc">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding">
+                    <a href="https://www.cnblogs.com/" title="开发者的网上家园" role="banner">
+                            <img src="./Bootstrap3.0的栅格布局系统实现原理 - 小猫慢慢爬 - 博客园_files/logo.svg" alt="博客园Logo">
+                    </a>
+                </li>
+                <li><a href="https://www.cnblogs.com/" onclick="countClicks(&#39;skin-navbar-sitehome&#39;)">首页</a></li>
+                <li><a href="https://news.cnblogs.com/" onclick="countClicks(&#39;nav&#39;, &#39;skin-navbar-news&#39;)">新闻</a></li>
+                <li><a href="https://q.cnblogs.com/" onclick="countClicks(&#39;nav&#39;, &#39;skin-navbar-q&#39;)">博问</a></li>
+                <li><a id="nav_brandzone" href="https://brands.cnblogs.com/huawei" onclick="countClicks(&#39;nav&#39;, &#39;skin-navbar-brands&#39;)">专区</a></li>
+                <li><a href="https://ing.cnblogs.com/" onclick="countClicks(&#39;nav&#39;, &#39;skin-navbar-ing&#39;)">闪存</a></li>
+                <li><a href="https://edu.cnblogs.com/" onclick="countClicks(&#39;nav&#39;, &#39;skin-navbar-edu&#39;)">班级</a></li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search" action="https://zzk.cnblogs.com/s" method="get" role="search">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="search" tabindex="3">
+                        <button type="submit" id="zzk_search_button">
+                            <img src="./Bootstrap3.0的栅格布局系统实现原理 - 小猫慢慢爬 - 博客园_files/search.svg" alt="搜索">
+                        </button>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a class="navbar-user-info navbar-blog" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" alt="写随笔" title="写随笔" style="display: none;">
+                        <img id="new_post_icon" class="navbar-icon" src="./Bootstrap3.0的栅格布局系统实现原理 - 小猫慢慢爬 - 博客园_files/newpost.svg" alt="写随笔">
+                    </a>
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客" style="display: none;">
+                        <img id="myblog_icon" class="navbar-icon" src="./Bootstrap3.0的栅格布局系统实现原理 - 小猫慢慢爬 - 博客园_files/myblog.svg" alt="我的博客">
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息" style="display: none;">
+                        <img id="msg_icon" class="navbar-icon" src="./Bootstrap3.0的栅格布局系统实现原理 - 小猫慢慢爬 - 博客园_files/message.svg" alt="短消息">
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <a id="navbar_lite_mode_indicator" data-current-page="blog" style="display: none" href="javascript:void(0)" alt="简洁模式" title="简洁模式启用，您在访问他人博客时会使用简洁款皮肤展示">
+                        <img class="navbar-icon" src="./Bootstrap3.0的栅格布局系统实现原理 - 小猫慢慢爬 - 博客园_files/lite-mode-on.svg" alt="简洁模式">
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown" style="display: none;">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="./Bootstrap3.0的栅格布局系统实现原理 - 小猫慢慢爬 - 博客园_files/avatar-default.svg" alt="用户头像">
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" id="navbar_lite_mode_toggle" title="简洁模式会使用简洁款皮肤显示所有博客">
+    简洁模式 <img id="navbar_lite_mode_on" src="./Bootstrap3.0的栅格布局系统实现原理 - 小猫慢慢爬 - 博客园_files/lite-mode-check.svg" class="hide"><span id="navbar_lite_mode_spinner" class="hide">...</span>
+</a>
+                            <a href="javascript:void(0)" onclick="account.logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup" style="display: inline;">注册</a>
+                    <a class="navbar-anonymous" href="javascript:void(0);" onclick="account.login()" style="display: inline;">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    
+    <div id="home">
+    <div id="header">
+        <div id="blogTitle">
+            <div class="title"><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/chengdabelief/">芬芬是个乖宝宝</a>
+</div>
+<div class="subtitle"></div>
+
+        </div>
+        <div id="navigator">
+            
+<ul id="navList">
+    <li id="nav_sitehome"><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+    <li id="nav_myhome">
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/chengdabelief/">
+首页</a>
+</li>
+    <li id="nav_newpost">
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+    <li id="nav_contact">
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/%E5%B0%8F%E7%8C%AB%E6%85%A2%E6%85%A2%E7%88%AC">
+联系</a></li>
+    <li id="nav_rss">
+<a id="blog_nav_rss" class="menu" href="javascript:void(0)" data-rss="https://www.cnblogs.com/chengdabelief/rss/">
+订阅</a></li>
+    <li id="nav_admin">
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+            <div class="blogStats">
+                
+<span id="stats_post_count">随笔 - 192&nbsp;</span>
+<span id="stats_article_count">文章 - 0&nbsp;</span>
+<span id="stats_comment_count">评论 - 5&nbsp;</span>
+<span id="stats_total_view_count">阅读 - 
+<span title="总阅读数: 249930">
+24万</span></span>
+            </div>
+        </div>
+    </div>
+    <div id="main">
+        <div id="mainContent">
+            <div class="forFlow">
+                <div id="post_detail">
+    <div id="topics">
+        <div class="post">
+            <h1 class="postTitle">
+                
+<a id="cb_post_title_url" class="postTitle2 vertical-middle" href="https://www.cnblogs.com/chengdabelief/p/6690940.html">
+    <span role="heading" aria-level="2">Bootstrap3.0的栅格布局系统实现原理</span>
+    
+
+
+
+</a><button class="cnblogs-toc-button" title="显示目录导航" aria-expanded="false"></button>
+
+            </h1>
+            <div class="clear"></div>
+            <div class="postBody">
+                <div id="cnblogs_post_body" class="blogpost-body blogpost-body-html">
+<p class="p0">这个标题取的有点奇怪，怪我翻译的有问题吧。英文学平有限，有道词典和google翻译齐上阵是必须的。还好翻译的不是小说，对于技术文章，还是能勉强翻过来的。</p>
+<p class="p0">本文主要讲解了Bootstrap3.0的栅格布局系统实现原理，以及使用过程中应该注意的问题。</p>
+<p class="p0">开始...翻译..</p>
+<p class="p0">像CSS栅格系统原理这类东西本应该藏在帘子后面，你直接用就可以了，没必要去了解其背后的工作原理，除非你有了比较烂的设计或者一些比较复杂的东西，</p>
+<p class="p0">当你无法找出spacing,&nbsp;margin,&nbsp;padding等这些补白全都乱的原因，那就真的很苦逼了，尤其是在某些动态改变和变化的UI上。</p>
+<p class="p0">&nbsp;</p>
+<p class="p0">在关于bootstrap的栅格系统工作原理上我见过很多人都对它比较困扰、懊恼，每次都需要我解释很多遍后别人才能理解，</p>
+<p class="p0">所以我乐意用快速和可视化的方式来解释为什么bootstrap栅格系统能玩得动，没必要解释很多。让我们一起找出Bootstrap是如何利用巧妙的技巧实现栅格系统的</p>
+<p class="p0">HTML正确的基本结构：</p>
+<p class="p0">&nbsp;</p>
+<div class="cnblogs_code">
+<pre>&lt;div class="container"&gt;
+    &lt;div class="row"&gt;
+      &lt;div class="col-xs-12"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</pre>
+</div>
+<p class="p0">&nbsp;</p>
+<h2 class="p0">Container<button class="cnblogs-toc-button" title="显示目录导航" aria-expanded="false"></button></h2>
+<hr>
+<p>&nbsp;</p>
+<p class="p0">Container这个容器class为.container类有2个目的</p>
+<p class="p0">1、在响应式宽度上提供宽度约束。响应式尺寸的改变其实改变的是container，行(rows)和列(columns)都是基于百分比的所以它们不需要做任何改变；</p>
+<p class="p0">2、提供padding以至于不内容不直为紧贴于浏览器边缘，两边都是15px，下图中粉色的就是了，稍后解释更多；</p>
+<p class="p0">在一个container中永远不需要再嵌一个container，记住永远不要。</p>
+<p class="p0">你将会看到为什么</p>
+<p class="p0"><img src="./Bootstrap3.0的栅格布局系统实现原理 - 小猫慢慢爬 - 博客园_files/201453517867301.png" alt="" width="684" height="351" class="medium-zoom-image"></p>
+<h2 class="p0">Row<button class="cnblogs-toc-button" title="显示目录导航" aria-expanded="false"></button></h2>
+<hr>
+<p>&nbsp;</p>
+<p class="p0">行(Row)Class为.row的容器</p>
+<p class="p0">row为col提供了空间，理想上一行上分了12&nbsp;col，当所有col都向左浮时row也就扮演了容器角色，另外当浮动有问题时row也不会重叠</p>
+<p class="p0">&nbsp;</p>
+<p class="p0">&nbsp;</p>
+<p class="p0">Rows&nbsp;的两侧都拥有独特的负15px&nbsp;margin值,如下图中蓝色部分.&nbsp;被当作为row的div被约束在container内边界与粉色区域重叠，但没超过。这负的15px&nbsp;margin值把row的推出了container的15px&nbsp;padding，并与之重叠，本质上讲就是负出去。为什么这么做呢？原因得看列(col)的工作原理，下面我们会看到</p>
+<p class="p0">&nbsp;</p>
+<p class="p0">永远不要在container外用row,&nbsp;row在container外面使用是无效的</p>
+<p class="p0">&nbsp;</p>
+<p class="p0"><img src="./Bootstrap3.0的栅格布局系统实现原理 - 小猫慢慢爬 - 博客园_files/201458449684506.png" alt="" class="medium-zoom-image"></p>
+<h2 class="p0">Column<button class="cnblogs-toc-button" title="显示目录导航" aria-expanded="false"></button></h2>
+<hr>
+<p>&nbsp;</p>
+<p class="p0">列(col)现在有15px的padding了，如下图中黄颜色部分。Container的正padding值造成了15px的留空，row用负margin值反的延伸回去，</p>
+<p class="p0">所以现在col的padding值与container的padding重叠了</p>
+<p class="p0">&nbsp;</p>
+<p class="p0">永远不要在row外使用col,在row外使用col是无效的</p>
+<p class="p0"><img src="./Bootstrap3.0的栅格布局系统实现原理 - 小猫慢慢爬 - 博客园_files/201504142693708.png" alt="" class="medium-zoom-image"></p>
+<h2 class="p0">Content&nbsp;Within&nbsp;a&nbsp;Column<button class="cnblogs-toc-button" title="显示目录导航" aria-expanded="false"></button></h2>
+<hr>
+<p>&nbsp;</p>
+<p class="p0">列(col)的padding给内容提供了空白，使内容不会紧贴在浏览器边界上，列之间有了padding才不会互相紧贴在一起。</p>
+<p class="p0">container/row/column整这么些事儿最终要达到的结果就体现在这里了，就是为了col的补白啊...</p>
+<p class="p0"><img src="./Bootstrap3.0的栅格布局系统实现原理 - 小猫慢慢爬 - 博客园_files/201506052691819.png" alt="" class="medium-zoom-image"></p>
+<h2 class="p0">Nesting嵌套<button class="cnblogs-toc-button" title="显示目录导航" aria-expanded="false"></button></h2>
+<hr>
+<p>&nbsp;</p>
+<p class="p0">当你设置了container,row,column后，你可以在column内再创建新的栅格系统。你在右侧的列(col)内添加新的行(row)时不需再嵌container了</p>
+<p class="p0"><img src="./Bootstrap3.0的栅格布局系统实现原理 - 小猫慢慢爬 - 博客园_files/201511360751050.png" alt="" class="medium-zoom-image"></p>
+<p class="p0">为什么嵌套时不需要新的container了？</p>
+<p class="p0">这个技巧在于列(col)扮演了container一样的角色，列也有15px的padding值，它一样允许行(row)的负margin值,它内部的列、内容间的补白等都一样能很好的工作了</p>
+<p class="p0"><img src="./Bootstrap3.0的栅格布局系统实现原理 - 小猫慢慢爬 - 博客园_files/201516347067714.png" alt="" class="medium-zoom-image"></p>
+<h2 class="p0">Offsets&nbsp;偏移<button class="cnblogs-toc-button" title="显示目录导航" aria-expanded="false"></button></h2>
+<hr>
+<p>&nbsp;</p>
+<p class="p0">偏移的实现相当简单，仅仅是在列(col)的左侧加上了margin值，</p>
+<p class="p0">唯一比较怪的地方可能是在最左侧的col是从-15px的row的margin值开始偏移的，中间的列的偏移则是直接从前一个列开始偏移，分割分离出补白。</p>
+<p class="p0">除此之外，偏移就表现的像列(col)一样</p>
+<p class="p0"><img src="./Bootstrap3.0的栅格布局系统实现原理 - 小猫慢慢爬 - 博客园_files/201520599186640.png" alt="" class="medium-zoom-image"></p>
+<h2 class="p0">Push&nbsp;and&nbsp;Pull&nbsp;列的排序<button class="cnblogs-toc-button" title="显示目录导航" aria-expanded="false"></button></h2>
+<hr>
+<p>&nbsp;</p>
+<p class="p0">(直译过来应该是“推和拉”但实际使用过程中更多的表现为互换位置进行排序)</p>
+<p class="p0">让我们先从为什么需要对列进行排序说起：基于响应式布局，对布局进行翻转，尤其是对移动设备上对列进行重新排列，</p>
+<p class="p0">对于pc桌面来说push&nbsp;and&nbsp;pull允许你打破HTML中div从上到下从左到右的固定布局</p>
+<p class="p0">&nbsp;</p>
+<p class="p0">可能让人比较困惑的是push&nbsp;pull的实现是通过添加position而不是通过添加margin值实现。</p>
+<p class="p0">Push添加的是left值，pull添加的是right值。当然在添加left或者right值之前它们的容器已经是相对定位了。</p>
+<p class="p0"><img src="./Bootstrap3.0的栅格布局系统实现原理 - 小猫慢慢爬 - 博客园_files/201526018817622.png" alt="" class="medium-zoom-image"></p>
+<p class="p0">上图那么做就有问题，它会导致列重叠，而不像正常的列或者列偏移。</p>
+<p class="p0">所以如果你push了一个列到右侧，它就会叠在右侧的列上，反之亦然。</p>
+<p class="p0">所以一般我们总是“互换”，如果你push一个列到右侧，那么你得pull右侧的列到左侧，或则也对右侧的列进行处理。</p>
+<p class="p0"><img src="./Bootstrap3.0的栅格布局系统实现原理 - 小猫慢慢爬 - 博客园_files/201531055095620.png" alt="" class="medium-zoom-image"></p>
+<h2 class="p0">The&nbsp;Reasoning&nbsp;Behind&nbsp;It&nbsp;总结一下背后的原理<button class="cnblogs-toc-button" title="显示目录导航" aria-expanded="false"></button></h2>
+<hr>
+<p>&nbsp;</p>
+<p class="p0"><strong>Container:</strong></p>
+<p class="p0">正是由于container这样设计才让content的两侧拥有15px的padding值的补白，</p>
+<p class="p0">另外，整个body拥有15px的padding值，这使整体上不会紧贴浏览器的边缘，当然如果对于满屏设计并带有背景色的div就不好了..</p>
+<p class="p0">&nbsp;</p>
+<p class="p0"><strong>Rows:</strong></p>
+<p class="p0">行(row)拥有负的margin值，并且值等于container的padding值，以至于边界与container得以重叠（相等）</p>
+<p class="p0">，负的margin值叠在了padding上，这让row看起来没被container的padding所影响.为啥？自行脑补..</p>
+<p class="p0"><strong>Columns：</strong></p>
+<p class="p0">列(col)又拥有15px&nbsp;的padding，所以能真正让content拥有15px的补白,而又让列之间拥有了15px+15px的中间补白，</p>
+<p class="p0">正是因为如此，这个栅格系统不需要像960排版（blueprint,&nbsp;等）系统似的对第一列或最生一列进行特殊的处理。</p>
+<p class="p0">现在不管怎样在列之间都拥有15px的空白了。</p>
+<p class="p0"><strong>Nested&nbsp;Rows：</strong></p>
+<p class="p0">嵌套行的原理就像上面一样，只是它的重叠住了列的padding，其实就把外面的列当作container了，</p>
+<p class="p0">本质上列扮演了container的角色，所以嵌套行时你不再需要container</p>
+<p class="p0">&nbsp;</p>
+<p class="p0"><strong>Nested&nbsp;Columns:</strong>&nbsp;</p>
+<p class="p0">&nbsp;</p>
+<p class="p0">嵌套列没什么好讲的了，和上面一样</p>
+<p class="p0"><strong>Offsets:&nbsp;</strong></p>
+<p class="p0">偏移的本质就是分割空白间隔，通过增加空白间隔达到你想要的距离，非常的简单</p>
+<p class="p0"><strong>Push/Pull:</strong></p>
+<p class="p0">Push和pull用于主要用于变换左右列的位置，当你有一个特别的设计并且offset偏移用着不给力的时候，你可以用它们来改变位置</p>
+<p class="p0">&nbsp;</p>
+<h2 class="p0">Common&nbsp;Problems<button class="cnblogs-toc-button" title="显示目录导航" aria-expanded="false"></button></h2>
+<hr>
+<p>&nbsp;</p>
+<p class="p0">这里有些普遍会发生的bug值得注意，一些bug在HTML中很容易就能看出来.</p>
+<p class="p0">&nbsp;</p>
+<p class="p0"><strong>缺少Container</strong><strong>：</strong>第一个容易产生bug的地方是忘记添加container。没有container意味着没有padding与行(row)的负margin直相抵消，</p>
+<p class="p0">意味着行会超出父元素。当元素处于浏览器边缘时，这是最普遍的造成奇怪的横向滚动的原因</p>
+<p class="p0"><img src="./Bootstrap3.0的栅格布局系统实现原理 - 小猫慢慢爬 - 博客园_files/201742421709991.png" alt="" class="medium-zoom-image"></p>
+<p class="p0">&nbsp;</p>
+<p class="p0"><strong>缺少row:</strong></p>
+<p class="p0">第二个普遍问题是少了row,这与缺少container产生的问题相反，content与浏览器/viewport的边缘拥有了30px的距离，</p>
+<p class="p0">比正常值多了一倍。而且你的列浮动也会产生问题。由于缺少了外面row的包裹，浮动没有得到正常的清除，所以浮动就可能产生问题。</p>
+<p class="p0">同样，当你试图嵌套栅格系统时，同样新嵌进去的content离左侧的边距达到了45px</p>
+<p class="p0"><img src="./Bootstrap3.0的栅格布局系统实现原理 - 小猫慢慢爬 - 博客园_files/201743376053763.png" alt="" width="606" height="311" class="medium-zoom-image"></p>
+<p class="p0">&nbsp;</p>
+<p class="p0">Container内的元素再嵌container:在container内任意元素内再嵌container会导致很多问题，如双倍的padding值，空白间隔，怪异的横向滚动</p>
+<p class="p0"><img src="./Bootstrap3.0的栅格布局系统实现原理 - 小猫慢慢爬 - 博客园_files/201744246392098.png" alt="" width="616" height="316" class="medium-zoom-image"></p>
+<p class="p0">&nbsp;</p>
+<p class="p0"><strong>偏移/push/pull:</strong></p>
+<p class="p0">当使用偏移或者排序(push/pull),偏移很简单不会出什么问题，push/pull却不同，如果你push太多，列会超出它的container，记住只是使用正常的值主不会有问题</p>
+<p class="p0"><img src="./Bootstrap3.0的栅格布局系统实现原理 - 小猫慢慢爬 - 博客园_files/201745193565781.png" alt="" width="589" height="302" class="medium-zoom-image"></p>
+<p class="p0">&nbsp;</p>
+<p class="p0">这些就是在使用bootstrap3.0的基础栅格系统时时产生的问题，如果你在设计里有很多的嵌套碰到问题，</p>
+<p class="p0">或你的响应式布局没按照你所希望的方式工作，先看看上面这几点，是不是这些问题产生的。</p>
+<p class="p0">如果你修复了上面说的问题，基本上除了你自定义的布局外bootstrap3.0的布局问题基本上都能搞定了</p>
+<p class="p0">&nbsp;</p>
+<p class="p0">&nbsp;</p>
+<h2 class="p0">That’s&nbsp;It<button class="cnblogs-toc-button" title="显示目录导航" aria-expanded="false"></button></h2>
+<p>&nbsp;</p>
+<hr>
+<p>&nbsp;</p>
+<p class="p0">这就是bootstrap3.0的工作原理。它真的很聪明并提供了极好的解决方案。在这么多年使用栅格系统的经验中，</p>
+<p class="p0">我个人觉得它是实现的最优雅的。虽然看到到这片文章写了这么多会可能觉得bootstrap3.0的栅格系统很复杂，</p>
+<p class="p0">但如果不从整体详细的了解其内部的实现原理的话，在实际使用中，它确实是使用了简单的CSS，提供了我们一个好用的栅格系统。</p>
+<p class="p0">&nbsp;</p>
+<p class="p0">&nbsp;</p>
+<p>========================================================</p>
+<p>英文原文：<a href="http://www.helloerik.com/the-subtle-magic-behind-why-the-bootstrap-3-grid-works" rel="noopener"><span class="15">http://www.helloerik.com/the-subtle-magic-behind-why-the-bootstrap-3-grid-works</span></a></p>
+<p>========================================================</p>
+<p class="p0">&nbsp;</p>
+<p>转载处请注明：博客园(王二狗)willian12345@126.com</p>
+</div>
+<div class="clear"></div>
+<div id="blog_post_info_block" role="contentinfo">
+<div id="EntryTag">
+    标签: 
+            <a href="https://www.cnblogs.com/chengdabelief/tag/Bootstrap/">Bootstrap</a></div>
+
+    <div id="blog_post_info">
+<div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(6690940,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+        <a id="green_channel_follow" onclick="follow(&#39;3bb21cd5-d169-e611-9fc1-ac853d9f53cc&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./Bootstrap3.0的栅格布局系统实现原理 - 小猫慢慢爬 - 博客园_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./Bootstrap3.0的栅格布局系统实现原理 - 小猫慢慢爬 - 博客园_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/chengdabelief/" target="_blank"><img src="./Bootstrap3.0的栅格布局系统实现原理 - 小猫慢慢爬 - 博客园_files/sample_face.gif" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/chengdabelief/">小猫慢慢爬</a><br>
+            <a href="https://home.cnblogs.com/u/chengdabelief/followees/">关注 - 13</a><br>
+            <a href="https://home.cnblogs.com/u/chengdabelief/followers/">粉丝 - 22</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow(&#39;3bb21cd5-d169-e611-9fc1-ac853d9f53cc&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(6690940,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">1</span>
+    </div>
+    <div class="buryit" onclick="votePost(6690940,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+
+<script type="text/javascript">
+    currentDiggType = 0;
+</script></div>
+    <div class="clear"></div>
+    <div id="post_next_prev">
+
+    <a href="https://www.cnblogs.com/chengdabelief/p/6689738.html" class="p_n_p_prefix">« </a> 上一篇：    <a href="https://www.cnblogs.com/chengdabelief/p/6689738.html" title="发布于 2017-04-10 19:11">Ajax</a>
+    <br>
+    <a href="https://www.cnblogs.com/chengdabelief/p/6691068.html" class="p_n_p_prefix">» </a> 下一篇：    <a href="https://www.cnblogs.com/chengdabelief/p/6691068.html" title="发布于 2017-04-10 21:34">Bootstrap栅格系统&amp;媒体查询</a>
+
+</div>
+</div>
+            </div>
+            <div class="postDesc">posted @ 
+<span id="post-date">2017-04-10 21:07</span>&nbsp;
+<a href="https://www.cnblogs.com/chengdabelief/">小猫慢慢爬</a>&nbsp;
+阅读(<span id="post_view_count">1555</span>)&nbsp;
+评论(<span id="post_comment_count">1</span>)&nbsp;
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=6690940" rel="nofollow">编辑</a>&nbsp;
+<a href="javascript:void(0)" onclick="AddToWz(6690940);return false;">收藏</a>&nbsp;
+<a href="javascript:void(0)" onclick="reportManager.report({ currentUserId: &#39;&#39;, targetType: &#39;blogPost&#39;, targetId: &#39;6690940&#39;, targetLink: &#39;https://www.cnblogs.com/chengdabelief/p/6690940.html&#39;, title: &#39;Bootstrap3.0的栅格布局系统实现原理&#39; })">举报</a></div>
+        </div>
+        
+<script>
+    var cb_entryId = 6690940, cb_entryCreatedDate = '2017-04-10 21:07', cb_postType = 1;
+    var allowComments = true, cb_blogId = 301334, cb_blogApp = 'chengdabelief', cb_blogUserGuid = '3bb21cd5-d169-e611-9fc1-ac853d9f53cc';
+    mermaidRender.render()
+    markdown_highlight()
+    zoomManager.apply("#cnblogs_post_body img:not(.code_img_closed):not(.code_img_opened)");
+    updatePostStats(
+            [cb_entryId],
+            function(id, count) { $("#post_view_count").text(count) },
+            function(id, count) { $("#post_comment_count").text(count) })
+</script>
+        <a id="!comments"></a>
+<div id="blog-comments-placeholder"></div>
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="https://www.cnblogs.com/chengdabelief/p/6690940.html#" onclick="return RefreshPage();">刷新页面</a><a href="https://www.cnblogs.com/chengdabelief/p/6690940.html#top">返回顶部</a></div>
+    <div id="comment_form_container" style="visibility: visible;"><div class="login_tips">
+    登录后才能查看或发表评论，立即 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return account.login(&#39;!comments&#39;);">登录</a> 或者
+    <a href="https://www.cnblogs.com/">逛逛</a> 博客园首页
+</div>
+</div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+    <div id="cnblogs_ch"><a href="https://cloud.baidu.com/campaign/2022/index.html?track=f685c156ee58624f28cc3a33e1947160036fe70e52355ff7#person" target="_blank" onclick="gtag(&#39;event&#39;, &#39;click&#39;, {&#39;event_category&#39;: &#39;ad&#39;, &#39;event_label&#39;: &#39;T2-百度智能云-开年采购季&#39;})">【推荐】百度智能云2022开年大促0.4折起，企业新用户享高配优惠</a><br><a href="https://developer.huawei.com/consumer/cn/forum/topic/0201833401197920098?fid=18&amp;ha_source=bokeyuan" target="_blank" onclick="gtag(&#39;event&#39;, &#39;click&#39;, {&#39;event_category&#39;: &#39;ad&#39;, &#39;event_label&#39;: &#39;T2-华为专区-移动应用白皮书&#39;})">【推荐】开发者必读：华为 2022 年移动应用趋势洞察白皮书</a><br></div>
+    <div id="opt_under_post"></div>
+    <div id="cnblogs_c1" class="under-post-card">
+            <div id="div-gpt-ad-1592365906576-0" style="width: 300px; height: 250px;" data-google-query-id="CKbZzYL17_YCFYWQvAodz84JAA"><div id="google_ads_iframe_/1090369/C1_0__container__" style="border: 0pt none;"><iframe id="google_ads_iframe_/1090369/C1_0" name="google_ads_iframe_/1090369/C1_0" title="3rd party ad content" width="300" height="250" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" role="region" aria-label="Advertisement" tabindex="0" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" data-google-container-id="1" style="border: 0px; vertical-align: bottom;" data-load-complete="true" src="./Bootstrap3.0的栅格布局系统实现原理 - 小猫慢慢爬 - 博客园_files/saved_resource.html"></iframe></div></div>
+    </div>
+    <div id="under_post_card1"><div class="under-post-card">
+<b>编辑推荐：</b>
+<br>
+
+· <a href="https://www.cnblogs.com/skychen1218/p/16068503.html" target="_blank">记我第一次做线下技术分享的那些事</a>
+    <br>
+· <a href="https://www.cnblogs.com/thisiswhy/p/16066548.html" target="_blank">换个数据结构，一不小心节约了 591 台机器！</a>
+    <br>
+· <a href="https://www.cnblogs.com/tcjiaan/p/16058491.html" target="_blank">[ASP.NET Core] MVC 模型绑定：非规范正文内容的处理</a>
+    <br>
+· <a href="https://www.cnblogs.com/yexiaochai/p/16041013.html" target="_blank">全面认识数据指标体系</a>
+    <br>
+· <a href="https://www.cnblogs.com/weixiao-he/p/16051730.html" target="_blank">项目开发中对成长的一些思考</a>
+    <br>
+</div></div>
+        <div id="cnblogs_c2" class="under-post-card">
+            <a href="https://developer.huawei.com/consumer/cn/forum/topic/0201833401197920098?fid=18&amp;ha_source=bokeyuan" rel="nofollow" target="_blank" onclick="countCreativeClicks(&#39;C2-华为专区-补量-移动应用白皮书&#39;)">
+                <img src="./Bootstrap3.0的栅格布局系统实现原理 - 小猫慢慢爬 - 博客园_files/35695-20220329191439390-706965398.jpg" alt="" onload="countCreativeImpressions(&#39;C2-华为专区-补量-移动应用白皮书&#39;)">
+            </a>
+        </div>
+    <div id="under_post_card2"><div class="itnews under-post-card">
+    <b>最新新闻</b>：
+    <br>
+ ·          <a href="https://news.cnblogs.com/n/717894/" target="_blank">谷歌解决 NVMe 驱动器太多导致 Linux 服务器重启太慢问题</a>
+        <br>
+ ·          <a href="https://news.cnblogs.com/n/717893/" target="_blank">OpenHarmony 3.1 正式发布</a>
+        <br>
+ ·          <a href="https://news.cnblogs.com/n/717892/" target="_blank">姜宁，带程序员前往开源“乌托邦”</a>
+        <br>
+ ·          <a href="https://news.cnblogs.com/n/717891/" target="_blank">Visual Studio Code 1.66 发布，新增 JavaScript 调试</a>
+        <br>
+ ·          <a href="https://news.cnblogs.com/n/717890/" target="_blank">屏下Touch ID iPhone？未来两年内可能都「没戏」</a>
+        <br>
+    » <a href="https://news.cnblogs.com/" title="IT 新闻" target="_blank">更多新闻...</a>
+</div></div>
+    <div id="HistoryToday" class="under-post-card"></div>
+    <script type="text/javascript">
+        var commentManager = new blogCommentManager();
+        commentManager.renderComments(0);
+        fixPostBody();
+
+                window.tocManager.displayDisableTocTips = false;
+                window.tocManager.generateToc();
+            setTimeout(function() { incrementViewCount(cb_entryId); }, 50);        deliverT2();
+        deliverC1C2();
+        loadNewsAndKb();
+LoadPostCategoriesTags(cb_blogId, cb_entryId);        LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+        GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+        loadOptUnderPost();
+        GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    </script>
+</div>
+
+    </div>
+</div>
+            </div>
+        </div>
+
+        <div id="sideBar">
+            <div id="sideBarMain">
+                <div id="sidebar_news" class="newsItem">
+<h3 class="catListTitle">公告</h3>
+
+<div id="blog-news">
+    
+    <div id="profile_block">
+        昵称：
+        <a href="https://home.cnblogs.com/u/chengdabelief/">
+            小猫慢慢爬
+        </a>
+        <br>
+        园龄：
+        <a href="https://home.cnblogs.com/u/chengdabelief/" title="入园时间：2016-08-24">
+            5年7个月
+        </a>
+        <br>
+        粉丝：
+        <a href="https://home.cnblogs.com/u/chengdabelief/followers/">
+            22
+        </a>
+        <br>
+        关注：
+        <a href="https://home.cnblogs.com/u/chengdabelief/followees/">
+            13
+        </a>
+        <div id="p_b_follow">
+<a href="javascript:void(0)" onclick="follow(&#39;3bb21cd5-d169-e611-9fc1-ac853d9f53cc&#39;)">+加关注</a></div>
+        <script>getFollowStatus('3bb21cd5-d169-e611-9fc1-ac853d9f53cc');</script>
+    </div>
+</div></div>
+<div id="sidebar_c3"></div>
+                <div id="calendar"><div id="blog-calendar" style="">
+
+<table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="Calendar" border="0">
+    <tbody>
+        <tr>
+            <td colspan="7">
+                <table class="CalTitle" cellspacing="0" border="0">
+                    <tbody>
+                        <tr>
+                            <td class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2022/02/28&#39;); return false;">&lt;</a>
+                            </td>
+                            <td align="center">2022年3月</td>
+                            <td align="right" class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2022/04/30&#39;); return false;">&gt;</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    <tr>
+        <th class="CalDayHeader" align="center" abbr="日" scope="col">日</th>
+        <th class="CalDayHeader" align="center" abbr="一" scope="col">一</th>
+        <th class="CalDayHeader" align="center" abbr="二" scope="col">二</th>
+        <th class="CalDayHeader" align="center" abbr="三" scope="col">三</th>
+        <th class="CalDayHeader" align="center" abbr="四" scope="col">四</th>
+        <th class="CalDayHeader" align="center" abbr="五" scope="col">五</th>
+        <th class="CalDayHeader" align="center" abbr="六" scope="col">六</th>
+    </tr>
+            <tr>
+                            <td class="CalOtherMonthDay" align="center">27</td>
+                            <td class="CalOtherMonthDay" align="center">28</td>
+                        <td class="" align="center">
+                            1
+                        </td>
+                        <td class="" align="center">
+                            2
+                        </td>
+                        <td class="" align="center">
+                            3
+                        </td>
+                        <td class="" align="center">
+                            4
+                        </td>
+                    <td class="CalWeekendDay" align="center">
+                        5
+                    </td>
+            </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            6
+                        </td>
+                            <td class="" align="center">
+                                7
+                            </td>
+                            <td class="" align="center">
+                                8
+                            </td>
+                            <td class="" align="center">
+                                9
+                            </td>
+                            <td class="" align="center">
+                                10
+                            </td>
+                            <td class="" align="center">
+                                11
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            12
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            13
+                        </td>
+                            <td class="" align="center">
+                                14
+                            </td>
+                            <td class="" align="center">
+                                15
+                            </td>
+                            <td class="" align="center">
+                                16
+                            </td>
+                            <td class="" align="center">
+                                17
+                            </td>
+                            <td class="" align="center">
+                                18
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            19
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            20
+                        </td>
+                            <td class="" align="center">
+                                21
+                            </td>
+                            <td class="" align="center">
+                                22
+                            </td>
+                            <td class="" align="center">
+                                23
+                            </td>
+                            <td class="" align="center">
+                                24
+                            </td>
+                            <td class="" align="center">
+                                25
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            26
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            27
+                        </td>
+                            <td class="" align="center">
+                                28
+                            </td>
+                            <td class="" align="center">
+                                29
+                            </td>
+                            <td class="" align="center">
+                                30
+                            </td>
+                            <td class="CalTodayDay" align="center">
+                                31
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                1
+                            </td>
+                        <td class="CalOtherMonthDay" align="center">
+                            2
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalOtherMonthDay" align="center">
+                            3
+                        </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                4
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                5
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                6
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                7
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                8
+                            </td>
+                        <td class="CalOtherMonthDay" align="center">
+                            9
+                        </td>
+                </tr>
+    </tbody>
+</table></div></div>                
+                <script>loadBlogDefaultCalendar();</script>
+                <div id="leftcontentcontainer">
+                    <!-- begin:SingleColumn -->
+                    <div id="blog-sidecolumn"><!-- 搜索 -->
+<div id="sidebar_search" class="sidebar-block">
+    <div id="sidebar_search" class="mySearch">
+        <h3 class="catListTitle">搜索</h3>
+        <div id="sidebar_search_box">
+            <div id="widget_my_zzk" class="div_my_zzk">
+                <input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk">
+            </div>
+            <div id="widget_my_google" class="div_my_zzk">
+                <input type="text" name="google_q" id="google_q" onkeydown="return google_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button" value="谷歌搜索" class="btn_my_zzk">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 常用链接 -->
+<div id="sidebar_shortcut" class="sidebar-block">
+<h3 class="catListTitle">
+常用链接
+</h3>
+<ul>
+    
+<li><a href="https://www.cnblogs.com/chengdabelief/p/" title="我的博客的随笔列表">我的随笔</a></li>
+<li><a href="https://www.cnblogs.com/chengdabelief/MyComments.html" title="我的发表过的评论列表">我的评论</a></li>
+<li><a href="https://www.cnblogs.com/chengdabelief/OtherPosts.html" title="我评论过的随笔列表">我的参与</a></li>
+<li><a href="https://www.cnblogs.com/chengdabelief/RecentComments.html" title="我的博客的评论列表">最新评论</a></li>
+<li><a href="https://www.cnblogs.com/chengdabelief/tag/" title="我的博客的标签列表">我的标签</a></li>
+
+</ul>
+</div>
+
+<!-- 最新随笔 -->
+
+
+<!-- 我的标签 -->
+<div id="sidebar_toptags" class="sidebar-block">
+<div class="catListTag">
+    <h3 class="catListTitle">我的标签</h3>
+    <ul>
+                <li>
+            <a href="https://www.cnblogs.com/chengdabelief/tag/%E3%80%90java%E3%80%91%E5%B9%B6%E5%8F%91-%E5%A4%9A%E7%BA%BF%E7%A8%8B/">【java】并发-多线程<span class="tag-count">(22)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/chengdabelief/tag/java/">java<span class="tag-count">(21)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/chengdabelief/tag/Network/">Network<span class="tag-count">(18)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/chengdabelief/tag/%E3%80%90java%E3%80%91%E9%9B%86%E5%90%88%E7%B1%BB/">【java】集合类<span class="tag-count">(17)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/chengdabelief/tag/javascript/">javascript<span class="tag-count">(17)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/chengdabelief/tag/%E5%89%8D%E7%AB%AF%E7%9F%A5%E8%AF%86/">前端知识<span class="tag-count">(15)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/chengdabelief/tag/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">算法与数据结构<span class="tag-count">(15)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/chengdabelief/tag/CSS/">CSS<span class="tag-count">(15)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/chengdabelief/tag/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库<span class="tag-count">(12)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/chengdabelief/tag/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式<span class="tag-count">(9)</span></a>
+        </li>
+    <li>
+        <a href="https://www.cnblogs.com/chengdabelief/tag/">更多</a>
+    </li>
+
+    </ul>
+</div>
+</div>
+
+<!-- 积分与排名 -->
+
+
+<!-- 随笔分类、随笔档案、文章分类、新闻分类、相册、链接 -->
+<div id="sidebar_categories">
+
+    <div class="catListPostArchive">
+        <h3 class="catListTitle">
+            
+随笔档案
+
+
+
+        </h3>
+        <ul>
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/chengdabelief/archive/2018/08.html" class="category-item-link" rel="" target="">2018年8月(1)</a>
+
+                    
+                </li>
+                                            <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/chengdabelief/archive/2018/07.html" class="category-item-link" rel="" target="">2018年7月(2)</a>
+
+                    
+                </li>
+                                            <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/chengdabelief/archive/2018/06.html" class="category-item-link" rel="" target="">2018年6月(4)</a>
+
+                    
+                </li>
+                                            <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/chengdabelief/archive/2018/05.html" class="category-item-link" rel="" target="">2018年5月(1)</a>
+
+                    
+                </li>
+                                            <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/chengdabelief/archive/2018/04.html" class="category-item-link" rel="" target="">2018年4月(3)</a>
+
+                    
+                </li>
+                                            <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/chengdabelief/archive/2018/01.html" class="category-item-link" rel="" target="">2018年1月(1)</a>
+
+                    
+                </li>
+                                            <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/chengdabelief/archive/2017/12.html" class="category-item-link" rel="" target="">2017年12月(1)</a>
+
+                    
+                </li>
+                                            <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/chengdabelief/archive/2017/10.html" class="category-item-link" rel="" target="">2017年10月(4)</a>
+
+                    
+                </li>
+                                            <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/chengdabelief/archive/2017/09.html" class="category-item-link" rel="" target="">2017年9月(46)</a>
+
+                    
+                </li>
+                                            <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/chengdabelief/archive/2017/08.html" class="category-item-link" rel="" target="">2017年8月(24)</a>
+
+                    
+                </li>
+                                            <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/chengdabelief/archive/2017/07.html" class="category-item-link" rel="" target="">2017年7月(17)</a>
+
+                    
+                </li>
+                                            <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/chengdabelief/archive/2017/06.html" class="category-item-link" rel="" target="">2017年6月(4)</a>
+
+                    
+                </li>
+                                            <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/chengdabelief/archive/2017/05.html" class="category-item-link" rel="" target="">2017年5月(4)</a>
+
+                    
+                </li>
+                                            <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/chengdabelief/archive/2017/04.html" class="category-item-link" rel="" target="">2017年4月(39)</a>
+
+                    
+                </li>
+                                            <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/chengdabelief/archive/2017/03.html" class="category-item-link" rel="" target="">2017年3月(36)</a>
+
+                    
+                </li>
+                                            <li data-category-list-item-visible="false" style="display: none">
+                    
+<a href="https://www.cnblogs.com/chengdabelief/archive/2016/12.html" class="category-item-link" rel="" target="">2016年12月(1)</a>
+
+                    
+                </li>
+                                            <li data-category-list-item-visible="false" style="display: none">
+                    
+<a href="https://www.cnblogs.com/chengdabelief/archive/2016/11.html" class="category-item-link" rel="" target="">2016年11月(2)</a>
+
+                    
+                </li>
+                                            <li data-category-list-item-visible="false" style="display: none">
+                    
+<a href="https://www.cnblogs.com/chengdabelief/archive/2016/08.html" class="category-item-link" rel="" target="">2016年8月(1)</a>
+
+                    
+                </li>
+                                        <li><a href="javascript:void(0)" onclick="sideColumnManager.loadMore(this)">更多</a></li>
+        </ul>
+    </div></div>
+
+<!-- 最新评论 -->
+<!-- 阅读排行榜 -->
+<div id="sidebar_topviewedposts" class="sidebar-block">
+<div id="topview_posts_wrap">
+    <h3 class="catListTitle">阅读排行榜</h3>
+    <div id="TopViewPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/chengdabelief/p/6683237.html">
+                            1. 常用正则表达式—邮箱（Email）(46884)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/chengdabelief/p/6635045.html">
+                            2. URL和URI(30565)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/chengdabelief/p/6576320.html">
+                            3. java编译器和java解释器、JVM(27287)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/chengdabelief/p/6883238.html">
+                            4. java Queue中 remove/poll, add/offer, element/peek区别(12068)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/chengdabelief/p/6691068.html">
+                            5. Bootstrap栅格系统&amp;媒体查询(11642)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div></div>
+
+<!-- 评论排行榜 -->
+<div id="sidebar_topcommentedposts" class="sidebar-block"><div id="topfeedback_posts_wrap">
+    <h3 class="catListTitle">评论排行榜</h3>
+    <div id="TopFeedbackPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/chengdabelief/p/6576320.html">
+                            1. java编译器和java解释器、JVM(2)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/chengdabelief/p/7419776.html">
+                            2. 【1】Jdk1.8中的HashMap实现原理(1)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/chengdabelief/p/6690940.html">
+                            3. Bootstrap3.0的栅格布局系统实现原理(1)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/chengdabelief/p/6686493.html">
+                            4. 浅谈Websocket、Ajax轮询和长轮询（long polling）(1)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div></div>
+
+<!-- 推荐排行榜 -->
+<div id="sidebar_topdiggedposts" class="sidebar-block">
+<div id="topdigg_posts_wrap">
+    <div class="catListView">
+        <h3 class="catListTitle">推荐排行榜</h3>
+        <div id="TopDiggPostsBlock">
+            <ul style="word-break: break-all">
+                        <li>
+                            <a href="https://www.cnblogs.com/chengdabelief/p/6576320.html">
+                                1. java编译器和java解释器、JVM(6)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/chengdabelief/p/6635045.html">
+                                2. URL和URI(4)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/chengdabelief/p/6204281.html">
+                                3. Java接口中的成员变量为什么必须声明为public static final？(3)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/chengdabelief/p/6686493.html">
+                                4. 浅谈Websocket、Ajax轮询和长轮询（long polling）(2)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/chengdabelief/p/6683237.html">
+                                5. 常用正则表达式—邮箱（Email）(2)
+                            </a>
+                        </li>
+            </ul>
+        </div>
+    </div>
+</div></div><div id="sidebar_recentcomments" class="sidebar-block"><div id="recent_comments_wrap" class="RecentComment">
+    <h3 class="catListTitle">最新评论</h3>
+    <div class="RecentCommentBlock">
+        <ul>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/chengdabelief/p/6576320.html">1. Re:java编译器和java解释器、JVM</a></li>
+                    <li class="recent_comment_body"><p>“它会先将源码翻译成另一种语言，以供多次运行而无需再经编译。其制成品无需依赖编译器而运行，程序运行速度比较快。”这个应该是即时编译器的特点吧</p>
+</li>
+                    <li class="recent_comment_author">--流年的blog</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/chengdabelief/p/6686493.html">2. Re:浅谈Websocket、Ajax轮询和长轮询（long polling）</a></li>
+                    <li class="recent_comment_body">你好，我问一下，我是两个项目实现websocket通信,客服端跨域发送消息给服务器，服务器可以收到消息，但是我服务器发送消息，客服端就收不到，为什么啊</li>
+                    <li class="recent_comment_author">--judy张</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/chengdabelief/p/6576320.html">3. Re:java编译器和java解释器、JVM</a></li>
+                    <li class="recent_comment_body">JRE 包含了 JVM 和运行时类库， 但是java解释器不是属于 java工具的吗？</li>
+                    <li class="recent_comment_author">--HelloWorld_Wys</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/chengdabelief/p/7419776.html">4. Re:【1】Jdk1.8中的HashMap实现原理</a></li>
+                    <li class="recent_comment_body">写的太好了 赞~</li>
+                    <li class="recent_comment_author">--丨核桃牛奶</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/chengdabelief/p/6690940.html">5. Re:Bootstrap3.0的栅格布局系统实现原理</a></li>
+                    <li class="recent_comment_body">这么好的文章，强烈的赞一个。今天仔细读了下栅格系统的代码，确实疑惑又是内边距又是负外边距的什么鬼，原来是这个道理。</li>
+                    <li class="recent_comment_author">--小孩孩</li>
+        </ul>
+    </div>
+</div></div>
+
+
+</div>
+                    <script>loadBlogSideColumn();</script>
+                    <!-- end:  SingleColumn -->
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+    <div id="footer">
+        <!--done-->
+Copyright © 2022 小猫慢慢爬
+<br><span id="poweredby">Powered by .NET 6 on Kubernetes</span>
+
+    </div>
+</div>
+
+    
+
+    <input type="hidden" id="antiforgery_token" value="CfDJ8AuMt_3FvyxIgNOR82PHE4mJvZKgoYEgSDR7RnYUajv6f8lfiOXEC8I6p12CKzINuH1EVB8yiICiwuDV2yzyERo1JqDzksrgvEMwmtDkV1XpjObuuo0q4rGgcbYLB-okoYn94L4hHHlVby6aW0KKtXk">
+    <script async="" src="./Bootstrap3.0的栅格布局系统实现原理 - 小猫慢慢爬 - 博客园_files/js"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    var kv = getGACustom();
+    if (kv) {
+        gtag('set', kv);
+    }
+    gtag('config', 'UA-476124-1');
+    </script>
+    <script defer="" src="./Bootstrap3.0的栅格布局系统实现原理 - 小猫慢慢爬 - 博客园_files/hm.js.下载"></script><iframe src="./Bootstrap3.0的栅格布局系统实现原理 - 小猫慢慢爬 - 博客园_files/container.html" style="visibility: hidden; display: none;"></iframe>
+
+<iframe src="./Bootstrap3.0的栅格布局系统实现原理 - 小猫慢慢爬 - 博客园_files/aframe.html" width="0" height="0" style="display: none;"></iframe></body></html>

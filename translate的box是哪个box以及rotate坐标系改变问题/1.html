@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="static/css/1.css">
+    <style>
+        #div1 {
+            box-sizing: border-box;
+            width: 200px;
+            height: 200px;
+            background-color: orange;
+            background-clip: content-box; /*设置背景颜色只到content-box,以免挡住border*/
+            display: inline-block;
+            padding: 30px;/*padding设置不了颜色*/
+            border: 30px solid green;
+        }
+        #div2 {
+            box-sizing: border-box;
+            width: 200px;
+            height: 200px;
+            background-color: orange;
+            background-clip: content-box; /*设置背景颜色只到content-box,以免挡住border*/
+            display: inline-block;
+            padding: 30px;/*padding设置不了颜色*/
+            border: 30px solid green;
+            transform: translateY(50%);
+        }
+        #div3 {
+            box-sizing: border-box;
+            width: 200px;
+            height: 200px;
+            background-color: orange;
+            background-clip: content-box; /*设置背景颜色只到content-box,以免挡住border*/
+            display: inline-block;
+            padding: 30px;/*padding设置不了颜色*/
+            border: 30px solid green;
+            transform: translateY(50%) rotate(45deg);
+        }
+        #div4 {
+            box-sizing: border-box;
+            width: 200px;
+            height: 200px;
+            background-color: orange;
+            background-clip: content-box; /*设置背景颜色只到content-box,以免挡住border*/
+            display: inline-block;
+            padding: 30px;/*padding设置不了颜色*/
+            border: 30px solid green;
+            transform: rotate(45deg) translateY(50%);
+        }
+        #div5 {
+            box-sizing: content-box;
+            width: 200px;
+            height: 200px;
+            background-color: orange;
+            background-clip: content-box; /*设置背景颜色只到content-box,以免挡住border*/
+            display: inline-block;
+            padding: 30px;/*padding设置不了颜色*/
+            border: 30px solid green;
+        }
+        #div6 {
+            box-sizing: content-box;
+            width: 200px;
+            height: 200px;
+            background-color: orange;
+            background-clip: content-box; /*设置背景颜色只到content-box,以免挡住border*/
+            display: inline-block;
+            padding: 30px;/*padding设置不了颜色*/
+            border: 30px solid green;
+            transform: translateY(50%);
+        }
+        #div7 {
+            box-sizing: content-box;
+            width: 200px;
+            height: 200px;
+            background-color: orange;
+            background-clip: content-box; /*设置背景颜色只到content-box,以免挡住border*/
+            display: inline-block;
+            padding: 30px;/*padding设置不了颜色*/
+            border: 30px solid green;
+            transform: translateY(50%) rotate(45deg);
+        }
+        #div8 {
+            box-sizing: content-box;
+            width: 200px;
+            height: 200px;
+            background-color: orange;
+            background-clip: content-box; /*设置背景颜色只到content-box,以免挡住border*/
+            display: inline-block;
+            padding: 30px;/*padding设置不了颜色*/
+            border: 30px solid green;
+            transform: rotate(45deg) translateY(50%);
+        }
+    </style>
+</head>
+<body>
+<div id="cotainer1">
+    <!--    这里两个div之间有距离是因为两个div间的空白字符被替换为一个空格，参考链接： https://www.cnblogs.com/zhang-wang/p/6979393.html， 《CSS权威指南》flex章节也有提到这个问题-->
+    <div id="div1"></div>
+    <div id="div2"></div>
+    <div id="div3"></div>
+    <div id="div4"></div>
+</div>
+<div id="cotainer2">
+    <!--    这里两个div之间有距离是因为两个div间的空白字符被替换为一个空格，参考链接： https://www.cnblogs.com/zhang-wang/p/6979393.html， 《CSS权威指南》flex章节也有提到这个问题-->
+    <div id="div5"></div>
+    <div id="div6"></div>
+    <div id="div7"></div>
+    <div id="div8"></div>
+<!--    可以看出来无论自身box-sizing属性设置为哪种，translate为百分比时，都是参照自身的border-box大小。此外，container1和container2并没有被撑大，说明translate不影响布局，只是影响元素的显示位置，
+        元素实际位置不变。div3,div4和div7,div8的对比可以看出来旋转和平移的顺序会影响结果，原因参考 https://blog.csdn.net/crazy_jialin/article/details/77969990，原因是rotate之后，元素的本地
+        坐标系也改变了，div4,div8 translate时的Y轴在5π/4方向，X轴在-π/4方向。所以最好先平移，最后旋转。-->
+</div>
+</body>
+</html>
