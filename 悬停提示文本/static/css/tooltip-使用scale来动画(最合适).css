@@ -11,7 +11,7 @@
     top: 120%;
     left: 50%; /*定位到中间偏右一点*/
     transform: translate(-50%, 0) scale(0); /*width的一半，左移到正中间*/
-    transition: all 0.2s;
+    transition: all 0.2s linear;
     /*指定元素变形原点*/
     transform-origin: top;
     /*transition-delay: 1s;*/
@@ -21,7 +21,7 @@
     /*用户不可选中文字*/
     /*user-select: none;*/
     overflow: visible;
-    opacity: 0.5;
+    opacity: 0;
 }
 .tooltip:hover .tooltip-text {
     top: 150%;
