@@ -1,0 +1,40 @@
+.tooltip {
+    display: inline;
+    position: relative;
+}
+.tooltip .tooltip-text {
+    position: absolute;
+    background-color: black;
+    color: white;
+    border-radius: 6px;
+    text-align: center;
+    top: 120%;
+    left: 50%; /*定位到中间偏右一点*/
+    transform: translate(-50%, 0) scale(0); /*width的一半，左移到正中间*/
+    transition: all 0.2s;
+    /*指定元素变形原点*/
+    transform-origin: top;
+    /*transition-delay: 1s;*/
+    padding: 5px;
+    /*用white-space: nowrap让文字在同一行，要换行的话删除white-space: nowrap并指定width: 100%*/
+    white-space: nowrap;
+    /*用户不可选中文字*/
+    /*user-select: none;*/
+    overflow: visible;
+    opacity: 0.5;
+}
+.tooltip:hover .tooltip-text {
+    top: 150%;
+    transform: translate(-50%, 0) scale(1);
+    opacity: 1;
+}
+.tooltip .tooltip-text::after {
+    content: ""; /*见https://developer.mozilla.org/zh-CN/docs/Web/CSS/content，如果不写，默认为normal，对伪元素normal计算为none，不会显示伪元素*/
+    position: absolute;
+    bottom: 100%; /*定位到上方*/
+    left: 50%; /*定位到中间偏右一点*/
+    margin-left: -5px; /*左移到水平正中*/
+    border-width: 5px; /*边框宽度为5px,底边为10px长*/
+    border-style: solid;
+    border-color: transparent transparent black transparent; /*用border画三角形，分别是上右下左，因为要画向上的箭头所以第三个位置不是透明*/
+}
