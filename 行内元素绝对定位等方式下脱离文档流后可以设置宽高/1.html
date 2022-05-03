@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../common/css/common.css">
+    <link rel="stylesheet" href="static/css/1.css">
+</head>
+<!--行内元素正常不能设置宽高，但是参考
+    https://www.superweb999.com/article/659900.html
+    https://blog.csdn.net/weixin_44312227/article/details/115408702
+    https://juejin.cn/post/6844903927008198670
+    绝对定位等方式下让元素脱离文档流后，元素变得类似块级元素，设置宽高有效-->
+<body style="display: flex;justify-content: center;align-items: center;min-height: 100vh;">
+<button class="button" style="position: relative">
+    button
+    <span style="width: 20px;height: 20px;background-color: rgba(0,0,0,0.5);border-radius: 50%;top: 50%;left: 50%;
+            transform: translate(-50%, -50%)"></span>
+</button>
+<button class="button" style="position: relative">
+    button
+    <span style="width: 20px;height: 20px;background-color: rgba(0,0,0,0.5);border-radius: 50%;top: 50%;left: 50%;
+            transform: translate(-50%, -50%);position:absolute;"></span>
+</button>
+<script src="static/js/1.js"></script>
+</body>
+</html>
