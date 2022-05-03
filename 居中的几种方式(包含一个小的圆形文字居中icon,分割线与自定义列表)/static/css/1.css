@@ -78,3 +78,11 @@
   overflow-y: scroll;
   text-align: left;
 }
+.button {
+  margin: 15px;
+  padding: 5px 10px;
+  color: white;
+  border-radius: 5px;
+  border: 1px solid rgb(23, 125, 255);
+  background-color: rgb(23, 125, 255);
+}

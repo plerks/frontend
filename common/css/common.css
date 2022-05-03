@@ -57,14 +57,14 @@
     box-shadow:1px 1px 15px 0 rgba(69,65,78,.08);
     padding: 15px;
     font-family: Arial;
-  }
+}
 .button {
-    margin: 15px;
-    padding: 5px 10px;
+    padding: 5px;
     color: white;
-    border-radius: 5px;
+    border-radius: 4px;
     border: 1px solid rgb(23, 125, 255);
     background-color: rgb(23, 125, 255);
+    text-align: center;
 }
 .button:enabled:hover {
     opacity: 0.9;
@@ -108,4 +108,16 @@
 }
 .round-border {
     border-radius: 5px;
+}
+.relative {
+    position: relative;
+}
+.absolute {
+    position: absolute;
+}
+.fixed {
+    position: fixed;
+}
+.sticky {
+    position: sticky;
 }
