@@ -1,0 +1,59 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+.streamer-button {
+  position: relative;
+  width: 400px;
+  height: 100px;
+  /* border-radius设置成一个超大值的时候会和等于min(width/2,height/2)的效果一样 */
+  border-radius: 9999px;
+  color: white;
+  font-size: 24px;
+  /* 让文字水平居中 */
+  text-align: center;
+  /* 让文字垂直居中 */
+  line-height: 100px;
+  /* 渐变色 */
+  background: linear-gradient(to right,#03a9f4,#f441a5,#ffeb3b,#09a8f4);
+  /* 背景渐变色大小，400%，超出的部分隐藏了 */
+  background-size: 400%;
+  user-select: none;
+}
+.streamer-button::before{
+  content: "";
+  position: absolute;
+  /* 没有指定width和height,所以top,left,bottom,right四个属性设置都有效，用这4个属性隐式拉开了这个::before，设置了width,height */
+  top: -5px;
+  left: -5px;
+  bottom: -5px;
+  right: -5px;
+  /* 渐变色 */
+  background: linear-gradient(to right,#03a9f4,#f441a5,#ffeb3b,#09a8f4);
+  /* 背景渐变色大小，400%，超出的部分隐藏了 */
+  background-size: 400%;
+  border-radius: 55px;
+  z-index: -1;
+  /* 设置模糊度 */
+  filter: blur(20px);
+}
+.streamer-button:hover{
+  animation: streamer 8s infinite;
+  /*animation-direction: alternate;*/
+}
+.streamer-button:hover::before{
+  animation: streamer 8s infinite;
+  /*animation-direction: alternate;*/
+}
+/* 定义动画 */
+@keyframes streamer{
+  0%{
+    /* 背景位置 */
+    background-position: 0 0;
+  }
+  100%{
+    /* 背景位置，负值向左，正值向右，这里正值按理说会移出去，但是颜色自动补充了，图片估计不会自动补充 */
+    background-position: -400% 0;
+  }
+}
