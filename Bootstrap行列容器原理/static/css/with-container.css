@@ -33,7 +33,8 @@ col里的row只在content区(content box);有负margin，col里的row在padding�
         }
 */
 .container {
-    padding: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 .row {
     display: flex;
