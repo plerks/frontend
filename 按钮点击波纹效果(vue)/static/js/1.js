@@ -3,65 +3,54 @@ const rippleButton = {
         <button class="button relative ripple-container" ref="rp" @mousedown="handleMouseDown" @mouseup="handleMouseUp"
          style="font-weight: 500;letter-spacing: 0.08em">
             <slot></slot>
-            <span v-if="isShow" :style="rippleStyle" :class="rippleClass"></span>
+            <span v-for="ripple in rippleQueue"
+                :style="{
+                    width: ripple.width,
+                    height: ripple.height,
+                    left: ripple.left,
+                    top: ripple.top
+                }"
+                :class="['ripple',ripple.isExpanding? 'expand':'']"></span>
         </button>
     `,
     data() {
         return {
-            isShow: false,
-            radius: 0,
-            left: 0,
-            top: 0,
-            isHolding: false,
+            rippleQueue: []
         }
     },
     methods: {
         handleMouseDown(e) {
-            this.isShow = true;
-            // vue完成dom更新后，调用$nextTick注册的方法
-            this.$nextTick(() => {
-                const rect = this.$refs.rp.getBoundingClientRect();
-                // console.log(`rect.width:${rect.width} rect.height:${rect.height}`)
-                // x,y为点击位置在button中的坐标
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                // console.log(`x:${x} y:${y}`);
-                const diagonal = Math.sqrt(rect.width * rect.width + rect.height * rect.height);
-                // 波纹的圆以对角线为半径时能保证不管点击哪里波纹都能覆盖按钮
-                const radius = diagonal;
-                // console.log(`radius:${radius}`);
-                this.radius = radius;
-                this.left = x - radius;
-                this.top = y - radius;
-                this.isHolding = true;
+            const rect = this.$refs.rp.getBoundingClientRect();
+            // x,y为点击位置在button中的坐标
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const diagonal = Math.sqrt(rect.width * rect.width + rect.height * rect.height);
+            // 波纹的圆以对角线为半径时能保证不管点击哪里波纹都能覆盖按钮
+            const radius = diagonal;
+            this.rippleQueue.push({
+                width: radius * 2 + 'px',
+                height: radius * 2 + 'px',
+                left: x - radius + 'px',
+                top: y - radius + 'px',
+                isExpanding: false,
             });
+            /*window.setTimeout(() => {
+                this.rippleQueue[this.rippleQueue.length - 1].isExpanding = true;
+            },0)*/
+            // 必须要nextTick，不然没动画
+            this.$nextTick(() => {
+                // 强制回流，试一下刚好就出动画了，很有意思，和"/折叠面板(vue)中的技巧一样"，上面通过window.setTimeout触发波纹扩张也能出动画。
+                this.$refs.rp.offsetHeight;
+                this.rippleQueue[this.rippleQueue.length - 1].isExpanding = true;
+            });
+            // console.log(this.rippleQueue);
         },
         handleMouseUp(e) {
             window.setTimeout(() => {
-                this.isShow = false;
-                this.radius = "0px";
-                this.left = 0;
-                this.top = 0;
-                this.isHolding = false;
+                this.rippleQueue.shift();
             }, 300)
         }
-    },
-    computed: {
-        rippleStyle() {
-            return {
-                width: this.radius * 2 + "px",
-                height: this.radius * 2 + "px",
-                left: this.left + "px",
-                top: this.top + "px",
-            }
-        },
-        rippleClass() {
-            return [
-                "ripple",
-                this.isHolding ? "is-holding":""
-            ]
-        }
-    },
+    }
 }
 const app = Vue.createApp({
     components: {

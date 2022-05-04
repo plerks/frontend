@@ -45,7 +45,7 @@ const collapse = {
         },
         leave (el) {
             //el.style.height = window.getComputedStyle(el).height
-            el.offsetHeight // 触发浏览器回流
+            el.offsetHeight // 触发浏览器回流，这里可以不用触发，上面enter()需要触发回流，见"../../说明.md"，应该只需要保证渲染线程看到高度从固定值到固定值的变化就行
             el.style.height = '0px'
         },
     }
