@@ -16,7 +16,8 @@ col里的row只在content区(content box);有负margin，col里的row在padding�
 估计这个container的padding和row的负margin的设计是这样来的:
     col作为放置用户内容的容器要提供基础padding，所以col有15px的padding，然而在col里另起一个row时希望新row占满父col，所以row需要-15px的margin来抵消父col的padding。然而这样在一开始起一行时，
     row的负margin又会导致问题，所以row的负margin需要一个父容器的padding来抵消，这个父容器就是container(Boostrap的container还做了响应式)。最终的效果就是用row -> col时要先用container套起来，
-    但在col里新起一行时不需要再用container套row。
+    但在col里新起一行时不需要再用container套row。container里可以不放row -> col，直接把container当成一个提供了基础padding的容器使用就行，已经被套在row里的col也不必须再新起一行(当这个col里想放
+    多行元素时才需要起新的row)，当成一个提供了基础padding的容器使用就行。但row必须被套在container或者col里，否则row的负margin容易导致问题。
     即：
         container {
             row {
