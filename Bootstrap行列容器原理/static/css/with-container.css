@@ -33,6 +33,22 @@ col里的row只在content区(content box);有负margin，col里的row在padding�
             }
             row {...}
         }
+    有时候bootstrap划分12列的设计有无法满足需求的情况，需要用原本的flex来实现(比如有7个button在一行，要均匀排布这7个button)。这时候要使用原生flex可以这样写：
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div style="display: flex;justify-content: space-around;align-items: center">
+                        ...
+                    </div>
+                </div>
+            </div>
+        </div>
+    此外，row里创建多个行的方式应该是使用col-12：
+        row {
+            col-12 {}
+            col-12 {}
+        }
+    不要想着 row{ row{} }或者写成 row { <div> }
 */
 .container {
     padding-left: 15px;

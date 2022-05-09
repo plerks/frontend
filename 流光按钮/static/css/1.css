@@ -7,7 +7,7 @@
   position: relative;
   width: 400px;
   height: 100px;
-  /* border-radius设置成一个超大值的时候会和等于min(width/2,height/2)的效果一样 */
+  /* border-radius设置成一个超大值的时候会和等于min(width/2,height/2)的效果一样，用这个半径的圆裁剪掉4个角外部的部分 */
   border-radius: 9999px;
   color: white;
   font-size: 24px;
@@ -53,7 +53,15 @@
     background-position: 0 0;
   }
   100%{
-    /* 背景位置，负值向左，正值向右，这里正值按理说会移出去，但是颜色自动补充了，图片估计不会自动补充 */
+    /*
+    参考《CSS权威指南》第4版 ISBN-9787519826598 关于背景的部分，background-position取固定值时是"背景左上角"相对于"元素左上角"偏移(和绝对定位的top,left类似)，但
+    取百分比值时和绝对定位完全不一样。background-position取百分比值时，是"(背景background-position百分比x位置,背景background-position百分比y位置)"
+    与"(元素background-position百分比x位置,元素background-position百分比y位置)"重合。只以x方向位置为例(y方向用0)，背景的移动位移是点:(背景宽 * x%,0)
+    到点:(元素宽 * x%,0)的矢量，也即：x方向位移是(元素宽 - 背景宽) * x%，这样才能让元素和元素背景的相同百分比位置的点重合。具体到这个例子，元素宽400px，背景
+    宽1600px，二者宽的-400%位置分别是(-1600px,0)和(-6400px,0)所以背景要往右移4800px(3倍背景宽，所以一轮动画一个颜色会经过3次)。此外这里背景往右移动也能
+    无缝衔接的原因是background-repeat默认平铺，把.streamer-button{}里改成background: no-repeat linear-gradient(to right,#03a9f4,#f441a5,#ffeb3b,#09a8f4);
+    就能看到背景移出了。还有如果background-size设置成100%，按位移公式位移恒为0(无论background的x%取值)，而100%的左右，位移反号(对同符号的x%)。
+    */
     background-position: -400% 0;
   }
 }
