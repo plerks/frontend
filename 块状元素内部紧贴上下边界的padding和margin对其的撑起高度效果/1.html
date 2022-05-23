@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="static/css/1.css" rel="stylesheet">
+</head>
+<body>
+<!--
+块状元素会被里面的内容撑起来高度，但是突然发现其内容物的撑起效果有区别，左右padding,margin的效果没有区别。但是其头尾子元素在不同display下的上下padding和margin对这个块状元素的高度影响有区别。
+结论是：
+1. 对于padding。一个div对于贴着自己上下边界的padding，如果这个padding是inline元素的，那么这部分padding不会撑起这个div(这部分padding会发生溢出，但不会对外部布局有影响)，如果是来自block或者
+    inline-block元素，那么这部分padding会对这个div有撑起高度效果。
+2. 对于margin。 一个div对于贴着自己上下边界的margin，这个margin不会来自inline元素(inline元素设置上下margin无效)，如果这个margin是block元素的，那么这部分margin不会撑起这个div(这部分margin
+    会发生溢出，且对外部布局有影响)，如果是来自inline-block元素，那么这部分margin会对这个div有撑起高度效果。
+
+为了避免这种复杂多变的情况，最佳实践我觉得应该是少写margin，并由父容器来提供padding。
+-->
+
+
+<div>第一个div</div>
+
+<!--div里放inline元素,inline元素的padding并未起到撑起作用,div只根据span的内容区高度撑起了自己的高度。这里span的padding溢出了div这个包含块，不过溢出不会对div的上下元素的布局造成影响-->
+<div>
+    <span class="button" style="background-color: #c7f1e3;margin-right: 2px;padding: 15px;margin-top: 0">
+        <a href="https://www.google.com">编码</a>
+    </span>
+    <span class="button" style="background-color: #c7f1e3;margin-right: 2px;padding: 15px;margin-top: 0;/*background-clip: content-box*/">
+        <a href="https://www.google.com">测试</a>
+    </span>
+    <span class="button" style="background-color: #c7f1e3;padding: 15px;margin-top: 0">
+        <a href="https://www.google.com">构建</a>
+    </span>
+</div>
+
+<!--这个div撑起自己高度时无视了子元素中，头部的inline元素的上padding-->
+<div>
+    <span style="padding: 15px">inline</span>
+    <div style="padding: 15px">block</div>
+</div>
+
+<!--这个div撑起自己高度时无视了子元素中，头部的inline元素的上padding，看起来像是这个div复用了span的上padding，没有复用div的下padding-->
+<div style="padding: 15px;">
+    <span style="padding: 15px">inline</span>
+    <div style="padding: 15px">block</div>
+</div>
+
+<hr/>
+<!--下面对每种情况单独来看-->
+
+<!--这个div撑起自己高度时无视了子inline元素的上下padding-->
+<div>
+    <span style="padding: 15px">inline</span>
+</div>
+<div>
+    <span style="padding: 15px;/*background-color: #c7f1e3*/">上面padding的溢出不会对布局产生影响</span>
+</div>
+
+<!--这个div撑起自己高度时考虑了子block元素的上下padding-->
+<div>
+    <div style="padding: 15px">block</div>
+</div>
+
+<!--这个div撑起自己高度时考虑了子inline-block元素的上下padding-->
+<div>
+    <span style="display: inline-block;padding: 15px">inline-block</span>
+</div>
+<hr/>
+<!--inline元素上下margin无效-->
+<div>
+    <span style="margin: 15px">inline</span>
+</div>
+
+<!--这个div撑起自己高度时没有考虑子block的上下margin,但是子div的margin确实对外部造成了影响,这个div上下离别的元素有距离-->
+<div>
+    <div style="margin: 15px;">block</div>
+</div>
+
+<!--这个div撑起自己高度时考虑了子inline-block元素的上下margin-->
+<div>
+    <span style="display: inline-block;margin: 15px">inline</span>
+</div>
+</body>
+</html>
