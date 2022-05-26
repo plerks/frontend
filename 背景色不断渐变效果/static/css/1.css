@@ -3,3 +3,26 @@
     padding: 0;
     box-sizing: border-box;
 }
+.canvas-wrap {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    overflow: hidden;
+}
+.content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    /*必须要写这个裁剪掉超过content的部分，不然虽然也会出现滚动条，但是content里面包含的内容过高时会超出content，
+    canvas好像不能设置百分比宽高，覆盖不了content里面的内容超出content的部分*/
+    overflow-y: scroll;
+}
+/*.content写成这样也可以
+.content {
+    width: 100vw;
+    height: 100vh;
+    overflow-y: scroll;
+}*/

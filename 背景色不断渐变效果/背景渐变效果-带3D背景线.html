@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="static/css/1.css">
+</head>
+<body>
+<!--
+这个div(id="canvas")里会被插入一个canvas标签渲染背景线，但是好像canvas标签不能设置百分比宽高，只能设置固定值(还没用过<canvas>，不确定)，
+创建<canvas>的脚本保持其宽高为视口大小，canvas-wrap绝对定位，也保持为视口大小。
+所以当页面主体内容过高时，渐变背景覆盖不了下面的部分。所以页面主体内容要设置在一个content容器里(和canvas一样都是视口大小)，
+并且这个content容器的overflow-y为scroll(不能不设置overflow-y,不然虽然也会出现滚动条，但是content里面包含的内容过高时会超出content，
+canvas覆盖不了content里面的内容超出content的部分。不过overflow-y:scroll后即使页面内容没那么高不需要滚动也会有滚动条，可以靠自定义滚动条解决)。
+然后content容器包住了内容，即使包住的内容过高也只是在content容器里scroll，不会导致canvas无法覆盖住。
+-->
+<div class="canvas-wrap background-gradient" id="canvas"></div>
+<div class="content">
+    <div style="height: 200%;">
+        <div style="display:flex;justify-content: space-between;align-items: center;flex-direction: column;height: 100%">
+            <span>111</span>
+            <span>222</span>
+        </div>
+    </div>
+</div>
+<script defer="true" src="static/js/my-background-gradient.js"></script>
+<script defer="true" src="static/js/three.min.js"></script>
+<script defer="true" src="static/js/projector.js"></script>
+<script defer="true" src="static/js/canvas-renderer.js"></script>
+<script defer="true" src="static/js/3d-lines-animation.js"></script>
+</body>
+</html>
