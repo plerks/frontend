@@ -1,0 +1,24 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.wrapper {
+    position: relative;
+    width: 50%;
+    /*不能用margin-top: 50%,否则wrapper的padding box高度为0,里面的绝对定位元素参照高度时高度也会算成0*/
+    padding-top: 50%;
+}
+.wrapper .content {
+    position: absolute;
+    /*绝对定位元素如果不写top和bottom,元素的垂直位置就是它假如作为静态(即static)元素时该在的位置,
+      也可以wrapper改成padding-bottom: 50%,这里就可以不写top*/
+    top: 0;
+    /*当元素绝对定位的时候，height百分比值是相对于包含块的padding box进行计算，
+      也就是计算的时候还需要将padding值加进来一起计算，而不是只计算内容块的值。
+      所以虽然wrapper高度为0，但wrapper有padding，所以content高度不为0*/
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
