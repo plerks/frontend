@@ -1,0 +1,16 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.rounded-blue {
+    background-color: #00b0e8;
+    border-radius: 50%;
+    padding: 15px;
+}
+.green {
+    background-color: #2cbb22;
+    padding: 5px;
+    color: darkred;
+    text-align: center;
+}

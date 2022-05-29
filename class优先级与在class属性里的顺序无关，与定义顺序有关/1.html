@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="static/css/1.css">
+    <link rel="stylesheet" href="static/css/2.css">
+</head>
+<body>
+<!--
+rounded-blue并未因为写在后面而让背景变蓝，因为.green在样式表里定义得靠后，在最终加载出来的样式表中的位置更高，.green掩盖了.rounded-blue的相同属性，
+同理2.css中的.green在最终加载出来的样式表中也比1.css中的.green更高，能掩盖1.css中的.green的相同属性。
+所以如果同时使用了第三方的基础样式表和自己写的样式表，自己写的样式表应该在后面引入。
+-->
+<div class="green rounded-blue">文字</div>
+</body>
+</html>
