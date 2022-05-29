@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="static/css/1.css">
+</head>
+<body>
+<div>
+<!--
+结论：
+width: auto会使元素的margin-box的宽度等于参照物宽度的100%，元素宽度不会超出参照元素
+
+width: 100%会使元素的box-sizing指定的盒子的宽度等于参照物宽度的100%。box-sizing: content-box的元素，有padding或margin时，
+指定width: 100%，元素宽度会超出参照元素。box-sizing: border-box的元素，有margin时指定width: 100%，元素宽度会超出参照元素。(CSS3没有box-sizing: margin-box)
+-->
+    <div style="box-sizing: content-box;width: auto;background-color: darkred;padding: 15px;margin: 0 15px">
+        1
+    </div>
+    <div style="box-sizing: content-box;width: 100%;background-color: #1a9bc2;padding: 15px;margin: 0 15px">
+        2
+    </div>
+    <div style="box-sizing: border-box;width: auto;background-color: darkred;padding: 15px;margin: 0 15px">
+        3
+    </div>
+    <div style="box-sizing: border-box;width: 100%;background-color: #1a9bc2;padding: 15px;margin: 0 15px">
+        4
+    </div>
+</div>
+</body>
+</html>
