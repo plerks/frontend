@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="static/css/1.css">
+</head>
+<body>
+<!--
+效果见"文字错位.JPG",inline元素在容器宽度不够时出现了文字错位问题,改成display: inline-block后显示效果就正常了,
+此外这里inline元素在垂直方向上略高于inline-block的原因是因为inline元素的padding不会撑起父div高度,
+见"/块状元素内部紧贴上下边界的padding和margin对其的撑起高度效果"
+-->
+<div class="container">
+    <div class="row">
+        <div class="col-3" style="padding: 5px">
+            <div class="row">
+                <div class="col-6">
+                    <span class="button">文字错位问题</span>
+                </div>
+                <div class="col-6">
+                    <span class="button" style="text-align: left">文字错位问题</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-3" style="padding: 5px">
+            <div class="row">
+                <div class="col-6">
+                    <span class="button" style="display: inline-block">文字错位问题</span>
+                </div>
+                <div class="col-6">
+                    <span class="button" style="display: inline-block;text-align: left">文字错位问题</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
