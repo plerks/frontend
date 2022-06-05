@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="static/css/1.css">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes">
+    <style>
+        .text1 {
+            display: inline-block;
+            text-align: center;
+            background-color: #00b2ff;
+            clip-path: polygon(0 0,calc(100% - 30px) 0,100% 50%,calc(100% - 30px) 100%,0 100%);
+            margin: 15px 0;
+            width: 300px;
+        }
+        .text2 {
+            display: inline-block;
+            text-align: center;
+            background-color: #00b2ff;
+            clip-path: polygon(0 0,calc(100% - 30px) 0,100% 50%,calc(100% - 30px) 100%,0 100%,30px 50%);
+            margin: 15px 0;
+            width: 300px;
+        }
+    </style>
+</head>
+<body>
+<!--这两个span中间不能换行，否则两个dom节点之间会多一个空格(浏览器会把标签之间的空白字符统一换成一个空格)，导致两个span不能排在同一行的屏幕临界宽度不是600px-->
+<span class="text1">文本1</span><span class="text2">文本2</span>
+</body>
+</html>
