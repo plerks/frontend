@@ -12,9 +12,6 @@
   margin: 30px auto;
   font-family: Arial;
 }
-.common-table * {
-    overflow: visible;
-}
 .common-table {
   margin: 0;
   width: 100%;
