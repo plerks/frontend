@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="static/css/1.css">
+</head>
+<body>
+<!--
+这个与"/inline元素宽度不够换行时文字边界错行问题,改为inline-block就正常"有关系，设置成inline-block能避免边界错行，但是每行的字数可能不均匀，
+在内部把文字拆成inline-block的span，可以控制文字换行方式
+-->
+<div class="container">
+    <div class="row space-around">
+        <div class="col-3 card" style="padding: 15px;">
+            <div class="row space-around" style="flex-wrap: nowrap;">
+                <a class="button" style="font-size: 0px"> <!-- 解决换行多出一个空格问题 -->
+                    <span class="inline-block" style="font-size: 16px">改</span>
+                    <span class="inline-block" style="font-size: 16px">设置</span>
+                </a>
+                <a class="button"><span class="inline-block">文字换行</span></a>
+                <a class="button"><span class="inline-block">文字</span><span class="inline-block">换行</span></a>
+                <a class="button"><span class="inline-block">文字</span><span class="inline-block">换行</span></a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
