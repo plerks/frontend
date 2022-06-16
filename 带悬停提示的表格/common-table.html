@@ -15,176 +15,160 @@
   </style>
 </head>
 <body>
-  <div class="card">
-    <div class="card-body">
-        <table class="common-table">
-            <thead>
-              <tr>
-                  <!-- 和超过了100%，但是会被计算为等宽 -->
-                  <th style="width: 20%">
-                    1
-                  </th>
-                  <th style="width: 20%">
-                    2
-                  </th>
-                  <th style="width: 20%">
-                    3
-                  </th>
-                  <th style="width: 20%">
-                    4
-                  </th>
-                  <th style="width: 20%">
-                    5
-                  </th>
-                  <th style="width: 20%">
-                    6
-                  </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td colspan="6">License</td>
-              </tr>
-              <tr>
-                  <!-- tooltip必须设置overflow: visible,否则子元素tooltip-text会因为溢出被隐藏(绝对定位虽然脱离文档流，
-                    显示仍然受制于祖先元素的盒子，从而td必须是overflow: visible(或者不设置))，而文本超出隐藏需要overflow: hidden，所以要把文本
-                    溢出显示省略号放在td内部来做(如果让td来做，就算td里面放tooltip(overflow: visible),也会因为td的overflow为hidden
-                    导致tooltip-text不显示)
-                  -->
-                  <!-- 也可以让td来成为tooltip,但是td设置了padding,看起来tooltip和tooltip-text会隔得比较远 -->
-                  <td>
-                    <div class="tooltip">
-                      <span class="tooltip-text">BSD 4-Clause "Original" or "Old" License</span>
-                      <span class="overflow-text-ellipsis">BSD 4-Clause "Original" or "Old" License</span>
+  <div style="width: 80%;">
+    <div class="card">
+      <div class="card-body">
+          <table class="common-table">
+              <thead>
+                <tr>
+                    <!-- 和超过了100%，但是会被计算为等宽 -->
+                    <th style="width: 20%;text-align: left;">
+                      1
+                    </th>
+                    <th style="width: 20%">
+                      2
+                    </th>
+                    <th style="width: 20%">
+                      3
+                    </th>
+                    <th style="width: 20%">
+                      4
+                    </th>
+                    <th style="width: 20%">
+                      5
+                    </th>
+                    <th style="width: 20%">
+                      6
+                    </th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- <tr>
+                  <td colspan="6">License</td>
+                </tr> -->
+                <tr>
+                    <!-- 文本超出隐藏需要指定overflow: hidden，所以tooltip-text不能放在overflow-text-ellipsis内部(绝对定位虽然脱离文档流，
+                    显示仍然受制于祖先元素的盒子，overflow-text-ellipsis会导致内部的tooltip-text无法显示出来)。因此，overflow-text-ellipsis
+                    里面只有文字，没有tooltip-text。剩下的就是要把tooltip-text定位到overflow-text-ellipsis中间，而tooltip-text是相对于更高
+                    层的tooltip定位的，所以需要让tooltip和overflow-text-ellipsis的盒子重合在一起。 -->
+                    <td style="text-align: left;/* 控制td对内部元素的对齐，和margin: auto一样需要有剩余空间才有效果 */">
+                      <!-- 让tooltip成为inline元素，从而与overflow-text-ellipsis位置相同，便于tooltip-text定位，
+                      因为变成inline了，需要设置max-width防止文字溢出td -->
+                      <div class="tooltip" style="display: inline-flex;max-width: 100%;">
+                        <span class="tooltip-text">BSD 4-Clause</span>
+                        <span class="overflow-text-ellipsis">BSD 4-Clause</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="tooltip" style="display: inline-flex;max-width: 100%;">
+                        <span class="tooltip-text">MIT License</span>
+                        <span class="overflow-text-ellipsis">MIT License</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="tooltip" style="display: inline-flex;max-width: 100%;">
+                        <span class="tooltip-text">“Commons Clause” License Condition v1.0</span>
+                        <span class="overflow-text-ellipsis">“Commons Clause” License Condition v1.0</span>
+                      </div> 
+                    </td>
+                    <td>
+                      <div class="tooltip" style="display: inline-flex;max-width: 100%;">
+                        <span class="tooltip-text">GNU General Public License v3.0 or later</span>
+                        <span class="overflow-text-ellipsis">GNU General Public License v3.0 or later</span> 
+                      </div>
+                    </td>
+                    <td>
+                      <div class="tooltip" style="display: inline-flex;max-width: 100%;">
+                        <span class="tooltip-text">Creative Commons Attribution 4.0 International</span>
+                        <span class="overflow-text-ellipsis">Creative Commons Attribution 4.0 International</span> 
+                      </div>
+                    </td>
+                    <td>
+                      <div class="tooltip" style="display: inline-flex;max-width: 100%;">
+                        <span class="tooltip-text">Artistic-2.0</span>
+                        <span class="overflow-text-ellipsis">Artistic-2.0</span> 
+                      </div>
+                    </td>
+                </tr>
+                <tr>
+                  <td style="text-align: left;">
+                    <div class="tooltip" style="display: inline-flex;max-width: 100%;">
+                      <span class="tooltip-text">BSD 4-Clause</span>
+                      <span class="overflow-text-ellipsis">BSD 4-Clause</span>
                     </div>
                   </td>
                   <td>
-                    <div class="tooltip">
-                      <span class="tooltip-text">Creative Commons Attribution 4.0 International</span>
-                      <span class="overflow-text-ellipsis">Creative Commons Attribution 4.0 International</span>
+                    <div class="tooltip" style="display: inline-flex;max-width: 100%;">
+                      <span class="tooltip-text">MIT License</span>
+                      <span class="overflow-text-ellipsis">MIT License</span>
                     </div>
                   </td>
                   <td>
-                    <div class="tooltip">
+                    <div class="tooltip" style="display: inline-flex;max-width: 100%;">
                       <span class="tooltip-text">“Commons Clause” License Condition v1.0</span>
                       <span class="overflow-text-ellipsis">“Commons Clause” License Condition v1.0</span>
                     </div> 
                   </td>
                   <td>
-                    <div class="tooltip">
-                      <span class="tooltip-text">GNU Affero General Public License v3.0 or later</span>
-                      <span class="overflow-text-ellipsis">GNU Affero General Public License v3.0 or later</span> 
+                    <div class="tooltip" style="display: inline-flex;max-width: 100%;">
+                      <span class="tooltip-text">GNU General Public License v3.0 or later</span>
+                      <span class="overflow-text-ellipsis">GNU General Public License v3.0 or later</span> 
                     </div>
                   </td>
                   <td>
-                    <div class="tooltip">
-                      <span class="tooltip-text">MIT License</span>
-                      <span class="overflow-text-ellipsis">MIT License</span> 
+                    <div class="tooltip" style="display: inline-flex;max-width: 100%;">
+                      <span class="tooltip-text">Creative Commons Attribution 4.0 International</span>
+                      <span class="overflow-text-ellipsis">Creative Commons Attribution 4.0 International</span> 
                     </div>
                   </td>
                   <td>
-                    <div class="tooltip">
+                    <div class="tooltip" style="display: inline-flex;max-width: 100%;">
                       <span class="tooltip-text">Artistic-2.0</span>
                       <span class="overflow-text-ellipsis">Artistic-2.0</span> 
                     </div>
                   </td>
-              </tr>
-              <tr>
-                <td colspan="6">License</td>
-              </tr>
-              <tr>
-                  <!-- tooltip必须设置overflow: visible,否则子元素tooltip-text会因为溢出被隐藏(绝对定位虽然脱离文档流，
-                    显示仍然受制于祖先元素的盒子，从而td必须是overflow: visible(或者不设置))，而文本超出隐藏需要overflow: hidden，所以要把文本
-                    溢出显示省略号放在td内部来做(如果让td来做，就算td里面放tooltip(overflow: visible),也会因为td的overflow为hidden
-                    导致tooltip-text不显示)
-                  -->
-                  <!-- 也可以让td来成为tooltip,但是td设置了padding,看起来tooltip和tooltip-text会隔得比较远 -->
-                  <td>
-                    <div class="tooltip">
-                      <span class="tooltip-text">BSD 4-Clause "Original" or "Old" License</span>
-                      <span class="overflow-text-ellipsis">BSD 4-Clause "Original" or "Old" License</span>
+                </tr>
+                <tr>
+                  <td style="text-align: left;">
+                    <div class="tooltip" style="display: inline-flex;max-width: 100%;">
+                      <span class="tooltip-text">BSD 4-Clause</span>
+                      <span class="overflow-text-ellipsis">BSD 4-Clause</span>
                     </div>
                   </td>
                   <td>
-                    <div class="tooltip">
-                      <span class="tooltip-text">Creative Commons Attribution 4.0 International</span>
-                      <span class="overflow-text-ellipsis">Creative Commons Attribution 4.0 International</span>
+                    <div class="tooltip" style="display: inline-flex;max-width: 100%;">
+                      <span class="tooltip-text">MIT License</span>
+                      <span class="overflow-text-ellipsis">MIT License</span>
                     </div>
                   </td>
                   <td>
-                    <div class="tooltip">
+                    <div class="tooltip" style="display: inline-flex;max-width: 100%;">
                       <span class="tooltip-text">“Commons Clause” License Condition v1.0</span>
                       <span class="overflow-text-ellipsis">“Commons Clause” License Condition v1.0</span>
                     </div> 
                   </td>
                   <td>
-                    <div class="tooltip">
-                      <span class="tooltip-text">GNU Affero General Public License v3.0 or later</span>
-                      <span class="overflow-text-ellipsis">GNU Affero General Public License v3.0 or later</span> 
+                    <div class="tooltip" style="display: inline-flex;max-width: 100%;">
+                      <span class="tooltip-text">GNU General Public License v3.0 or later</span>
+                      <span class="overflow-text-ellipsis">GNU General Public License v3.0 or later</span> 
                     </div>
                   </td>
                   <td>
-                    <div class="tooltip">
-                      <span class="tooltip-text">MIT License</span>
-                      <span class="overflow-text-ellipsis">MIT License</span> 
-                    </div>
-                  </td>
-                  <td>
-                    <div class="tooltip">
-                      <span class="tooltip-text">Artistic-2.0</span>
-                      <span class="overflow-text-ellipsis">Artistic-2.0</span> 
-                    </div>
-                  </td>
-              </tr>
-              <tr>
-                <td colspan="6">License</td>
-              </tr>
-              <tr>
-                  <!-- tooltip必须设置overflow: visible,否则子元素tooltip-text会因为溢出被隐藏(绝对定位虽然脱离文档流，
-                    显示仍然受制于祖先元素的盒子，从而td必须是overflow: visible(或者不设置))，而文本超出隐藏需要overflow: hidden，所以要把文本
-                    溢出显示省略号放在td内部来做(如果让td来做，就算td里面放tooltip(overflow: visible),也会因为td的overflow为hidden
-                    导致tooltip-text不显示)
-                  -->
-                  <!-- 也可以让td来成为tooltip,但是td设置了padding,看起来tooltip和tooltip-text会隔得比较远 -->
-                  <td>
-                    <div class="tooltip">
-                      <span class="tooltip-text">BSD 4-Clause "Original" or "Old" License</span>
-                      <span class="overflow-text-ellipsis">BSD 4-Clause "Original" or "Old" License</span>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="tooltip">
+                    <div class="tooltip" style="display: inline-flex;max-width: 100%;">
                       <span class="tooltip-text">Creative Commons Attribution 4.0 International</span>
-                      <span class="overflow-text-ellipsis">Creative Commons Attribution 4.0 International</span>
+                      <span class="overflow-text-ellipsis">Creative Commons Attribution 4.0 International</span> 
                     </div>
                   </td>
                   <td>
-                    <div class="tooltip">
-                      <span class="tooltip-text">“Commons Clause” License Condition v1.0</span>
-                      <span class="overflow-text-ellipsis">“Commons Clause” License Condition v1.0</span>
-                    </div> 
-                  </td>
-                  <td>
-                    <div class="tooltip">
-                      <span class="tooltip-text">GNU Affero General Public License v3.0 or later</span>
-                      <span class="overflow-text-ellipsis">GNU Affero General Public License v3.0 or later</span> 
-                    </div>
-                  </td>
-                  <td>
-                    <div class="tooltip">
-                      <span class="tooltip-text">MIT License</span>
-                      <span class="overflow-text-ellipsis">MIT License</span> 
-                    </div>
-                  </td>
-                  <td>
-                    <div class="tooltip">
+                    <div class="tooltip" style="display: inline-flex;max-width: 100%;">
                       <span class="tooltip-text">Artistic-2.0</span>
                       <span class="overflow-text-ellipsis">Artistic-2.0</span> 
                     </div>
                   </td>
-              </tr>
-            </tbody>
-        </table>
+                </tr>
+              </tbody>
+          </table>
+      </div>
     </div>
   </div>
 </body>

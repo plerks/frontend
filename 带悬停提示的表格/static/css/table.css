@@ -5,7 +5,7 @@
 }
 .card {
   background-color: #fff;
-  width: 50%;
+  width: 100%;
   border-radius: 5px 5px 5px 0;
   box-shadow: 1px 1px 15px 0 rgba(69, 65, 78, 0.08);
   padding: 10px;
@@ -23,21 +23,21 @@
 .common-table th {
   padding: 8px;
   text-align: center;
-  border: 1px solid #dedede;
 }
 .common-table tr {
   padding: 8px;
   text-align: center;
-  border: 1px solid #dedede;
+}
+.common-table tbody tr:nth-child(2n+1) {
+  background-color: #f8f9fa;;
 }
 .common-table td {
-  padding: 8px;
-  border: 1px solid #dedede;
+  border-top: 1px solid #dedede;
+}
+.common-table tr:last-child {
+  border-bottom: 1px solid #dedede;
 }
 .overflow-text-ellipsis {
-    /* 防止设置宽无效 */
-    display: block;
-    width: 100%;
     text-align: center;
     padding: 8px;
     /* 不换行 */
@@ -55,17 +55,19 @@
     display: none;
     height: 0;
     position: absolute;
-    width: 120px;
+    /* 可以设置这个让内容不会太长
+    max-width: 120px;
+    单词断开
+    word-break: break-all; */
     background-color: black;
     color: white;
     border-radius: 6px;
     text-align: center;
     top: 100%;
     left: 50%; /*定位到中间偏右一点*/
-    margin-left: -60px; /*width的一半，左移到正中间*/
-    padding: 5px;
-    /* 单词断开 */
-    /* word-break: break-all; */
+    transform: translateX(-50%); /*左移到正中间*/
+    padding: 8px;
+    white-space: nowrap;
     /* 不写这个可能和表格内容重影 */
     z-index: 1;
 }
