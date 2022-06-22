@@ -51,6 +51,8 @@ const commonTable = {
                     <td v-for="(item,index) in items">
                       <div class="tooltip" style="display: inline-flex;max-width: 100%;">
                         <span class="tooltip-text" v-if="ifShowTooltipText[index]">{{item}}</span>
+                        <!-- 这个ref写法参见https://v3.cn.vuejs.org/api/special-attributes.html#ref
+                        和https://v3.cn.vuejs.org/guide/composition-api-template-refs.html#v-for-%E4%B8%AD%E7%9A%84%E7%94%A8%E6%B3%95 -->
                         <span class="overflow-text-ellipsis" :ref="el => { if(el) { contents[index] = el; } }">{{item}}</span>
                       </div>
                     </td>
