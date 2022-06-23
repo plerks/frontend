@@ -97,4 +97,18 @@ isEllipsisActive(e: any) {
 应该是Vue和Angular原理实现导致的差别。此外，Angular这里循环里都是用的fullName作为引用名也没有导致问题，
 甚至overflow-text-ellipsis和tooltip-text顺序对换也没有导致问题，可能ngFor的每次循环都有一个单独的作
 用域(https://angular.io/guide/template-reference-variables#template-variable-scope)？
+
+此外，Vue按Angular那样写是不能工作的，也就是说，写成：
+<span class="tooltip-text" v-if="calculateIfShowTooltipText(index)">{{item}}</span>
+
+methods: {
+  calculateIfShowTooltipText(index) {
+    return this.contents[index].clientWidth < this.contents[index].scrollWidth
+  }
+}
+
+会报错：Cannot read properties of undefined (reading 'clientWidth')
+这应该是因为Vue用了virtual dom，在v-if判断的时候对应的overflow-text-ellipsis在真实dom里还没有，所以对应的ref为undefined，
+mounted之后ref才引用到了真实dom。(把overflow-text-ellipsis在模板里的位置换到tooltip-text前面也仍然会报这个错)
+但Angular不是用的virtual dom，所以没有这个问题。
 */
