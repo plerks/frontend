@@ -1,0 +1,114 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.col-1 {
+    width: 8.333333333333333%;
+}
+.col-2 {
+    width: 16.666666666666666%;
+}
+.col-3 {
+    width: 25%;
+}
+.col-4 {
+    width: 33.33333333333333%;
+}
+.col-5 {
+    width: 41.66666666666667%;
+}
+.col-6 {
+    width: 50%;
+}
+.col-7 {
+    width: 58.33333333333334%;
+}
+.col-8 {
+    width: 66.66666666666666%;
+}
+.col-9 {
+    width: 75%;
+}
+.col-10 {
+    width: 83.33333333333334%;
+}
+.col-11 {
+    width: 91.66666666666666%;
+}
+.col-12 {
+    width: 100%;
+}
+.col-1,.col-2,.col-3,.col-4,.col-5,.col-6,.col-7,.col-8,.col-9,.col-10,.col-11,.col-12 {
+    padding: 15px;
+}
+.pacman .before {
+    width: 100px;
+    height: 50px;
+    border-radius: 50px 50px 0 0;
+    background-color: rgb(25, 222, 123);
+    transform-origin: center bottom;
+    animation: pacman-haha-up 0.8s linear infinite;
+}
+.pacman .after {
+    width: 100px;
+    height: 50px;
+    border-radius: 0 0 50px 50px;
+    background-color: rgb(25, 222, 123);
+    transform-origin: center top;
+    animation: pacman-haha-down 0.8s linear infinite;
+}
+@keyframes pacman-haha-up {
+    0% {
+        transform: rotate(0);
+    }
+    25% {
+        transform: rotate(-45deg);
+    }
+    50% {
+        transform: rotate(0);
+    }
+    75% {
+        transform: rotate(-45deg);
+    }
+    100% {
+        transform: rotate(0);
+    }
+}
+@keyframes pacman-haha-down {
+    0% {
+        transform: rotate(0);
+    }
+    25% {
+        transform: rotate(45deg);
+    }
+    50% {
+        transform: rotate(0);
+    }
+    75% {
+        transform: rotate(45deg);
+    }
+    100% {
+        transform: rotate(0);
+    }
+}
+.dots {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: rgb(25, 222, 123);
+    margin: 4px;
+    border-radius: 50%;
+    cursor: pointer;
+    /* 参考链接中的技巧，用box-shadow来重复dot，也可以不要这条直接在模板里重复dot */
+    box-shadow: 30px 0 0 #02ec2a, 60px 0 0 #02ec2a, 90px 0 0 #02ec2a, 120px 0 0 #02ec2a, 150px 0 0 #02ec2a;
+    animation: dot-move 0.4s linear infinite;
+}
+@keyframes dot-move {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-30px);
+    }
+}
