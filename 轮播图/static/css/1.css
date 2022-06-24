@@ -1,0 +1,228 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.col-1 {
+    width: 8.333333333333333%;
+}
+.col-2 {
+    width: 16.666666666666666%;
+}
+.col-3 {
+    width: 25%;
+}
+.col-4 {
+    width: 33.33333333333333%;
+}
+.col-5 {
+    width: 41.66666666666667%;
+}
+.col-6 {
+    width: 50%;
+}
+.col-7 {
+    width: 58.33333333333334%;
+}
+.col-8 {
+    width: 66.66666666666666%;
+}
+.col-9 {
+    width: 75%;
+}
+.col-10 {
+    width: 83.33333333333334%;
+}
+.col-11 {
+    width: 91.66666666666666%;
+}
+.col-12 {
+    width: 100%;
+}
+.col-1,.col-2,.col-3,.col-4,.col-5,.col-6,.col-7,.col-8,.col-9,.col-10,.col-11,.col-12 {
+    padding: 15px;
+}
+.wrapper {
+    position: relative;
+    width: 100%;
+    padding-top: 80%;
+    overflow: hidden;
+}
+.wrapper .content {
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+.container {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -15px;
+}
+.img-box {
+    height: 80%;
+}
+.bottom-box {
+    height: 20%;
+    position: relative;
+}
+.bottom-box .gradient {
+    width: 100%;
+    position: absolute;
+    bottom: 100%;
+    height: 100px;
+}
+.space-between {
+    display: flex;
+    justify-content: space-between;
+}
+.justify-center {
+    display: flex;
+    justify-content: center;
+}
+.align-center {
+    display: flex;
+    align-items: center;
+}
+.title {
+    color: white;
+    font-size: 18px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: rgba(255,255,255,0.4);
+    margin: 4px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.dot.active {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background-color: transparent;
+    margin: 1px;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+}
+.dot.active .before {
+    position: absolute;
+    top: 0;
+    width: 14px;
+    height: 7px;
+    border-radius: 7px 7px 0 0;
+    background-color: white;
+    transform-origin: center bottom;
+    animation: pacman-haha-up 0.8s linear forwards;
+}
+.dot.active .after {
+    position: absolute;
+    bottom: 0;
+    width: 14px;
+    height: 7px;
+    border-radius: 0 0 7px 7px;
+    background-color: white;
+    transform-origin: center top;
+    animation: pacman-haha-down 0.8s linear forwards;
+}
+/* b站F12看还加了这两个伪元素，我猜可能是为了在一些渲染能力较差，精度不行的浏览器里解决吃豆人闭合时上下两个半圆有缝隙的问题。
+伪元素会跟着对应的元素旋转，也受对应元素的border-radius裁剪，所以不会有错误。但是会导致吃豆人开口的位置在中心线偏右一点点 */
+/* .dot.active .before::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    width: 100%;
+    height: 1px;
+    background-color: #fff;
+}
+.dot.active .after::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -1px;
+    width: 100%;
+    height: 1px;
+    background-color: #fff;
+} */
+@keyframes pacman-haha-up {
+    0% {
+        transform: rotate(0);
+    }
+    25% {
+        transform: rotate(-45deg);
+    }
+    50% {
+        transform: rotate(0);
+    }
+    75% {
+        transform: rotate(-45deg);
+    }
+    100% {
+        transform: rotate(0);
+    }
+}
+@keyframes pacman-haha-down {
+    0% {
+        transform: rotate(0);
+    }
+    25% {
+        transform: rotate(45deg);
+    }
+    50% {
+        transform: rotate(0);
+    }
+    75% {
+        transform: rotate(45deg);
+    }
+    100% {
+        transform: rotate(0);
+    }
+}
+.bottom-box ul li {
+    list-style: none;
+}
+.bottom-box .gray-button {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background-color: rgba(255,255,255,0.1);
+    cursor: pointer;
+}
+.bottom-box .gray-button:hover {
+    background-color: rgba(255,255,255,0.2);
+}
+.left-arrow {
+    width: 8px;
+    height: 8px;
+    border-top: 2px solid #dedede;
+    border-right: 2px solid #dedede;
+    border-left: 2px solid transparent;
+    border-bottom: 2px solid transparent;
+    transform: translateX(2.82px) rotate(-135deg);
+}
+.right-arrow {
+    width: 8px;
+    height: 8px;
+    border-top: 2px solid #dedede;
+    border-right: 2px solid #dedede;
+    border-left: 2px solid transparent;
+    border-bottom: 2px solid transparent;
+    transform: translateX(-2.82px) rotate(45deg);
+}
+.reverse {
+    transform: rotate(180deg);
+}
