@@ -103,7 +103,9 @@ const carousel = {
             },
             // 图片切换时下面bottom-box的颜色是设计成瞬变的，上面展示的img-box的图片有渐变延迟，用imgs[1].mainColor来反映下面的颜色不可行，需要新定义一个变量
             bottomColor: "",
-            timer: null
+            timer: null,
+            // 点击一次左右箭头后的移动是否还没结束
+            clickArrowMoving: false
         }
     },
     beforeMount() {
@@ -115,10 +117,6 @@ const carousel = {
     },
     mounted() {
         this.$refs.imgBox.addEventListener("transitionend", () => {
-            this.reachStatusByActiveDot();
-            /*
-            先把所有reachStatusByActiveDot()的调用取消掉，这里这样写看似是可以的：
-
             this.imgBoxStyle.transition = "transform 0s ease";
             this.imgBoxStyle.transform = "translateX(-11.1111%)";
             if(this.pacmanReverse == true) {
@@ -130,12 +128,7 @@ const carousel = {
                 this.imgs.push(first);
             }
             this.bottomColor = this.imgs[1].mainColor;
-
-            但是会导致在狂点左或者右箭头时，发生下面的点和图片对应不上的情况(比如activeDot==0但是在显示的图片的index!=0)。
-            应该是因为transitionend的发生有延迟，例如：如果快速点击两下右箭头，第一次transition还未end，第二次transition就开始了，这时候应该
-            只会触发一次transitionend事件。加上一句console.log("transitionend happened"),狂点右箭头再观察transitionend happened打印次数就能
-            发现打印次数少于点击次数
-            */
+            this.clickArrowMoving = false;
         })
         // 开始轮播
         this.startAutoPlay();
@@ -152,36 +145,28 @@ const carousel = {
             this.bottomColor = this.imgs[1].mainColor;
         },
         handleClickLeftArrow() {
-            /*
-            这里调用reachStatusByActiveDot()是为了处理连点两次左箭头，第一次渐变还没完成就点第二次的情况，每次点击就先根据activeDot的值立刻重置为正确状态(即使在渐变中)，
-            如果没有调用reachStatusByActiveDot()，连点两次，最终的正确性是没问题的(轮播图静止后的状态只取决于activeDot,activeDot值是正确的就行)。第一次点击时
-            设置了`translateX(${offset}%)`，没位移完成第二次点击再设置`translateX(${offset}%)`(offset的值没变的)，中间没有经历把translateX设置回-11.1111%，
-            所以有没有调用reachStatusByActiveDot()都只有一次位移。区别在于没调用，会在位移结束后瞬变为第二张图片，而有调用后连点两次，第二次点击时会先把图片瞬变再继续位移，
-            把transition的时长设置得高一点就能看出差别
-            */
-            this.reachStatusByActiveDot();
-            this.bottomColor = this.imgs[0].mainColor;
-            this.activeDot = (this.activeDot - 1 + this.imgs.length) % this.imgs.length;
-            let offset = 0;
-            this.imgBoxStyle.transition = "transform 0.3s ease";
-            this.imgBoxStyle.transform = `translateX(${offset}%)`; // 然后这里会有个注册的transitionend回调
-            this.pacmanReverse = true;
+            // 连续点击时，在第一次点击的动画完成前，后续点击无效
+            if(!this.clickArrowMoving) {
+                this.clickArrowMoving = true;
+                this.bottomColor = this.imgs[0].mainColor;
+                this.activeDot = (this.activeDot - 1 + this.imgs.length) % this.imgs.length;
+                let offset = 0;
+                this.imgBoxStyle.transition = "transform 0.3s ease";
+                this.imgBoxStyle.transform = `translateX(${offset}%)`; // 然后这里会有个注册的transitionend回调
+                this.pacmanReverse = true;
+            }
         },
         handleClickRightArrow() {
-            /*
-            这里调用reachStatusByActiveDot()是为了处理连点两次右箭头，第一次渐变还没完成就点第二次的情况，每次点击就先根据activeDot的值立刻重置为正确状态(即使在渐变中)，
-            如果没有调用reachStatusByActiveDot()，连点两次，最终的正确性是没问题的(轮播图静止后的状态只取决于activeDot,activeDot值是正确的就行)。第一次点击时
-            设置了`translateX(${offset}%)`，没位移完成第二次点击再设置`translateX(${offset}%)`(offset的值没变的)，中间没有经历把translateX设置回-11.1111%，
-            所以有没有调用reachStatusByActiveDot()都只有一次位移。区别在于没调用，会在位移结束后瞬变为第二张图片，而有调用后连点两次，第二次点击时会先把图片瞬变再继续位移，
-            把transition的时长设置得高一点就能看出差别
-            */
-            this.reachStatusByActiveDot();
-            this.bottomColor = this.imgs[2].mainColor;
-            this.activeDot = (this.activeDot + 1) % this.imgs.length;
-            let offset = -11.1111 * 2;
-            this.imgBoxStyle.transition = "transform 0.3s ease";
-            this.imgBoxStyle.transform = `translateX(${offset}%)`; // 然后这里会有个注册的transitionend回调
-            this.pacmanReverse = false;
+            // 连续点击时，在第一次点击的动画完成前，后续点击无效
+            if(!this.clickArrowMoving) {
+                this.clickArrowMoving = true;
+                this.bottomColor = this.imgs[2].mainColor;
+                this.activeDot = (this.activeDot + 1) % this.imgs.length;
+                let offset = -11.1111 * 2;
+                this.imgBoxStyle.transition = "transform 0.3s ease";
+                this.imgBoxStyle.transform = `translateX(${offset}%)`; // 然后这里会有个注册的transitionend回调
+                this.pacmanReverse = false;
+            }
         },
         // 根据activeDot的值旋转imgs，activeDot的值反映了轮播图静止下来后的状态
         reachStatusByActiveDot() {
@@ -218,16 +203,16 @@ const carousel = {
             </div>
             <div class="bottom-box space-between" :style="{'height': '20%', 'background-color': bottomColor}">
                 <div class="gradient" :style="{'background': 'linear-gradient(to top,'+bottomColor+',transparent)'}"></div>
-                <div class="col-8">
+                <div class="col-8" style="padding: 0 15px">
                     <div class="title">{{imgs[1].title}}</div>
                     <ul>
-                        <li v-for="img,index in imgs" :class="{'dot':true,'active':index===activeDot,'reverse':pacmanReverse}" @click="handleClickDot($event, index)">
+                        <li v-for="img,index in imgs" :class="{'dot':true,'active':index===activeDot,'reverse':pacmanReverse&&activeDot==index}" @click="handleClickDot($event, index)">
                             <div class="before"></div>
                             <div class="after"></div>
                         </li>
                     </ul>
                 </div>
-                <div class="col-4 justify-center">
+                <div class="col-4 justify-center" style="padding: 0 15px">
                     <div class="gray-button justify-center align-center" style="margin-right: 12px" @click="handleClickLeftArrow()">
                         <span class="left-arrow"></span>
                     </div>
