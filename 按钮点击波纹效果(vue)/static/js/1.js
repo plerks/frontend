@@ -1,7 +1,7 @@
 const rippleButton = {
     template: `
-        <button class="button relative ripple-container" ref="rp" @mousedown="handleMouseDown" @mouseup="handleMouseUp"
-         style="font-weight: 500;letter-spacing: 0.08em">
+        <button class="button relative ripple-container" ref="rippleButton" @mousedown="handleMouseDown" @mouseup="handleMouseUp" @mouseout="handleMouseOut"
+         style="font-weight: 500;letter-spacing: 0.08em;padding: 5px 15px">
             <slot></slot>
             <span v-for="ripple in rippleQueue"
                 :style="{
@@ -15,12 +15,14 @@ const rippleButton = {
     `,
     data() {
         return {
-            rippleQueue: []
+            rippleQueue: [],
+            mouseDown: false
         }
     },
     methods: {
         handleMouseDown(e) {
-            const rect = this.$refs.rp.getBoundingClientRect();
+            this.mouseDown = true;
+            const rect = this.$refs.rippleButton.getBoundingClientRect();
             // x,y为点击位置在button中的坐标
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
@@ -40,15 +42,27 @@ const rippleButton = {
             // 必须要nextTick，不然没动画
             this.$nextTick(() => {
                 // 强制回流，试一下刚好就出动画了，很有意思，和"/折叠面板(vue)中的技巧一样"，上面通过window.setTimeout触发波纹扩张也能出动画。
-                this.$refs.rp.offsetHeight;
+                this.$refs.rippleButton.offsetHeight;
                 this.rippleQueue[this.rippleQueue.length - 1].isExpanding = true;
             });
-            // console.log(this.rippleQueue);
+            window.setTimeout(() => {
+                // 长按鼠标状态下，到时间也不清除波纹
+                if(!this.mouseDown) {
+                    this.rippleQueue.shift();
+                }
+            }, 300)
         },
         handleMouseUp(e) {
+            this.mouseDown = false;
+            // 延时一点后清除所有波纹
             window.setTimeout(() => {
-                this.rippleQueue.shift();
-            }, 300)
+                this.rippleQueue = [];
+            }, 10)
+        },
+        handleMouseOut(e) {
+            window.setTimeout(() => {
+                this.rippleQueue = [];
+            }, 10)
         }
     }
 }

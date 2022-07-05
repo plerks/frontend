@@ -9,9 +9,9 @@
 .ripple {
   position: absolute;
   border-radius: 50%;
-  background-color: rgba(0,0,0,0.3);
+  background-color: lightblue;
   opacity: 0.4;
-  transform: scale(0.15);
+  transform: scale(0.2);
   /*防止点到波纹上再冒泡到处理方法上*/
   pointer-events: none;
   transition: transform 0.3s ease-out;
