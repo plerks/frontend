@@ -42,32 +42,36 @@ const collapse = {
             this.expanded = !this.expanded
         },
         beforeEnter(el) {
+            el.classList.add("collapse-transition")
+            el.style.height = '0'
             console.log("beforeEnter")
         },
         enter(el) {
-            el.style.height = 'auto'
-            let expandedHeight = window.getComputedStyle(el).height
-            console.log("enter:" + expandedHeight)
-            el.style.height = '0px'
-            el.offsetHeight // 触发浏览器回流
-            el.style.height = expandedHeight // 要展开不能设置height为auto，不会出动画，所以要先获得固定值的高度
+            if (el.scrollHeight !== 0) {
+                el.style.height = el.scrollHeight + 'px';
+            } 
+            else {
+                el.style.height = '';
+            }
         },
         afterEnter(el) {
             console.log("afterEnter")
+            el.classList.remove("collapse-transition")
             el.style.height=''
         },
         beforeLeave(el) {
-
+            el.style.height = el.scrollHeight + 'px';
         },
         leave(el) {
-            console.log("leave:" + el.offsetHeight)
-            el.style.height = window.getComputedStyle(el).height
-            
-            el.offsetHeight // 触发浏览器回流，这里可以不用触发，上面enter()需要触发回流，见"../../说明.md"，应该只需要保证渲染线程看到高度从固定值到固定值的变化就行
-            el.style.height = '0px'
+            if (el.scrollHeight !== 0) {
+                // for safari: add class after set height, or it will jump to zero height suddenly, weired
+                el.classList.add("collapse-transition")
+                el.style.height = 0;
+              }
         },
         afterLeave(el) {
-            
+            el.classList.remove("collapse-transition")
+            el.style.height = '';
         }
     }
 }
