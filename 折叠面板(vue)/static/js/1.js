@@ -13,13 +13,17 @@ const collapse = {
             <span class="has-arrow" :aria-expanded="expanded" @click="expand()" style="flex: 1 1;padding: 5px;color: #5f5f5f">点击</span>
         </div>
     </div>
-    <div style="overflow: hidden">
+    <div style="overflow: hidden;">
         <transition
             name="fade-in"
+            @beforeEnter="beforeEnter"
             @enter="enter"
+            @afterEnter="afterEnter"
+            @beforeLeave="beforeLeave"
             @leave="leave"
+            @afterLeave="afterLeave"
         >
-          <div v-if="expanded">
+          <div v-show="expanded">
             <button class="button">Collapse Content</button>
             <button class="button">Collapse Content</button>
             <button class="button">Collapse Content</button>
@@ -37,17 +41,34 @@ const collapse = {
         expand: function () {
             this.expanded = !this.expanded
         },
+        beforeEnter(el) {
+            console.log("beforeEnter")
+        },
         enter(el) {
+            el.style.height = 'auto'
             let expandedHeight = window.getComputedStyle(el).height
+            console.log("enter:" + expandedHeight)
             el.style.height = '0px'
             el.offsetHeight // 触发浏览器回流
             el.style.height = expandedHeight // 要展开不能设置height为auto，不会出动画，所以要先获得固定值的高度
         },
-        leave (el) {
-            //el.style.height = window.getComputedStyle(el).height
+        afterEnter(el) {
+            console.log("afterEnter")
+            el.style.height=''
+        },
+        beforeLeave(el) {
+
+        },
+        leave(el) {
+            console.log("leave:" + el.offsetHeight)
+            el.style.height = window.getComputedStyle(el).height
+            
             el.offsetHeight // 触发浏览器回流，这里可以不用触发，上面enter()需要触发回流，见"../../说明.md"，应该只需要保证渲染线程看到高度从固定值到固定值的变化就行
             el.style.height = '0px'
         },
+        afterLeave(el) {
+            
+        }
     }
 }
 const app = Vue.createApp({
