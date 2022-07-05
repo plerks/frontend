@@ -22,8 +22,9 @@ const collapse = {
             @beforeLeave="beforeLeave"
             @leave="leave"
             @afterLeave="afterLeave"
+            @enter-cancelled="enterCanceled"
         >
-          <div v-show="expanded">
+          <div v-show="expanded" style="transition: all 2s ease">
             <button class="button">Collapse Content</button>
             <button class="button">Collapse Content</button>
             <button class="button">Collapse Content</button>
@@ -56,8 +57,8 @@ const collapse = {
             console.log("afterEnter")
             el.style.height=''
         },
-        beforeLeave(el) {
-
+        enterCanceled(el) {
+            console.log('enterCancelled' + el.offsetHeight)
         },
         leave(el) {
             console.log("leave:" + el.offsetHeight)
