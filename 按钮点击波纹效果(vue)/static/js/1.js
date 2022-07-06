@@ -1,9 +1,10 @@
 const rippleButton = {
     template: `
         <button class="button relative ripple-container" ref="rippleButton" @mousedown="handleMouseDown" @mouseup="handleMouseUp" @mouseout="handleMouseOut"
-         style="font-weight: 500;letter-spacing: 0.08em;padding: 5px 15px">
+         style="font-weight: 500;letter-spacing: 0.08em;padding: 8px 24px">
             <slot></slot>
-            <span v-for="ripple in rippleQueue"
+            <span v-for="(ripple,index) in rippleQueue"
+                :key=index
                 :style="{
                     width: ripple.width,
                     height: ripple.height,
@@ -35,6 +36,7 @@ const rippleButton = {
                 left: x - radius + 'px',
                 top: y - radius + 'px',
                 isExpanding: false,
+                transitionend: false
             });
             /*window.setTimeout(() => {
                 this.rippleQueue[this.rippleQueue.length - 1].isExpanding = true;
@@ -43,26 +45,34 @@ const rippleButton = {
             this.$nextTick(() => {
                 // 强制回流，试一下刚好就出动画了，很有意思，和"/折叠面板(vue)中的技巧一样"，上面通过window.setTimeout触发波纹扩张也能出动画。
                 this.$refs.rippleButton.offsetHeight;
+                // 开启波纹扩张动画
                 this.rippleQueue[this.rippleQueue.length - 1].isExpanding = true;
+                this.$refs.rippleButton.addEventListener("transitionend", () => {
+                    // this.rippleQueue[i].transitionend值是给handleMouseUp用的
+                    for(let i = 0; (i < this.rippleQueue.length) && (this.rippleQueue[i].transitionend == false); i++) {
+                        this.rippleQueue[i].transitionend = true;
+                    }
+                    // transitionend时按理应该清除所有波纹，但是要处理长按的情况，所以transitionend时如果鼠标是按下状态，要剩一个波纹在那里
+                    if(!(this.mouseDown && this.rippleQueue.length == 1)) {
+                        this.rippleQueue.shift();
+                    }
+                })
             });
-            window.setTimeout(() => {
-                // 长按鼠标状态下，到时间也不清除波纹
-                if(!this.mouseDown) {
-                    this.rippleQueue.shift();
-                }
-            }, 300)
         },
         handleMouseUp(e) {
             this.mouseDown = false;
-            // 延时一点后清除所有波纹
+            // handleMouseUp只负责清除因为长按而没有在transitionend时清除的波纹(延时了一点)
             window.setTimeout(() => {
-                this.rippleQueue = [];
-            }, 10)
+                if(this.rippleQueue[0].transitionend==true) {
+                    this.rippleQueue.shift()
+                }
+            }, 30)
         },
         handleMouseOut(e) {
+            // 鼠标移出，延时一点后清除所有波纹
             window.setTimeout(() => {
                 this.rippleQueue = [];
-            }, 10)
+            }, 30)
         }
     }
 }
