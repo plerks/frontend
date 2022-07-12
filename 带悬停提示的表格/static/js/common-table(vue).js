@@ -25,6 +25,7 @@ const commonTable = {
           <table class="common-table">
               <thead>
                 <tr>
+                    <!-- 和超过了100%，但是会被计算为等宽 -->
                     <th style="width: 20%">
                       1
                     </th>
