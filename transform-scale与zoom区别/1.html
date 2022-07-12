@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="static/css/1.css">
+</head>
+<!--
+    zoom放大缩小会影响布局,第一个entry被撑开了;
+    transform: scale()不会,只会影响渲染显示的位置(虽然在这个例子中导致出现了横向滚动条)
+-->
+<body>
+    <div class="entry" style="margin: 15px;">
+        <div class="content-header lightgray items-center" style="flex: 0 0 50px;"><span>主<br/>题</span></div>
+        <div class="content" style="flex: 1 1;padding: 10px;zoom: 2;">
+            <button class="button">内容区域</button>
+            <button class="button">内容区域</button>
+            <button class="button">内容区域</button>
+        </div>
+    </div>
+    <div class="entry" style="margin: 15px;">
+        <div class="content-header lightgray items-center" style="flex: 0 0 50px;"><span>主<br/>题</span></div>
+        <div class="content" style="flex: 1 1;padding: 10px;transform: scale(2);">
+            <button class="button">内容区域</button>
+            <button class="button">内容区域</button>
+            <button class="button">内容区域</button>
+        </div>
+    </div>
+</body>
+</html>
