@@ -43,7 +43,7 @@ const rippleButton = {
             },0)*/
             // 必须要nextTick，不然没动画
             this.$nextTick(() => {
-                // 强制回流，试一下刚好就出动画了，很有意思，和"/折叠面板(vue)中的技巧一样"，上面通过window.setTimeout触发波纹扩张也能出动画。
+                // 强制回流，试一下刚好就出动画了，很有意思，和"/折叠面板"中的技巧一样，上面通过window.setTimeout触发波纹扩张也能出动画。
                 this.$refs.rippleButton.offsetHeight;
                 // 开启波纹扩张动画
                 this.rippleQueue[this.rippleQueue.length - 1].isExpanding = true;
