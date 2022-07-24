@@ -1,0 +1,36 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.circle-progress-background {
+    fill: transparent;
+    stroke: #dedede;
+    stroke-width: 6;
+    stroke-dasharray: 295.16;
+}
+.circle-progress {
+    fill: transparent;
+    stroke: #1890ff;
+    stroke-width: 6;
+    /* 设置stroke两端为圆的 */
+    stroke-linecap: round;
+    stroke-dasharray: 295.16;
+    transition: stroke-dashoffset 1s linear;
+    transform-origin: center;
+    transform: rotate(-90deg);
+}
+.input-ratio {
+    height: 32px;
+    width: 32px;
+    position: absolute;
+    top: calc(100% + 32px);
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
