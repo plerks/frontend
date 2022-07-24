@@ -1,0 +1,53 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.circle-progress {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: linear-gradient(gold,transparent 40%);
+    animation: roll 1s linear infinite;
+}
+/*
+遮挡,使circle-progress只出现一个环,但是这个circle-progress实现使得.circle-progress::before必须指定背景颜色,
+无法是transparent的,外部背景色不是白色时(例如把body背景改成黑色)圆环中间就是一坨白色,很突兀。中间部分必须
+指定颜色导致这种实现不通用。
+*/
+.circle-progress::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% - 20px);
+    height: calc(100% - 20px);
+    border-radius: 50%;
+    background-color: white;
+}
+/* 边缘模糊效果 */
+.circle-progress::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: linear-gradient(gold,transparent 40%);
+    filter: blur(15px);
+    z-index: -1;
+}
+@keyframes roll{
+    to{
+        transform: rotateZ(360deg);
+        /* 旋转色相 */
+        filter: hue-rotate(360deg);
+    }
+}

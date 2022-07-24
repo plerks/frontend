@@ -1,0 +1,38 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.circle-progress-background {
+    fill: transparent;
+    stroke: #dedede;
+    stroke-width: 5px;
+    stroke-dasharray: 157;
+    stroke-dashoffset: 0;
+}
+.circle-progress {
+    fill: transparent;
+    stroke: url(#progress-gradient);
+    stroke-width: 5px;
+    /* 设置两端为圆的 */
+    stroke-linecap: round;
+    /* 这里157来自圆周长度2*pi*25,157比真实值稍小了一点没有出问题 */
+    stroke-dasharray: 157;
+    stroke-dashoffset: 78;
+    transform-origin: 50% 50%;
+    animation: roll 0.5s linear infinite;
+}
+@keyframes roll {
+    0% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

@@ -1,0 +1,43 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.circle-progress {
+    fill: transparent;
+    stroke: skyblue;
+    stroke-width: 5px;
+    /* 设置两端为圆的 */
+    stroke-linecap: round;
+    transform-origin: center;
+    animation: roll 1.5s linear infinite;
+}
+/*
+首先整体有个360度旋转动画,然后用stroke-dasharray和stroke-dashoffset控制滑块,为了防止出现波浪型线段,
+把缺口长度设置成足够大(这里157来自圆周长度2*pi*25,157比真实值稍小了一点没有出问题)。这里把关键帧里的
+rotate去掉才能看出stroke-dasharray和stroke-dashoffset要达成的效果,不仅要通过改stroke-dasharray改
+显示的线段总长,还要通过stroke-dashoffset让显示的线段在圆周里滑动(转动位置)。
+*/
+@keyframes roll {
+    0% {
+        transform: rotate(0);
+        stroke-dasharray: 10 157;
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 75 157;
+        stroke-dashoffset: 0;
+    }
+    100% {
+        transform: rotate(360deg);
+        stroke-dasharray: 100 157;
+        /* 这里要通过stroke-dashoffset让滑块在圆周里滑动(转动位置) */
+        stroke-dashoffset: -157;
+    }
+}
