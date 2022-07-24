@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="static/css/1.css">
+</head>
+<body>
+    <!-- 这个relative元素有border就能看出来,绝对定位元素是相对于其包含块的内容区定位的 -->
+    <div style="width: 300px;height: 300px;border: 15px solid lightgreen;position: relative;">
+        <div style="width: 300px;height: 300px;border: 15px solid skyblue;position: absolute;top: 0;left: 0">
+        </div>
+    </div>
+    <!-- 重合在一起 -->
+    <div style="width: 300px;height: 300px;border: 15px solid lightgreen;position: relative;">
+        <div style="width: 300px;height: 300px;border: 15px solid skyblue;position: absolute;top: -15px;left: -15px">
+        </div>
+    </div>
+</body>
+</html>
