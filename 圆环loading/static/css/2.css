@@ -20,7 +20,7 @@ body{
 .loading::before {
     content: "";
     position: absolute;
-    /* 绝对定位是相对包含块内容区定位,所以要上移-10px才能让loading::before和loading重合在一起 */
+    /* 绝对定位是相对包含块内容区定位,而.loading有border,所以要上移10px才能让loading::before和loading重合在一起 */
     top: -10px;
     left: 0;
     width: 100%;
@@ -32,7 +32,7 @@ body{
 .loading::after {
     content: "";
     position: absolute;
-    /* 绝对定位是相对包含块内容区定位,所以要上移-10px才能让loading::after和loading重合在一起 */
+    /* 绝对定位是相对包含块内容区定位,而.loading有border,所以要上移10px才能让loading::after和loading重合在一起 */
     top: -10px;
     /* 这里不写left的话,把loading-text的position: absolute取消掉,会发现::after被loading-text挤开(把::after的rotate取消
     就能看出来),原因应该是绝对定位不指定偏移量时,其位置与position为static时的位置一致 */

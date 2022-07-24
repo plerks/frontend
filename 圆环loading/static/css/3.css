@@ -20,10 +20,17 @@ body{
     fill: transparent;
     stroke: url(#progress-gradient);
     stroke-width: 5px;
-    /* 设置两端为圆的 */
+    /* 设置stroke两端为圆的 */
     stroke-linecap: round;
     /* 这里157来自圆周长度2*pi*25,157比真实值稍小了一点没有出问题 */
     stroke-dasharray: 157;
+    /*
+    实线长一个圆周,stroke-dasharray参数个数为奇数时会自动重复一遍变成偶数个,
+    所以虚线长也是157。(其实不止一条实线一条虚线,其实是实虚不断重复的,只是其它的超出可视区域)
+    通过stroke-dashoffset移动dasharray,从而实线的一半到了不可视区域内,只显示一半的实线(占据半圆),剩下的半圆被虚线占据。
+    stroke-dashoffset为正时向左/逆时针移动,为负时向右/顺时针移动。
+    此外,这个圆环的stroke开始位置在圆最右边那个点。
+    */
     stroke-dashoffset: 78;
     transform-origin: 50% 50%;
     animation: roll 0.5s linear infinite;

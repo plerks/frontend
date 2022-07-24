@@ -13,7 +13,7 @@ body{
     fill: transparent;
     stroke: skyblue;
     stroke-width: 5px;
-    /* 设置两端为圆的 */
+    /* 设置stroke两端为圆的 */
     stroke-linecap: round;
     transform-origin: center;
     animation: roll 1.5s linear infinite;
