@@ -13,11 +13,12 @@ body{
     fill: transparent;
     stroke: #dedede;
     stroke-width: 6;
+    /* 295.16来自2 * 3.14 * 47 */
     stroke-dasharray: 295.16;
 }
 .circle-progress {
     fill: transparent;
-    stroke: #1890ff;
+    stroke: url(#progress-gradient);
     stroke-width: 6;
     /* 设置stroke两端为圆的 */
     stroke-linecap: round;

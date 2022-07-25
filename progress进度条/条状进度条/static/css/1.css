@@ -1,0 +1,58 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.linear-progress-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 9999px;
+    width: 100%;
+    height: 100%;
+    background: #dedede;
+}
+.linear-progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 9999px;
+    width: 100%;
+    height: 100%;
+    transition: width 1.5s ease-in-out;
+    background: linear-gradient(to right, rgb(16, 142, 233), rgb(135, 208, 104));
+}
+.linear-progress::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    border-radius: 9999px;
+    width: 100%;
+    height: 100%;
+    background: white;
+    opacity: 0.1;
+    animation: to-right 1.5s ease-in-out infinite;
+}
+@keyframes to-right {
+    from {
+        left: -100%;
+    }
+    to {
+        left: 0;
+    }
+}
+.input-ratio {
+    height: 32px;
+    width: 32px;
+    position: absolute;
+    top: calc(100% + 32px);
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
