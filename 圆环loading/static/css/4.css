@@ -11,7 +11,7 @@ body{
 }
 .circle-progress {
     fill: transparent;
-    stroke: skyblue;
+    stroke: #27a5d9;
     stroke-width: 5px;
     /* 设置stroke两端为圆的 */
     stroke-linecap: round;
