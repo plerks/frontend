@@ -67,10 +67,12 @@ const rippleButton = {
             }
         },
         handleMouseOut(e) {
-            // 鼠标移出，延时一点后清除所有波纹
-            window.setTimeout(() => {
-                this.rippleQueue = [];
-            }, 30)
+            // 虽然有可能在按住鼠标的情况下把光标移出按钮,这里仍然要把mouseDown置成false(这时鼠标左键可能是按下的状态),因为要给handleTransitionend做判断
+            this.mouseDown = false;
+            // 鼠标移出时清除所有已完成过渡的波纹
+            for(let i = 0; (i < this.rippleQueue.length) && (this.rippleQueue[i].transitionend == true); i++) {
+                this.rippleQueue.shift();
+            }
         },
         handleTransitionend(e) {
             if (e.propertyName == "transform") {
