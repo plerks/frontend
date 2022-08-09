@@ -1,0 +1,103 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+}
+#app {
+    width: 100%;
+}
+.button {
+    padding: 5px;
+    color: black;
+    border: 0px;
+    background-color: white;
+    text-align: center;
+    font-size: 16px;
+}
+.button:enabled:hover {
+    opacity: 0.9;
+    transition: 0.3s;
+}
+.button:disabled {
+    opacity: 0.5;
+    transition: 0.3s;
+}
+.relative {
+    position: relative;
+}
+.ripple-container {
+    overflow: hidden;
+}
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background-color: lightblue;
+    opacity: 0.4;
+    transform: scale(0.1);
+    pointer-events: none;
+    transition: transform 0.5s ease-out;
+}
+.expand {
+    transform: scale(1);
+}
+.tab {
+    padding: 15px;
+    border: 1px solid #dedede;
+    border-radius: 5px;
+}
+.tab-header {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    padding: 5px 0;
+    margin-bottom: 15px;
+    /* 用border-bottom作为tab-header-bar的背景,二者会重合不上 */
+    /* border-bottom: 3px solid #dedede; */
+    position: relative;
+}
+.tab-header > *{
+    flex: 1 1;
+}
+.tab-header-bar {
+    height: 3px;
+    background-color: #3fd4d4;
+    border-radius: 999px;
+    position: absolute;
+    top: calc(100% - 3px);
+    transition: left 0.5s cubic-bezier(0.05, 0.45, 0.25, 1);
+}
+/* 需要把tab-header-bar-background在模板里放在tab-header-bar前面,否则需要降低一下tab-header-bar-background的z-index */
+.tab-header-bar-background {
+    height: 3px;
+    width: 100%;
+    background-color: #dedede;
+    border-radius: 999px;
+    position: absolute;
+    top: calc(100% - 3px);
+}
+.tab-container {
+    width: 100%;
+    display: flex;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: transform 0.5s cubic-bezier(0.05, 0.45, 0.25, 1);
+}
+.tab-container > * {
+    flex: 1 1;
+}
+.card {
+    background-color: #fff;
+    width: 100%;
+    border-radius: 5px;
+    box-shadow:1px 1px 15px 0 rgba(69,65,78,.08);
+    padding: 15px;
+    font-family: Arial;
+    border: 1px solid rgb(151, 233, 151);
+}
