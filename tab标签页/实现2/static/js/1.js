@@ -170,4 +170,7 @@ activeIndex取值时还需要加上.value, 浏览器控制台也有提示：
     To opt-in to the new behavior now, set `app.config.unwrapInjectedRef = true` (this config is temporary and will not be needed in the future.)
 
 除了用provide,inject, 还有一种办法是用作用域插槽,见commit:5ca9d8b3727b3b48815174b0e07464f4b3bc8b73
+
+PS:这里想给.tab加个transition: all 0.5s linear来实现.tab高度变化时渐变是没用的。虽然.tab高度变了,但是是被内容撑起来的,自始至终height属性没变,
+没有让渲染线程看到height属性从数值到数值的变化,出不了动画。
 */
