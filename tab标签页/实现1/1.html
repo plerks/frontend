@@ -6,28 +6,33 @@
     <link rel="stylesheet" href="static/css/1.css">
 </head>
 <body>
-<div class="container">
-    <div class="row">
-        <div class="col-12">
-            <ul style="list-style: none;display: flex;border-bottom: 1px solid rgb(222, 226, 230);">
-                <span class="tab-item tab-active">标签页1</span>
-                <span class="tab-item">标签页2</span>
-                <span class="tab-item">标签页3</span>
-                <span class="tab-item">标签页4</span>
-            </ul>
-        </div>
-        <div>
-            <div class="col-12 tab-content tab-content-active">
-                <div class="button">标签页1内容</div>
+<div class="tab">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <ul style="list-style: none;display: flex;border-bottom: 1px solid rgb(222, 226, 230);">
+                    <span class="tab-item tab-active">标签页1</span>
+                    <span class="tab-item">标签页2</span>
+                    <span class="tab-item">标签页3</span>
+                    <span class="tab-item">标签页4</span>
+                </ul>
             </div>
-            <div class="col-12 tab-content">
-                <div class="button">标签页2内容</div>
-            </div>
-            <div class="col-12 tab-content">
-                <div class="button">标签页3内容</div>
-            </div>
-            <div class="col-12 tab-content">
-                <div class="button">标签页4内容</div>
+            <div>
+                <div class="col-12 tab-content tab-content-active">
+                    <div class="button">标签页1内容</div>
+                </div>
+                <div class="col-12 tab-content">
+                    <div class="button">标签页2内容</div>
+                    <div class="button">标签页2内容</div>
+                    <div class="button">标签页2内容</div>
+                </div>
+                <div class="col-12 tab-content">
+                    <div class="button">标签页3内容</div>
+                    <div class="button">标签页3内容</div>
+                </div>
+                <div class="col-12 tab-content">
+                    <div class="button">标签页4内容</div>
+                </div>
             </div>
         </div>
     </div>
@@ -36,19 +41,17 @@
     // 这部分代码参考b站up主艾恩小灰灰(UID-13604667)，https://www.bilibili.com/video/BV1H5411R7jr
     const tabItems = document.querySelectorAll('.tab-item');
     const tabContents = document.querySelectorAll('.tab-content');
+    let activeIndex = 0;
     function removeActive() {
-        tabItems.forEach((item) => {
-            item.classList.remove('tab-active');
-        })
-        tabContents.forEach((content) => {
-            content.classList.remove('tab-content-active');
-        })
+        tabItems[activeIndex].classList.remove('tab-active');
+        tabContents[activeIndex].classList.remove('tab-content-active');
     }
     tabItems.forEach((item, index) => {
             item.addEventListener('click', () => {
                 removeActive();
                 tabItems[index].classList.add('tab-active');
                 tabContents[index].classList.add('tab-content-active');
+                activeIndex = index;
             })
         }
     )

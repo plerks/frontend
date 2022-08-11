@@ -3,6 +3,12 @@
     padding: 0;
     box-sizing: border-box;
 }
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .container {
     padding-left: 15px;
     padding-right: 15px;
@@ -26,6 +32,11 @@
 .button:hover {
     opacity: 0.9;
     transition: 0.3s;
+}
+.tab {
+    padding: 15px;
+    border: 1px solid #dedede;
+    border-radius: 5px;
 }
 .tab-item {
     border: 1px solid transparent;
