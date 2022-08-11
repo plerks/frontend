@@ -105,7 +105,9 @@ const tab = {
             <div style="position: relative">
                 <div class="tab-container"
                   :style="{width: this.tabHeaders.length * 100 +'%',transform: this.tabTranslateX}">
-                    <slot></slot>
+                  <template v-for="(header,index) in tabHeaders">
+                    <slot :name="index" :values="activeIndex==index?'':'tab-item-inactive'"></slot>
+                  </template>
                 </div>
             </div>
         </div>
@@ -135,9 +137,32 @@ const app = Vue.createApp({
     },
     template: `
     <Tab :tabHeaders="this.tabHeaders">
-        <TabItem><div class="card" style="border-color: rgb(151, 233, 151)">1</div></TabItem>
-        <TabItem><div class="card" style="border-color: red">2</div></TabItem>
-        <TabItem><div class="card" style="border-color: blue">3</div></TabItem>
+        <!-- 要求Tab组件用户写上template和:class="slotProps.values", 用来控制.tab-item-inactive类 -->
+        <template #0="slotProps">
+            <TabItem :class="slotProps.values">
+                <div class="card" style="border-color: rgb(151, 233, 151)">1</div>
+            </TabItem>
+        </template>
+        <template #1="slotProps">
+            <TabItem :class="slotProps.values">
+                <div class="card" style="border-color: red">2</div>
+                <div class="card" style="border-color: red">2</div>
+                <div class="card" style="border-color: red">2</div>
+            </TabItem>
+        </template>
+        <template #2="slotProps">
+            <TabItem :class="slotProps.values">
+                <div class="card" style="border-color: blue">3</div>
+            </TabItem>
+        </template>
     </Tab>
 `
 }).mount("#app");
+
+/*
+为了便于使用Tab组件,具体的Tab中的内容需要由Tab的父组件提供给Tab中的插槽。
+此外,非在显示的TabItem需要设置height为0,否则tab-container的高度将由最高的TabItem决定,会导致较矮的TabItem下方有空白,
+而不是tab-container贴合当前的TabItem。
+但是,只有Tab才知道active的TabItem,所以需要用作用域插槽(scoped slots)从Tab的<slot>向父组件的<template>传递数据,然后再给
+到TabItem改变height
+*/
