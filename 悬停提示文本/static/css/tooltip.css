@@ -20,8 +20,10 @@
 }
 .tooltip:hover .tooltip-text {
     visibility: visible;
-    /* css无法支持从0到auto的过渡效果，要么靠max-height(指定一个充分大的值)实现高度的过渡效果，要么计算出高度
-    计算的例子见 https://www.bilibili.com/video/BV1L34y1q7mZ (gitee地址 https://gitee.com/wyanhui02/html_css_demo/blob/master/html/100.html ) ,
+    /* css无法支持从0到auto的高度过渡效果，一个办法是靠max-height(指定一个充分大的值)实现高度的过渡效果，还有一个不通用的办法是计算出高度(这里的计算不是指用js获取元素高度，
+    而是要包含的元素确定的情况下(比如提前知道是数行(行数可以动态地用js获取)固定了line-height的文字)，通过计算知道tooltip-text该展开的高度再进行修改，对tooltip-text包含的元素特点要提前知道，不通用)，
+    相关的例子见 https://www.bilibili.com/video/BV1L34y1q7mZ (gitee地址 https://gitee.com/wyanhui02/html_css_demo/blob/master/html/100.html ) ,
+    通用的通过js获取元素高度并实现动画的例子见"/折叠面板"。
     此外或许也可以通过设置父元素的overflow为hidden收起折叠面板，这样做始终能获取到要折叠部分的高度，然后修改父元素的overflow属性并增减height实现折叠和收起的效果,
     还有一些可以参考的链接:
         https://juejin.cn/post/6865316668986523661
