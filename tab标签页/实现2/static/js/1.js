@@ -73,6 +73,7 @@ const rippleButton = {
         }
     }
 }
+// 见https://cn.vuejs.org/guide/quick-start.html#without-build-tools，全局构建版的Vue(直接页面引Vue脚本)，所有API都暴露在了全局变量Vue上
 const { computed } = Vue;
 const tab = {
     components: {
@@ -85,6 +86,17 @@ const tab = {
     },
     provide() {
         return {
+            /*
+            使用选项式api，这个响应式的provide写法见vue3官网(未来这个cn.vuejs.org域名可能会被vue团队改成指向vue4+的文档)：
+            https://cn.vuejs.org/guide/components/provide-inject.html#provide 和
+            https://cn.vuejs.org/guide/components/provide-inject.html#working-with-reactivity。(网页上api风格偏好要切到选项式)
+            使用组合式api，按官网说法(https://cn.vuejs.org/guide/components/provide-inject.html#provide，网页上api风格偏好要切到组合式)，
+            这样写：
+                import { ref, provide } from 'vue' // 引脚本的情况下是const { ref, provide } = Vue
+                const count = ref(0)
+                provide('key', count)
+            直接就是响应式的provide
+            */
             activeIndex: computed(() => this.activeIndex)
         }
     },
