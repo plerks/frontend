@@ -45,6 +45,7 @@ const collapse = {
         },
         beforeEnter(el) {
             el.style.height = ''
+            el.classList.add("collapse-transition")
         },
         enter(el) {
             let expandedHeight = window.getComputedStyle(el).height
@@ -54,9 +55,11 @@ const collapse = {
         },
         afterEnter(el) {
             el.style.height = ''
+            el.classList.remove("collapse-transition")
         },
         beforeLeave(el) {
             el.style.height = ''
+            el.classList.add("collapse-transition")
         },
         leave (el) {
             el.style.height = this.currentHeight + 'px'
@@ -65,12 +68,19 @@ const collapse = {
         },
         afterLeave(el) {
             el.style.height = ''
+            el.classList.remove("collapse-transition")
         }
 
         /*
         上面的v-show="expanded"不能换成v-if="expanded"。否则会有问题，毕竟v-if要重新插入元素到dom中，所以这里用v-if动画会不正常。
+        
         为了保证动画被打断时的开闭连续(打开到一半时点关闭，要保证从半高缩到0，而非突然变成全高再缩到0)，必须获得目前变化到的高度。
         所以要在click时获得当前的高度并记录，然后动画变化到0/全高。
+
+        很奇怪，不能用fade-in-enter-active和fade-in-leave-active来声明transition，否则把transition时长拉大，反复点击开闭，还是会出现
+        突然瞬间变到完全打开/完全关闭的情况。得在enter,leave的钩子函数里添加/删除class来控制transition。
+
+        仍然还有一个问题是有时会出现快要到展开/关闭结束时，突然跳到完全展开/关闭(例如关闭到一半再点打开)。
         */
     }
 }

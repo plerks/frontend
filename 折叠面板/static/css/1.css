@@ -5,23 +5,20 @@
 }
 /* 参考 https://segmentfault.com/q/1010000038499249
         https://v3.cn.vuejs.org/api/sfc-spec.html#style 单文件组件(.vue)才有scoped css*/
-.fade-in-enter-active {
-  transition: all 2s ease;
-}
 .fade-in-enter-from {
   opacity: 0;
 }
 .fade-in-enter-to {
   opacity: 1;
 }
-.fade-in-leave-active {
-  transition: all 2s ease;
-}
 .fade-in-leave-from {
   opacity: 1;
 }
 .fade-in-leave-to {
   opacity: 0;
+}
+.collapse-transition {
+  transition: all 6s linear;
 }
 .has-arrow {
   position: relative;
