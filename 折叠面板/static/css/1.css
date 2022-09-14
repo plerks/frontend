@@ -18,10 +18,11 @@
   opacity: 0;
 }
 .collapse-transition {
-  transition: all 6s linear;
+  transition: all 0.6s ease-out;
 }
 .has-arrow {
   position: relative;
+  user-select: none;
 }
 /*.has-arrow:not(.expanded)::after {
   content: "";
