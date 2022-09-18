@@ -1,0 +1,30 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+.border-flow-button {
+  cursor: pointer;
+  user-select: none;
+}
+.border-rect {
+  fill: none;
+  stroke: #27a5d9;
+  stroke-width: 5;
+  transition: 1s ease;
+  stroke-dasharray: 40 420;
+  stroke-dashoffset: -270;
+}
+/* .border-rect:hover不行，rect fill为none，鼠标放rect内部:hover没起效，放rect边缘线:hover有效 */
+.border-flow-button:hover .border-rect {
+  stroke: #06e6a0;
+  filter: hue-rotate(360deg);
+  stroke-dasharray: 50 0;
+  stroke-dashoffset: 50;
+}
