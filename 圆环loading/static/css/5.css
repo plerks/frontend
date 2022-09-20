@@ -1,0 +1,52 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.dot-rotate {
+    /* 普通元素的transform默认相对元素自身中心，但是svg中transform默认相对画布左上角，
+    参考https://www.zhangxinxu.com/wordpress/2015/10/understand-svg-transform/ */
+    transform-origin: 50% 50%;
+    animation: rotate 2s linear infinite;
+}
+.dot-rotate:nth-child(1) {
+    animation-delay: 0.15s;
+}
+.dot-rotate:nth-child(2) {
+    animation-delay: 0.3s;
+}
+.dot-rotate:nth-child(3) {
+    animation-delay: 0.45s;
+}
+.dot-rotate:nth-child(4) {
+    animation-delay: 0.6s;
+}
+.dot-rotate:nth-child(5) {
+    animation-delay: 0.75s;
+}
+.dot-rotate:nth-child(6) {
+    animation-delay: 0.9s;
+}
+.dot-rotate:nth-child(7) {
+    animation-delay: 1.05s;
+}
+@keyframes rotate {
+    0% {
+        rotate: 0deg;
+    }
+    40% {
+        rotate: 180deg;
+    }
+    80% {
+        rotate: 270deg;
+    }
+    100% {
+        rotate: 360deg;
+    }
+}
