@@ -24,8 +24,10 @@ const lazyLoadDemo = {
             threshold: [0, 0.2, 0.75, 1]
         }
         let observer = new IntersectionObserver((entries) => {
-            for (let i = 0; i < entries.length; i++) {
-                console.log("第"+i+"张图片"+"intersectionRatio为："+entries[i].intersectionRatio)
+            console.log(entries);
+            for (var i = 0; i < entries.length; i++) {
+                // 回调时entries只会包含触发了threshold的target，不一定是全部被observe了的target
+                console.log(i+" "+"intersectionRatio为："+entries[i].intersectionRatio);
                 if (entries[i].intersectionRatio >= 0.75) { // intersectionRatio不一定能刚好到1,用0.75的比率作判断
                     /* 用户滑动图片到可视区域,<img>添加到dom中时浏览器会去取src对应的图片,
                        从而实现懒加载(对应src的图片取回来后删除再添加相同src的<img>不会重新请求) */
