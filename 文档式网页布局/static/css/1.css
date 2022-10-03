@@ -1,0 +1,134 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html {
+    scroll-behavior: smooth;
+}
+.header {
+    background-color: #fff;
+    width: 100%;
+    border-radius: 5px 5px 5px 0;
+    padding: 15px 30px;
+    font-family: Arial;
+    border-bottom: 1px solid #cbcdd3;
+    position: fixed;
+    top: 0;
+    z-index: 9999;
+}
+:root {
+    --header-height: 59px;
+    --outline-link-height: 20px;
+    --outline-link-margin-bottom: 12px;
+    --outline-link-padding-top: 15px;
+}
+.flex-between {
+    display: flex;
+    justify-content: space-between;
+}
+.search {
+    outline: none;
+    width: 240px;
+    height: 28px;
+    line-height: 28px;
+    padding: 0 15px;
+    border-radius: 4px;
+    border: 1px solid #cbcdd3;
+    color: #606066;
+    transition: all .2s linear;
+}
+.search:focus {
+    width: 540px;
+    border-color: rgb(66, 184, 131);;
+}
+.icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+}
+.sidebar {
+    position: fixed;
+    top: var(--header-height);
+    overflow-y: scroll;
+    width: 25%;
+    height: calc(100vh - 59px);
+    padding: 0 30px 0 60px;
+}
+.h-scrollbar::-webkit-scrollbar {
+    width: 8px;
+}
+.h-scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: #b7b0b0;
+}
+.h-scrollbar:hover::-webkit-scrollbar-thumb {
+    background-color: #b7b0b0;
+}
+.h-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: #a19797;
+}
+.h-scrollbar::-webkit-scrollbar-track {
+    border-radius: 4px;
+    background-color: #ededee;
+}
+.title {
+    font-size: 16px;
+    color: rgba(60, 60, 60, 0.7);
+    padding: 4px 0;
+    cursor: pointer;
+    transition: color 0.3s linear;
+    display: block;
+    text-decoration: none;
+}
+.title:not(.router-link-active):hover {
+    color: rgb(33, 53, 71);
+}
+.router-link-active {
+    color: rgb(66, 184, 131);
+}
+.content-panel {
+    padding-top: var(--header-height);
+    padding-left: 25%;
+}
+.catalog {
+    position: sticky;
+    top: var(--header-height);
+    padding: 15px 30px 0 30px;
+}
+.paragraph-title {
+    margin: 1.8rem 0 1.8rem;
+    transition: color 0.5s linear;
+}
+.paragraph-title .head-anchor {
+    opacity: 0;
+    color: rgb(66, 184, 131);
+    cursor: pointer;
+    text-decoration: none;
+}
+.paragraph-title:hover .head-anchor {
+    opacity: 1;
+}
+.outline-link {
+    line-height: var(--outline-link-height);
+    margin-bottom: var(--outline-link-margin-bottom);
+    cursor: pointer;
+    color: rgba(60, 60, 60, 0.7);
+    font-size: 16px;
+    display: block;
+    text-decoration: none;
+    user-select: none;
+}
+.outline-link:hover {
+    color: rgba(33, 53, 71);
+}
+.outline-marker {
+    width: 4px;
+    height: var(--outline-link-height);
+    background-color: green;
+    border-radius: 4px;
+    position: absolute;
+    top: 47px;
+    left: 15px;
+    transition: all 0.2s linear;
+}
