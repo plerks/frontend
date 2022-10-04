@@ -119,9 +119,6 @@ const content = {
 }
 
 const contentPanel = {
-    components: {
-        Content: content
-    },
     template: `
     <div>
         <router-view name="default"></router-view>
