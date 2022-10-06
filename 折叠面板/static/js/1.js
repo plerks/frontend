@@ -23,7 +23,8 @@ const collapse = {
             @leave="leave"
             @afterLeave="afterLeave"
         >
-          <div v-show="expanded">
+          <!--这个要在竖直方向上折叠的元素,竖直方向的两头有padding,margin时,动画末尾就会卡一下,奇怪-->
+          <div v-show="expanded" style="/* margin: 15px 0;padding: 15px 0 */">
             <button class="button">Collapse Content</button>
             <button class="button">Collapse Content</button>
             <button class="button">Collapse Content</button>
