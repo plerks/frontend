@@ -1,0 +1,102 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+}
+.container {
+  width: 100%;
+  padding: 0 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.code-fragment {
+  width: 100%;
+  max-width: 1280px;
+  color: #c9d1d9;
+  /* 要用等宽字体,不然对不齐 */
+  font-family: Consolas, Monaco, monospace;
+  font-size: 14px;
+}
+.header {
+  background-color: #161b22;
+  border-radius: 5px 5px 0 0;
+  padding: 8px 16px;
+  border: 1px solid #30363d;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.content {
+  border-radius: 0 0 5px 5px;
+  border: 1px solid #30363d;
+  border-top: 0px;
+}
+.svg-icon {
+  stroke: currentColor;
+  fill: currentColor;
+  cursor: pointer;
+  stroke-width: 0;
+}
+.copy {
+  color: #8b949e;
+}
+.copy:hover {
+  color: #58a6ff;
+}
+.circle-progress-background {
+  fill: transparent;
+  stroke: #8b949e;
+  stroke-width: 2;
+}
+.circle-progress {
+  fill: transparent;
+  stroke: #58a6ff;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 38;
+  stroke-dashoffset: 16;
+  transform-origin: 50% 50%;
+  animation: roll 1.2s linear infinite;
+}
+@keyframes roll {
+  0% {
+      transform: rotate(0);
+  }
+  100% {
+      transform: rotate(360deg);
+  }
+}
+.finish {
+  animation: finish-animation 1s linear forwards;
+}
+@keyframes finish-animation {
+  from {
+      stroke-dasharray: 0 100%;
+  }
+  to {
+      stroke-dasharray: 100% 0;
+  }
+}
+.line-number {
+  padding: 0 10px;
+  line-height: 20px;
+  min-width: 50px;
+  text-align: right;
+}
+.red {
+  color: #ff7b72;
+}
+.purple {
+  color: #d2a8ff;
+}
+.blue {
+  color: #a5d6ff;
+}

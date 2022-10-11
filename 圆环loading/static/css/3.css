@@ -12,14 +12,14 @@ body{
 .circle-progress-background {
     fill: transparent;
     stroke: #dedede;
-    stroke-width: 5px;
+    stroke-width: 5;
     stroke-dasharray: 157;
     stroke-dashoffset: 0;
 }
 .circle-progress {
     fill: transparent;
     stroke: url(#progress-gradient);
-    stroke-width: 5px;
+    stroke-width: 5;
     /* 设置stroke两端为圆的 */
     stroke-linecap: round;
     /* 这里157来自圆周长度2*pi*25,157比真实值稍小了一点没有出问题 */

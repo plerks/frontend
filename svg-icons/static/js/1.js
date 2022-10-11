@@ -1,17 +1,29 @@
+const { markRaw } = Vue
 const app = Vue.createApp({
+    data() {
+        return {
+            /*
+            这里直接写icons: icons会因为:is提示:
+            Vue received a Component which was made a reactive object. This can lead to unnecessary performance overhead,
+            and should be avoided by marking the component with `markRaw` or using `shallowRef` instead of `ref`.
+            不过markRaw之后也丢失了this.icons的响应性
+            */
+            icons: markRaw(icons)
+        }
+    },
     template: `
-    <div class="svg-list">
-        <BarsOutline/>
-        <Home/>
-        <Dot3/>
-        <Group/>
-        <Tables/>
-        <Charts/>
-        <Screen/>
-        <TriangleDown/>
+    <div class="svg-list" @click="this.icons.pop()">
+        <component v-for="icon in icons" :is="icon"/>
     </div>
     `
 });
+
+/* js的变量提升(https://developer.mozilla.org/zh-CN/docs/Glossary/Hoisting)，
+变量可以在声明之前进行初始化和使用，但是如果没有初始化，就不能使用它们(只提升了声明)。 */
+//console.log({icons: icons}) //报错未初始化icons
+//console.log({data() { return {icons: icons}}}.data) //这里定义包含data函数的一个对象，应该是不算使用icons，不报错，甚至可以把icons换成一个不存在的变量名
+//console.log({data() { return {icons: icons}}}.data()) //报错未初始化icons
+const icons = []
 
 const barsOutline = {
     template: `
@@ -25,13 +37,13 @@ const barsOutline = {
     </div>
     `
 }
-app.component('BarsOutline', barsOutline)
+icons.push(barsOutline)
 
 const home = {
     template: `
     <div class="svg-container">
         <span class="svg-icon-container">
-            <svg class="svg-icon home" width="100%" height="100%" viewBox="0 0 1000 1000">
+            <svg class="svg-icon" width="100%" height="100%" viewBox="0 0 1000 1000">
                 <path d="M 100 500 L 500 100 L 900 500 A 30 30 0 0 1 857.58 542.42 L 500 184.84 L 142.42 542.42 A 30 30 0 0 1 100 500"/>
                 <path d="M 730 330 L 730 100 L 670 100 L 670 270"/>
                 <path d="M 200 900 L 200 600 L 500 300 L 800 600 L 800 900 L 600 900 L 600 600 L 400 600 L 400 900 Z"/>
@@ -41,7 +53,7 @@ const home = {
     </div>
     `
 }
-app.component('Home', home)
+icons.push(home)
 
 const dot3 = {
     template: `
@@ -57,7 +69,7 @@ const dot3 = {
     </div>
     `
 }
-app.component('Dot3', dot3)
+icons.push(dot3)
 
 const group = {
     template: `
@@ -73,7 +85,7 @@ const group = {
     </div>
     `
 }
-app.component('Group', group)
+icons.push(group)
 
 const tables = {
     template: `
@@ -92,7 +104,7 @@ const tables = {
     </div>
     `
 }
-app.component('Tables', tables)
+icons.push(tables)
 
 const charts = {
     template: `
@@ -110,7 +122,7 @@ const charts = {
     </div>
     `
 }
-app.component('Charts', charts)
+icons.push(charts)
 
 const screen = {
     template: `
@@ -129,7 +141,7 @@ const screen = {
     </div>
     `
 }
-app.component('Screen', screen)
+icons.push(screen)
 
 const triangleDown = {
     template: `
@@ -143,6 +155,86 @@ const triangleDown = {
     </div>
     `
 }
-app.component('TriangleDown', triangleDown)
+icons.push(triangleDown)
+
+const copy = {
+    template: `
+    <div class="svg-container">
+        <span class="svg-icon-container">
+            <svg class="svg-icon" width="100%" height="100%" viewBox="0 0 16 16">
+                <path d="M 2 6 L 6 6 L 6 7.5 L 2.5 7.5 A 1 1 0 0 0 1.5 8.5 L 1.5 13.5 A 1 1 0 0 0 2.5 14.5 L 7.5 14.5 A 1 1 0 0 0 8.5 13.5 L 8.5 8.5
+                L 10 8.5 L 10 14 A 2 2 0 0 1 8 16 L 2 16 A 2 2 0 0 1 0 14 L 0 8 A 2 2 0 0 1 2 6
+                "/>
+                <!--内外两条线都是顺时针,必须指定fill-rule为evenodd,nonezero不行-->
+                <path fill-rule="evenodd" d="M 8 0 h 6 A 2 2 0 0 1 16 2 L 16 8 A 2 2 0 0 1 14 10 L 8 10 A 2 2 0 0 1 6 8 L 6 2 A 2 2 0 0 1 8 0
+                        M 8.5 1.5 L 13.5 1.5 A 1 1 0 0 1 14.5 2.5 L 14.5 7.5 A 1 1 0 0 1 13.5 8.5 L 8.5 8.5 A 1 1 0 0 1 7.5 7.5 L 7.5 2.5 A 1 1 0 0 1 8.5 1.5
+                "/>
+            </svg>
+        </span>
+        <span class="svg-icon-name">Copy</span>
+    </div>
+    `
+}
+icons.push(copy)
+
+const finish = {
+    template: `
+    <div class="svg-container">
+        <span class="svg-icon-container">
+            <svg class="svg-icon" width="100%" height="100%" viewBox="0 0 16 16">
+                <circle cx="8" cy="8" r="7" stroke-width="2" fill="none" stroke="green"/>
+                <polyline class="finish" points="3.7,8 7,11.5 11.7,5.7" stroke-width="2" fill="none" stroke="green" stroke-linecap="round"/>
+            </svg>
+        </span>
+        <span class="svg-icon-name">Finish</span>
+    </div>
+    `
+}
+icons.push(finish)
+
+const error = {
+    template: `
+    <div class="svg-container">
+        <span class="svg-icon-container">
+            <svg class="svg-icon" width="100%" height="100%" viewBox="0 0 16 16">
+                <circle cx="8" cy="8" r="7" stroke-width="2" fill="none" stroke="#ab1313"/>
+                <line x1="8" y1="3" x2="8" y2="10" stroke-width="2" stroke="#ab1313"/>
+                <circle cx="8" cy="12" r="1" fill="#ab1313"/>
+            </svg>
+        </span>
+        <span class="svg-icon-name">Error</span>
+    </div>
+    `
+}
+icons.push(error)
+
+const loading1 = {
+    template: `
+    <div class="svg-container">
+        <span class="svg-icon-container">
+            <svg class="svg-icon" width="100%" height="100%" viewBox="0 0 16 16">
+                <circle class="loading1-background" cx="8" cy="8" r="7"/>
+                <circle class="loading1" cx="8" cy="8" r="7"/>
+            </svg>
+        </span>
+        <span class="svg-icon-name">Loading-1</span>
+    </div>
+    `
+}
+icons.push(loading1)
+
+const loading2 = {
+    template: `
+    <div class="svg-container">
+        <span class="svg-icon-container">
+            <svg class="svg-icon" width="100%" height="100%" viewBox="0 0 16 16">
+                <circle class="loading2" cx="8" cy="8" r="7"/>
+            </svg>
+        </span>
+        <span class="svg-icon-name">Loading-2</span>
+    </div>
+    `
+}
+icons.push(loading2)
 
 app.mount("#app")

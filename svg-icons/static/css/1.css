@@ -31,6 +31,7 @@ body {
     text-align: center;
     line-height: 20px;
     font-size: 14px;
+    user-select: none;
 }
 .svg-container:hover {
     background-color: #1890ff;
@@ -46,12 +47,68 @@ body {
     stroke: currentColor;
     fill: currentColor;
     cursor: pointer;
+    /* 用fill产生图形,一些情况下也可以用stroke的宽度 */
+    stroke-width: 0;
 }
 .bars-outline {
     stroke-width: 60;
     stroke-linecap: round;
 }
-.home {
-    /* 用fill产生图形 */
-    stroke-width: 0;
+.finish {
+    animation: finish-animation 1s linear forwards;
+}
+@keyframes finish-animation {
+    from {
+        stroke-dasharray: 0 100%;
+    }
+    to {
+        stroke-dasharray: 100% 0;
+    }
+}
+.loading1-background {
+    fill: none;
+    stroke: #dedede;
+    stroke-width: 2;
+}
+.loading1 {
+    fill: none;
+    stroke: #58a6ff;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-dasharray: 38;
+    stroke-dashoffset: 16;
+    transform-origin: 50% 50%;
+    animation: loading1-roll 1.2s linear infinite;
+}
+@keyframes loading1-roll {
+    0% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+.loading2 {
+    fill: none;
+    stroke: #27a5d9;
+    stroke-width: 2;
+    stroke-linecap: round;
+    transform-origin: center;
+    animation: loading2-roll 1.5s linear infinite;
+}
+@keyframes loading2-roll {
+    0% {
+        transform: rotate(0);
+        stroke-dasharray: 2.8 44;
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 34 44;
+        stroke-dashoffset: 0;
+    }
+    100% {
+        transform: rotate(360deg);
+        stroke-dasharray: 28 44;
+        stroke-dashoffset: -44;
+    }
 }
