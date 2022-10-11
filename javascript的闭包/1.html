@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <script>
+        /* 
+        参考《JavaScript高级程序设计》（第4版，ISBN-9787115545381）的闭包章节，
+        https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Closures
+        */
+        function outter() {
+            let a = 5;
+            /* function inner() {
+                console.log(a--);
+            }
+            return inner; */
+            return function() {
+                console.log(a--);
+            }
+        }
+        /*
+        f指向outter()返回的内部函数，这个内部函数被f引用，所以不会被回收。
+        并且由于作用域链，内部函数可以访问外部函数可以访问的所有变量，且外部函数的活动对象不会被销毁，因为内部函数的作用域链中仍然有对它的引用。
+        */
+        let f = outter();
+        // 闭包使得可以从内部函数访问外部函数的作用域
+        f();
+        f();
+        f();
+        // 解除对函数的引用，作用域链也会被销毁，其他作用域（除全局作用域之外）也可以销毁，这样就可以释放内存了
+        f = null;
+    </script>
+</body>
+</html>
