@@ -39,7 +39,9 @@ const content = {
     <!--这里加个padding-top: 30px，刚开始往下滚动时右边目录会往上动一下，然后sticky住-->
     <div style="display: flex;padding-top: 30px" ref="root">
         <div style="flex: 1 1 75%;">
-            <!--用这个当锚点，用paragraph-title当锚点的话，段落标题会直接跑到header里被挡住-->
+            <!--加个paragraph-anchor元素当锚点，用paragraph-title当锚点的话，段落标题会直接跑到header里被挡住，
+            可以通过html{scroll-padding-top: var(--header-height);}(写在body上不行)或者paragraph-title里写scroll-margin-top解决被挡住的问题，
+            但是那样进度判定会有点问题，得标题进到header里面才会触发，点击#跳转后右侧进度提示也不会变，所以还是用paragraph-anchor实现-->
             <div style="height: var(--header-height)" class="paragraph-anchor" id="paragraph-1"></div>
             <h2 class="paragraph-title">
                 <a href="#paragraph-1" class="head-anchor">#</a>
