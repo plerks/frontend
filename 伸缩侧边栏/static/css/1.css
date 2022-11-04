@@ -114,7 +114,7 @@ html {
     padding-left: var(--sidebar-current);
     transition: padding 0.2s ease-in;
 }
-.header-outline-icon {
+.header-icon {
     stroke: currentColor;
     fill: currentColor;
     width: 25px;
@@ -127,6 +127,13 @@ html {
     fill: currentColor;
     cursor: pointer;
     transition: all 0.2s linear;
+}
+.svg-icon-container {
+    /* 需要改成inline-block,否则设置宽高无效 */
+    display: inline-block;
+    width: 20px;
+    height: 35px;
+    vertical-align: middle;
 }
 .bars-outline {
     stroke: white;
@@ -148,9 +155,7 @@ html {
 }
 .navbar-item {
     position: relative;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    height: 45px;
     padding: 5px 15px;
     user-select: none;
     font-size: 16px;

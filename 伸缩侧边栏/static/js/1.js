@@ -1,19 +1,35 @@
 const barsOutline = {
     template: `
-        <svg class="header-outline-icon" viewBox="0 0 1000 1000">
+        <svg class="header-icon" viewBox="0 0 1000 1000">
             <path class="bars-outline" d="M 300 250 l 700 0 M 300 500 l 700 0 M 300 750 l 700 0"/>
+        </svg>
+    `
+}
+
+const dot3 = {
+    template: `
+        <svg class="header-icon" color="white" viewBox="0 0 1000 1000">
+            <circle cx="500" cy="250" r="80"/>
+            <circle cx="500" cy="500" r="80"/>
+            <circle cx="500" cy="750" r="80"/>
         </svg>
     `
 }
 
 const header = {
     components: {
-        BarsOutline: barsOutline
+        BarsOutline: barsOutline,
+        Dot3: dot3
+    },
+    data() {
+        return {
+            sidebarClosed: false
+        }
     },
     template: `
     <div class="header flex-between">
         <div sidebar-closed="false" ref="headerStretch" class="header-stretch">
-            <BarsOutline @click="sidebarExpandSwitch()"/>
+            <component :is="sidebarClosed?'Dot3':'BarsOutline'" @click="sidebarExpandSwitch()"/>
         </div>
         <div class="header-content flex-between align-center">
             <input class="search" placeholder="Search"/>
@@ -23,6 +39,7 @@ const header = {
     `,
     methods: {
         sidebarExpandSwitch() {
+            this.sidebarClosed = !this.sidebarClosed
             let sidebar = document.querySelector('.sidebar')
             let headerStretch = this.$refs.headerStretch
             let contentPanel = document.querySelector('.content-panel')
@@ -112,7 +129,7 @@ const base = {
     },
     template: `
     <div class="navbar-item" @click="expand()">
-        <span style="width: 20px;height: 20px;">
+        <span class="svg-icon-container">
             <svg class="svg-icon title-icon" width="100%" height="100%" viewBox="0 0 1000 1000">
                 <path d="M 100 370 L 500 170 L 900 370 L 500 570"/>
                 <path d="M 500 610 L 100 410 L 100 490 L 500 690 L 900 490 L 900 410"/>
@@ -120,7 +137,7 @@ const base = {
             </svg>
         </span>
         <span class="to-be-hidden navbar-item-title">Base</span>
-        <svg class="svg-icon to-be-hidden" width="13" height="13" viewBox="0 0 1000 1000" :style="{rotate: this.expanded==true?'0deg':'-90deg'}">
+        <svg class="svg-icon to-be-hidden" width="13" height="13" viewBox="0 0 1000 1000" :style="{rotate: this.expanded==true?'0deg':'-90deg',height: '35px',float: 'right'}">
             <path d="M 200 326.8 L 800 326.8 L 500 846.4"/>
         </svg>
     </div>
@@ -177,7 +194,7 @@ const tables = {
     },
     template: `
     <div class="navbar-item" @click="expand()">
-        <span style="width: 20px;height: 20px;">
+        <span class="svg-icon-container">
             <svg class="svg-icon" width="100%" height="100%" viewBox="0 0 1000 1000">
                 <path d="M 100 250 A 120 120 0 0 1 220 130 h 560 A 120 120 0 0 1 900 250"/>
                 <path d="M 100 250 L 100 810 A 60 60 0 0 0 160 870 L 160 250"/>
@@ -188,7 +205,7 @@ const tables = {
             </svg>
         </span>
         <span class="to-be-hidden navbar-item-title">Tables</span>
-        <svg class="svg-icon to-be-hidden" width="13" height="13" viewBox="0 0 1000 1000" :style="{rotate: this.expanded==true?'0deg':'-90deg'}">
+        <svg class="svg-icon to-be-hidden" width="13" height="13" viewBox="0 0 1000 1000" :style="{rotate: this.expanded==true?'0deg':'-90deg',height: '35px',float: 'right'}">
             <path d="M 200 326.8 L 800 326.8 L 500 846.4"/>
         </svg>
     </div>
@@ -245,7 +262,7 @@ const charts = {
     },
     template: `
     <div class="navbar-item" @click="expand()">
-        <span style="width: 20px;height: 20px;">
+        <span class="svg-icon-container">
             <svg class="svg-icon" width="100%" height="100%" viewBox="0 0 1000 1000">
                 <path d="M 170 170 L 170 770 A 60 60 0 0 0 230 830 L 830 830 L 830 770 L 230 770 L 230 170"/>
                 <path d="M 305 670 L 305 470 L 380 470 L 380 670"/>
@@ -255,7 +272,7 @@ const charts = {
             </svg>
         </span>
         <span class="to-be-hidden navbar-item-title">Charts</span>
-        <svg class="svg-icon to-be-hidden" width="13" height="13" viewBox="0 0 1000 1000" :style="{rotate: this.expanded==true?'0deg':'-90deg'}">
+        <svg class="svg-icon to-be-hidden" width="13" height="13" viewBox="0 0 1000 1000" :style="{rotate: this.expanded==true?'0deg':'-90deg',height: '35px',float: 'right'}">
             <path d="M 200 326.8 L 800 326.8 L 500 846.4"/>
         </svg>
     </div>
