@@ -3,9 +3,6 @@
     padding: 0;
     box-sizing: border-box;
 }
-html {
-    scroll-behavior: smooth;
-}
 .header {
     background-color: #fff;
     width: 100%;
@@ -99,6 +96,8 @@ html {
 .paragraph-title {
     margin: 1.8rem 0 1.8rem;
     transition: color 0.5s linear;
+    /* 防止锚点跳时被header挡,这里要多减1px,这样锚点跳转时才能判断是下一个paragraph */
+    scroll-margin-top: calc(var(--header-height) + 1.8rem - 1px);
 }
 .paragraph-title .head-anchor {
     opacity: 0;
@@ -108,6 +107,10 @@ html {
 }
 .paragraph-title:hover .head-anchor {
     opacity: 1;
+}
+.head-anchor {
+    /* 防止锚点跳时被header挡,这里要多减1px,这样锚点跳转时才能判断是下一个paragraph */
+    scroll-margin-top: calc(var(--header-height) + 1.8rem - 1px);
 }
 .outline-link {
     line-height: var(--outline-link-height);

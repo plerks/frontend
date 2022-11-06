@@ -27,6 +27,19 @@ const content = {
             options: null
         }
     },
+    methods: {
+        scrollInto(e) {
+            // 需要preventDefault,直接用锚点跳转加上html{scroll-behavior: smooth},hash会瞬变成目标hash,但是滚动时又会被我写的滚动进度检测改写,hash会闪一下
+            e.preventDefault()
+            e.target.scrollIntoView({behavior: 'smooth'})
+        },
+        scrollIntoTargetAnchor(e) {
+            // 需要preventDefault,直接用锚点跳转加上html{scroll-behavior: smooth},hash会瞬变成目标hash,但是滚动时又会被我写的滚动进度检测改写,hash会闪一下
+            e.preventDefault()
+            let href = e.target.getAttribute('href').substring(1)
+            document.getElementById(href).scrollIntoView({behavior: 'smooth'})
+        }
+    },
     computed: {
         outlineMarkerTop() {
             let outlineLinkHeight = window.getComputedStyle(document.documentElement).getPropertyValue('--outline-link-height');
@@ -39,84 +52,65 @@ const content = {
     <!--这里加个padding-top: 30px，刚开始往下滚动时右边目录会往上动一下，然后sticky住-->
     <div style="display: flex;padding-top: 30px" ref="root">
         <div style="flex: 1 1 75%;">
-            <!--加个paragraph-anchor元素当锚点，用paragraph-title当锚点的话，段落标题会直接跑到header里被挡住，
-            可以通过html{scroll-padding-top: var(--header-height);}(写在body上不行)或者paragraph-title里写scroll-margin-top解决被挡住的问题，
-            但是那样进度判定会有点问题，得标题进到header里面才会触发，点击#跳转后右侧进度提示也不会变，所以还是用paragraph-anchor实现-->
-            <div style="height: var(--header-height)" class="paragraph-anchor" id="paragraph-1"></div>
-            <h2 class="paragraph-title">
-                <a href="#paragraph-1" class="head-anchor">#</a>
-                段落一
-            </h2>
-            <div style="height: 500px;background-color: #6fdc6f">内容</div>
-            <div style="height: var(--header-height)" class="paragraph-anchor" id="paragraph-2"></div>
-            <h2 class="paragraph-title">
-                <a href="#paragraph-2" class="head-anchor">#</a>
-                段落二
-            </h2>
-            <div style="height: 500px;background-color: #6fdc6f">内容</div>
-            <div style="height: var(--header-height)" class="paragraph-anchor" id="paragraph-3"></div>
-            <h2 class="paragraph-title">
-                <a href="#paragraph-3" class="head-anchor">#</a>
-                段落三
-            </h2>
-            <div style="height: 500px;background-color: #6fdc6f">
-                内容
+            <div class="paragraph">
+                <h2 class="paragraph-title" id="paragraph-1">
+                    <a href="#paragraph-1" class="head-anchor" @click="scrollInto">#</a>
+                    段落一
+                </h2>
+                <div style="height: 500px;background-color: #6fdc6f" class="content">内容</div>
+            </div>
+            <div class="paragraph">
+                <h2 class="paragraph-title" id="paragraph-2">
+                    <a href="#paragraph-2" class="head-anchor" @click="scrollInto">#</a>
+                    段落二
+                </h2>
+                <div style="height: 500px;background-color: #6fdc6f" class="content">内容</div>
+            </div>
+            <div class="paragraph">
+                <h2 class="paragraph-title" id="paragraph-3">
+                    <a href="#paragraph-3" class="head-anchor" @click="scrollInto">#</a>
+                    段落三
+                </h2>
+                <div style="height: 500px;background-color: #6fdc6f" class="content">内容</div>
             </div>
         </div>
         <div class="aside" style="flex: 1 1 25%;">
             <!--这里手动把catalog高度变高一点，这样滑到最下面时能看到catalog被滑出的效果(因为catalog的包含块的下边界把sticky定位的catalog挤上去了)-->
             <div class="catalog" style="min-height: 600px">
-                <a v-for="(title,index) in titles" :key=index :href="'#paragraph-'+(index+1)" :class="{'outline-link': true}">{{ title }}</a>
+                <a v-for="(title,index) in titles" :key=index :href="'#paragraph-'+(index+1)" :class="{'outline-link': true}" @click="scrollIntoTargetAnchor">{{ title }}</a>
                 <div class="outline-marker" :style="{top: this.outlineMarkerTop}"></div>
             </div>
         </div>
     </div>
     `,
     mounted() {
-        let paragraphAnchors = this.$refs.root.querySelectorAll(".paragraph-anchor");
-        let headerHeightPx = window.getComputedStyle(document.documentElement).getPropertyValue('--header-height');
-        let rootMarginBottom = window.innerHeight - parseInt(headerHeightPx); // 这样实现，按developer tool出来(视口高度变了)，右边目录就会对应不上
-        this.options = {
-            root: null, // 指定要检查与target交集情况的元素为viewport
-            rootMargin: `0px 0px -${rootMarginBottom}px 0px`, // 用负margin将要判断的root矩形压缩到header的矩形位置
-            threshold: [0, 0.05, 0.1, 0.15, 0.2] // 触发密集一点
+        // 这个通过元素位置判断是否在视口的函数写法参考https://juejin.cn/post/6950471443264045064
+        const isElementVisibleExcludeHeader = (el) => {
+            const rect = el.getBoundingClientRect()
+            const vWidth = window.innerWidth || document.documentElement.clientWidth
+            const vHeight = window.innerHeight || document.documentElement.clientHeight
+            let headerHeight = window.getComputedStyle(document.documentElement).getPropertyValue('--header-height');
+            if (
+              rect.right < 0 ||
+              // 这里减去header的高度
+              rect.bottom - parseInt(headerHeight) < 0 ||
+              rect.left > vWidth ||
+              rect.top > vHeight
+            ) {
+              return false
+            }
+            return true
         }
-
-        /* 很奇怪，这样写右侧目录进度显示功能不行：
-        let rootMarginBottom = document.body.scrollHeight - parseInt(headerHeightPx);
-        let options = {
-            root: document, // 换成document.documentElement,document.body也不行
-            rootMargin: `0px 0px -${rootMarginBottom}px 0px`,
-            threshold: [0, 0.05, 0.1, 0.15, 0.2]
-        }
-        ,但是这样可以：
-        let rootMarginBottom = document.body.scrollHeight - parseInt(headerHeightPx);
-        let options = {
-            root: document, // 换成document.documentElement,document.body不行
-            rootMargin: `0px 0px -90% 0px`,
-            threshold: [0, 0.05, 0.1, 0.15, 0.2]
-        } */
-
-        let observer = new IntersectionObserver((entries) => {
-            for (let i = 0; i < entries.length; i++) {
-                // console.log("intersectionRatio为："+entries[i].intersectionRatio)
-                // paragraph-anchor触碰到header的位置，就改变activeIndex
-                if (entries[i].intersectionRatio > 0) {
-                    paragraphAnchors.forEach((paragraphAnchor, index) => {
-                        if (paragraphAnchor == entries[i].target) {
-                            this.activeIndex = index;
-                        }
-                    })
+        let paragraphs = this.$refs.root.querySelectorAll(".paragraph");
+        window.addEventListener('scroll', (e) => {
+            for (let i = 0; i < paragraphs.length; i++) {
+                if (isElementVisibleExcludeHeader(paragraphs[i])) {
+                    this.activeIndex = i;
+                    window.location.hash = `paragraph${i+1}`
+                    break;
                 }
             }
-        }, this.options);
-        this.observer = observer;
-        // 目标元素
-        let targets = this.$refs.root.querySelectorAll(".paragraph-anchor");
-        targets.forEach(t => observer.observe(t));
-    },
-    unmounted() {
-        this.observer.disconnect();
+        })
     }
 }
 
