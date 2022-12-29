@@ -90,6 +90,12 @@ body {
   line-height: 20px;
   min-width: 50px;
   text-align: right;
+  user-select: none;
+  color: #6e7681;
+}
+.line-number:hover {
+  color: #c9d1d9;
+  cursor: pointer;
 }
 .red {
   color: #ff7b72;

@@ -109,7 +109,8 @@ const codeFragment = {
             codeTags.forEach(e => {lines.push(e.innerText)})
             navigator.clipboard.writeText(lines.join("\n"))
             .then(() => {
-                // 此时已经完成复制，不过这里做个动画，等Loading的动画完(1.2s)后再转为Finish,此时再等1.5s(Finish的动画(1s)足够完成了)再回到开始的Copy状态
+                /* 此时已经完成复制，不过这里仿照github做个动画，等Loading的动画完(1.2s)后再转为Finish,此时再等1.5s(Finish的动画(1s)足够完成了)再回到开始的Copy状态。
+                   github要做这个动画应该是因为github点复制时获取复制内容是通过发个请求，需要等待响应，不像直接从页面上获取一般能瞬时完成。 */
                 setTimeout(() => {
                     this.copyStatus = "Finish"
                     setTimeout(() => {
